@@ -137,7 +137,7 @@ const Header = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" }, color: "wheat" }}
+            sx={{ display: { xs: "none", sm: "block" }, color: "white" }}
           >
             Cryptocurrency Dashboard
           </Typography>

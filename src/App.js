@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
-import InputSearch from "./components/InputSearch/InputSearch";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <InputSearch />
+      <Layout />
     </div>
   );
 }

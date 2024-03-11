@@ -1,19 +1,18 @@
 .sectionsearch {
-    margin-bottom: 0.5rem;
-    padding: 0 0 0.5rem 0.5rem;
-  }
-  
-  #searchtask {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    width: 60%;
-    margin: 0.5rem 0 0 0;
-    color: white;
-    background-color: rgb(31, 37, 61);
-  }
+  margin-bottom: 0.5rem;
+  padding: 0 0 0.5rem 0.5rem;
+}
 
-  .sectionsearch input::placeholder {
-    color: white;
-  }
-  
+#searchtask {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  width: 60%;
+  margin: 0.5rem 0 0 0;
+  color: rgb(169, 172, 186);
+  background-color: rgb(31, 37, 61);
+}
+
+.sectionsearch input::placeholder {
+  color: rgb(169, 172, 186);
+}
