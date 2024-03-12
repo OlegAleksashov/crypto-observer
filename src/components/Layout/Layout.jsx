@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Grid, Table } from "@mui/material";
+import { Grid } from "@mui/material";
 // import useInput from "../../hooks/useInput";
 import InputSearch from "../InputSearch/InputSearch";
 import Categories from "../../card/Categories";
-import CustomizedTables from '../../Table/CustomizedTables'
 import "./Layout.css";
+import CustomizedTables from "../../Table/CustomizedTables";
 
 const Layout = () => {
   // const input = useInput();
@@ -41,7 +41,7 @@ const Layout = () => {
         </Grid>
       </Grid>
       <InputSearch onInputChange={handleInputChange} />
-      <CustomizedTables/>
+      <CustomizedTables />
     </div>
   );
 };

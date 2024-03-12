@@ -31,7 +31,7 @@ const Categories = () => {
   }, []);
 
   return (
-    <PersonalCard 
+    <PersonalCard
       text="CATEGORIES"
       value={categories.length}
       color={theme.palette.error.dark}

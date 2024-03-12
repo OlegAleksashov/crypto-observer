@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -27,22 +28,29 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export default function CustomizedTables() {
+  const [bitcoin, setBitcoin] = useState([]);
+
+  const fetchBitcoin = () => {
+    axios
+      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
+        headers: {
+          Accept: "aplication/json",
+        },
+      })
+      .then((response) => {
+        setBitcoin(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    fetchBitcoin();
+  }, []);
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 400 }} aria-label="customized table">
+      <Table sx={{ minWidth: 500 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <TableCell
@@ -83,17 +91,23 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {bitcoin.map((coin) => (
+            <StyledTableRow key={coin.image}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                <img
+                  src={coin.image}
+                  alt=""
+                  style={{ height: "30px", width: "30px" }}
+                />
               </StyledTableCell>
-              <StyledTableCell>{row.calories}</StyledTableCell>
-              <StyledTableCell>{row.fat}</StyledTableCell>
-              <StyledTableCell>{row.carbs}</StyledTableCell>
-              <StyledTableCell>{row.protein}</StyledTableCell>
-              <StyledTableCell>{row.protein}</StyledTableCell>
-              <StyledTableCell>{row.protein}</StyledTableCell>
+              <StyledTableCell>{coin.name}</StyledTableCell>
+              <StyledTableCell>{coin.symbol}</StyledTableCell>
+              <StyledTableCell>
+                {coin.current_price.toFixed(2)}
+              </StyledTableCell>
+              <StyledTableCell>{coin.price_change_percentage_24h.toFixed(2)}</StyledTableCell>
+              <StyledTableCell>{coin.total_volume}</StyledTableCell>
+              <StyledTableCell>{coin.market_cap}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
