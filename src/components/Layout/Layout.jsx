@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import useInput from "../../hooks/useInput";
+import { Grid } from "@mui/material";
+// import useInput from "../../hooks/useInput";
 import InputSearch from "../InputSearch/InputSearch";
+import Categories from "../../card/Categories";
 import "./Layout.css";
 
 const Layout = () => {
-  const input = useInput();
+  // const input = useInput();
   const [searchTerm, setSearchTerm] = useState("");
 
-  let dateTemp = new Date().toString().split(" ");
-  const date =
-    dateTemp[0] + " " + dateTemp[1] + " " + dateTemp[2] + " " + dateTemp[3];
+  let date = new Date().toLocaleDateString("en-GB", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const handleInputChange = (value) => {
     setSearchTerm(value);
@@ -29,6 +34,11 @@ const Layout = () => {
       <span className="date">
         Today: <p id="date">{date}</p>
       </span>
+      <Grid container spacing={1}>
+        <Grid marginLeft={1} marginTop={1} item xs={2.5}>
+          <Categories />
+        </Grid>
+      </Grid>
       <InputSearch onInputChange={handleInputChange} />
     </div>
   );
