@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Table } from "@mui/material";
 // import useInput from "../../hooks/useInput";
 import InputSearch from "../InputSearch/InputSearch";
 import Categories from "../../card/Categories";
+import CustomizedTables from '../../Table/CustomizedTables'
 import "./Layout.css";
 
 const Layout = () => {
@@ -40,6 +41,7 @@ const Layout = () => {
         </Grid>
       </Grid>
       <InputSearch onInputChange={handleInputChange} />
+      <CustomizedTables/>
     </div>
   );
 };
