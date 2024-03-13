@@ -1,31 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid } from "@mui/material";
-// import useInput from "../../hooks/useInput";
-import InputSearch from "../InputSearch/InputSearch";
 import Categories from "../../card/Categories";
 import "./Layout.css";
 import CustomizedTables from "../../Table/CustomizedTables";
 
 const Layout = () => {
-  // const input = useInput();
-  const [searchTerm, setSearchTerm] = useState("");
-
   let date = new Date().toLocaleDateString("en-GB", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-
-  const handleInputChange = (value) => {
-    setSearchTerm(value);
-  };
-
-  //   const filteredTasks = tasks.filter(
-  //     (task) =>
-  //       typeof task.title === "string" &&
-  //       task.title.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
 
   return (
     <div className="main">
@@ -40,7 +25,6 @@ const Layout = () => {
           <Categories />
         </Grid>
       </Grid>
-      <InputSearch onInputChange={handleInputChange} />
       <CustomizedTables />
     </div>
   );

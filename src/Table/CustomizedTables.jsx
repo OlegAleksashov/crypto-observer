@@ -8,6 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
+import useInput from "../hooks/useInput";
+import InputSearch from "../components/InputSearch/InputSearch";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,6 +32,8 @@ const StyledTableRow = styled(TableRow)(() => ({
 
 export default function CustomizedTables() {
   const [bitcoin, setBitcoin] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const input = useInput();
 
   const fetchBitcoin = () => {
     axios
@@ -48,8 +52,21 @@ export default function CustomizedTables() {
     fetchBitcoin();
   }, []);
 
+  const filteredCryptoCurrency = bitcoin.filter((coin) =>
+    coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleInputChange = (value) => {
+    setSearchTerm(value);
+  };
+
+  const isSearchFieldEmpty = filteredCryptoCurrency.length === 0;
+
+  const newLocal = "rgb(123, 182, 77)";
+
   return (
     <TableContainer component={Paper}>
+      <InputSearch style={{}} onInputChange={handleInputChange} />
       <Table sx={{ minWidth: 500 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -90,27 +107,63 @@ export default function CustomizedTables() {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {bitcoin.map((coin) => (
-            <StyledTableRow key={coin.image}>
-              <StyledTableCell component="th" scope="row">
-                <img
-                  src={coin.image}
-                  alt=""
-                  style={{ height: "30px", width: "30px" }}
-                />
-              </StyledTableCell>
-              <StyledTableCell>{coin.name}</StyledTableCell>
-              <StyledTableCell>{coin.symbol}</StyledTableCell>
-              <StyledTableCell>
-                {coin.current_price.toFixed(2)}
-              </StyledTableCell>
-              <StyledTableCell>{coin.price_change_percentage_24h.toFixed(2)}</StyledTableCell>
-              <StyledTableCell>{coin.total_volume}</StyledTableCell>
-              <StyledTableCell>{coin.market_cap}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
+        {isSearchFieldEmpty ? (
+          <TableBody>
+            {bitcoin.map((coin) => (
+              <StyledTableRow key={coin.image}>
+                <StyledTableCell component="th" scope="row">
+                  <img
+                    src={coin.image}
+                    alt=""
+                    style={{ height: "2rem", width: "2rem" }}
+                  />
+                </StyledTableCell>
+                <StyledTableCell>{coin.name}</StyledTableCell>
+                <StyledTableCell>{coin.symbol}</StyledTableCell>
+                <StyledTableCell>
+                  ${coin.current_price.toFixed(2)}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <span style={{ color: newLocal }}>
+                    {coin.price_change_percentage_24h.toFixed(2)}%
+                  </span>
+                </StyledTableCell>
+                <StyledTableCell>${coin.total_volume}</StyledTableCell>
+                <StyledTableCell>${coin.market_cap}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        ) : (
+          <TableBody>
+            {filteredCryptoCurrency
+              .filter((coin) =>
+                coin.name.toLowerCase().includes(input.value.toLowerCase())
+              )
+              .map((coin) => (
+                <StyledTableRow key={coin.image}>
+                  <StyledTableCell component="th" scope="row">
+                    <img
+                      src={coin.image}
+                      alt=""
+                      style={{ height: "2rem", width: "2rem" }}
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell>{coin.name}</StyledTableCell>
+                  <StyledTableCell>{coin.symbol}</StyledTableCell>
+                  <StyledTableCell>
+                    ${coin.current_price.toFixed(2)}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <span style={{ color: newLocal }}>
+                      {coin.price_change_percentage_24h.toFixed(2)}%
+                    </span>
+                  </StyledTableCell>
+                  <StyledTableCell>${coin.total_volume}</StyledTableCell>
+                  <StyledTableCell>${coin.market_cap}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+          </TableBody>
+        )}
       </Table>
     </TableContainer>
   );
