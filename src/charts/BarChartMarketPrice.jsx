@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
+  // Cell,
+  // XAxis,
+  // YAxis,
+  // CartesianGrid,
+  // Tooltip,
+  // Legend,
   ResponsiveContainer,
 } from "recharts";
 
