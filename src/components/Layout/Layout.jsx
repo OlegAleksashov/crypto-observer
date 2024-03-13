@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import Categories from "../../card/Categories";
 import "./Layout.css";
 import CustomizedTables from "../../Table/CustomizedTables";
+import { BarChartMarketPrice } from "../../charts/BarChartMarketPrice";
 
 const Layout = () => {
   let date = new Date().toLocaleDateString("en-GB", {
@@ -26,6 +27,7 @@ const Layout = () => {
         </Grid>
       </Grid>
       <CustomizedTables />
+      <BarChartMarketPrice />
     </div>
   );
 };

@@ -158,8 +158,12 @@ export default function CustomizedTables() {
                       {coin.price_change_percentage_24h.toFixed(2)}%
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell>${coin.total_volume}</StyledTableCell>
-                  <StyledTableCell>${coin.market_cap}</StyledTableCell>
+                  <StyledTableCell>
+                    ${coin.total_volume.toLocaleString()}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    ${coin.market_cap.toLocaleString()}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
           </TableBody>
