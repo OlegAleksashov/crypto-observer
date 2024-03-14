@@ -2,8 +2,21 @@ import React from "react";
 import { Grid } from "@mui/material";
 import Categories from "../../card/Categories";
 import "./Layout.css";
-import CustomizedTables from "../../Table/CustomizedTables";
+import CustomizedTables from "../Table/CustomizedTables";
 import { BarChartMarketPrice } from "../../charts/BarChartMarketPrice";
+import HeaderOfCharts from "../HeaderOfCharts/HeaderOfCharts";
+import {
+  priceHeader,
+  priceTitle,
+  athHeader,
+  athTitle,
+  cheapHeader,
+  cheapTitle,
+  volumeHeader,
+  volumeTitle,
+  capHeader,
+  capTitle,
+} from "../../const/titles";
 
 const Layout = () => {
   let date = new Date().toLocaleDateString("en-GB", {
@@ -27,7 +40,20 @@ const Layout = () => {
         </Grid>
       </Grid>
       <CustomizedTables />
-      <BarChartMarketPrice />
+      <HeaderOfCharts title={priceHeader} subheader={priceTitle}>
+        <BarChartMarketPrice />
+      </HeaderOfCharts>
+      <HeaderOfCharts title={athHeader} subheader={athTitle}></HeaderOfCharts>
+      <HeaderOfCharts
+        title={cheapHeader}
+        subheader={cheapTitle}
+      ></HeaderOfCharts>
+      <HeaderOfCharts title={athHeader} subheader={athTitle}></HeaderOfCharts>
+      <HeaderOfCharts
+        title={volumeHeader}
+        subheader={volumeTitle}
+      ></HeaderOfCharts>
+      <HeaderOfCharts title={capHeader} subheader={capTitle}></HeaderOfCharts>
     </div>
   );
 };

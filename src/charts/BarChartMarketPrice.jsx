@@ -36,15 +36,21 @@ export const BarChartMarketPrice = () => {
     .slice(0, 10);
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width='95%' height={400}>
       <BarChart width={500} height={300} data={filteredData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <CartesianGrid stroke="none" />
+        <XAxis
+          dataKey="name"
+          interval={0}
+          tick={{ fontSize: "1rem" }}
+          angle={-25}
+          textAnchor="end"
+        />
         <YAxis />
         <Tooltip />
         <Legend />
         <Bar dataKey="current_price" fill="#8884d8" name="Current Price" />
-        <Bar dataKey="name" fill="#8884d8" />
+        <Bar dataKey="Name" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );
