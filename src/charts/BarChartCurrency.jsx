@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export const BarChartMarketPrice = () => {
+export const BarChartCurrency = () => {
   const [marketPrice, setMarketPrice] = useState([]);
 
   const fetchMarketPrice = () => {
@@ -20,7 +20,6 @@ export const BarChartMarketPrice = () => {
         headers: { Accept: "application-json" },
       })
       .then((response) => {
-        console.log(response.data);
         setMarketPrice(response.data);
       })
       .catch((error) => console.log(error));
@@ -36,7 +35,7 @@ export const BarChartMarketPrice = () => {
     .slice(0, 10);
 
   return (
-    <ResponsiveContainer width='95%' height={400}>
+    <ResponsiveContainer width="95%" height={400}>
       <BarChart width={500} height={300} data={filteredData}>
         <CartesianGrid stroke="none" />
         <XAxis
