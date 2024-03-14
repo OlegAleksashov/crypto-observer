@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
-  // Cell,
-  // XAxis,
-  // YAxis,
-  // CartesianGrid,
-  // Tooltip,
-  // Legend,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -21,7 +20,7 @@ export const BarChartMarketPrice = () => {
         headers: { Accept: "application-json" },
       })
       .then((response) => {
-        //console.log(response.data)
+        console.log(response.data);
         setMarketPrice(response.data);
       })
       .catch((error) => console.log(error));
@@ -31,17 +30,22 @@ export const BarChartMarketPrice = () => {
     fetchMarketPrice();
   }, []);
 
-  const dataKeys = marketPrice.filter((coin) => {
-    console.log(coin.current_price);
-    return coin.current_price !== undefined;
-});
+  const filteredData = marketPrice
+    .slice()
+    .sort((a, b) => b.current_price - a.current_price)
+    .slice(0, 10);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart width={150} height={40} data={dataKeys}>
-        <Bar dataKey='market_cap'/>
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart width={500} height={300} data={filteredData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="current_price" fill="#8884d8" name="Current Price" />
+        <Bar dataKey="name" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );
 };
-
