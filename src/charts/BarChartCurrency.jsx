@@ -14,6 +14,8 @@ import {
 export const BarChartCurrency = () => {
   const [marketPrice, setMarketPrice] = useState([]);
 
+  //const COLORS = ["rgb(25, 42, 176)", "rgb(212, 17, 192)", "rgb(12, 232, 225)", "rgb(142, 161, 18)", 'rgb(143, 58, 24)'];
+
   const fetchMarketPrice = () => {
     axios
       .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
@@ -44,12 +46,17 @@ export const BarChartCurrency = () => {
           tick={{ fontSize: "1rem" }}
           angle={-25}
           textAnchor="end"
+          axisLine={false}
         />
-        <YAxis />
+        <YAxis axisLine={false} tickLine={false} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="current_price" fill="#8884d8" name="Current Price" />
-        <Bar dataKey="Name" fill="#8884d8" />
+        <Bar
+          dataKey="current_price"
+          fill="rgb(25, 42, 176)"
+          name="Current Price"
+          label
+        />
       </BarChart>
     </ResponsiveContainer>
   );

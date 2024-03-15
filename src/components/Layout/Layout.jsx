@@ -16,9 +16,12 @@ import {
   volumeTitle,
   capHeader,
   capTitle,
+  atlHeader,
+  atlTitle,
 } from "../../const/titles";
 import "./Layout.css";
 import InnerPieChartCurrency from "../../charts/InnerPieChartCurrency";
+import AreaChartCurrency from "../../charts/AreaChartCurrency/AreaChartCurrency";
 
 const Layout = () => {
   let date = new Date().toLocaleDateString("en-GB", {
@@ -48,12 +51,13 @@ const Layout = () => {
       <HeaderOfCharts title={volumeHeader} subheader={volumeTitle}>
         <PieChartCurrency />
       </HeaderOfCharts>
-      <HeaderOfCharts title={athHeader} subheader={athTitle}><InnerPieChartCurrency/></HeaderOfCharts>
-      <HeaderOfCharts
-        title={cheapHeader}
-        subheader={cheapTitle}
-      ></HeaderOfCharts>
-      <HeaderOfCharts title={athHeader} subheader={athTitle}></HeaderOfCharts>
+      <HeaderOfCharts title={athHeader} subheader={athTitle}>
+        <AreaChartCurrency />
+      </HeaderOfCharts>
+      <HeaderOfCharts title={cheapHeader} subheader={cheapTitle}>
+        <InnerPieChartCurrency />
+      </HeaderOfCharts>
+      <HeaderOfCharts title={atlHeader} subheader={atlTitle}></HeaderOfCharts>
       <HeaderOfCharts title={capHeader} subheader={capTitle}></HeaderOfCharts>
     </div>
   );
