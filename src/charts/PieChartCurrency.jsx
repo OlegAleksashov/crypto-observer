@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -40,6 +40,7 @@ export const PieChartCurrency = () => {
     innerRadius,
     outerRadius,
     percent,
+    index,
   }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -47,13 +48,14 @@ export const PieChartCurrency = () => {
 
     return (
       <text
+        fontSize={"1.5rem"}
         x={x}
         y={y}
         fill="white"
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
       >
-        {`${(percent * 100).toFixed(0)}%`}
+        {`${filteredData[index].name} - ${(percent * 100).toFixed(0)}%`}
       </text>
     );
   };
@@ -66,12 +68,10 @@ export const PieChartCurrency = () => {
           cx="50%"
           cy="50%"
           labelLine={false}
-          //label={(props) => renderCustomizedLabel(props, filteredData)}
-          //label={({ name }) => <Label value={name} position="center" />}
-          label={({ name }) => <Label value={name} position="center" />}
           outerRadius={95}
           fill="#8884d8"
           dataKey="value"
+          label={renderCustomizedLabel}
         >
           {filteredData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
