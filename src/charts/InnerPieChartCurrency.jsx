@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["rgb(25, 42, 176)", "rgb(212, 17, 192)", "rgb(12, 232, 225)", "rgb(142, 161, 18)", 'rgb(143, 58, 24)'];
 
 const RADIAN = Math.PI / 180;
 
-export const PieChartCurrency = () => {
+const InnerPieChartCurrency = () => {
   const [volume, setVolume] = useState([]);
 
   const fetchVolume = () => {
@@ -26,11 +26,12 @@ export const PieChartCurrency = () => {
 
   const filteredData = volume
     .slice()
-    .sort((a, b) => b.total_volume - a.total_volume)
-    .slice(0, 3)
+    .sort((a, b) => a.current_price - b.current_price)
+    .filter((coin) => coin.current_price > 100)
+    .slice(0, 5)
     .map((currency) => ({
       name: currency.name,
-      value: currency.total_volume,
+      value: currency.current_price,
     }));
 
   const renderCustomizedLabel = ({
@@ -55,11 +56,10 @@ export const PieChartCurrency = () => {
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
       >
-        {`${filteredData[index].name} - ${(percent * 100).toFixed(0)}%`}
+        {`${filteredData[index].name} - ${filteredData[index].value}$`}
       </text>
     );
   };
-
   return (
     <ResponsiveContainer width="100%" height={400}>
       <PieChart width={400} height={400}>
@@ -71,6 +71,7 @@ export const PieChartCurrency = () => {
           outerRadius={195}
           fill="#8884d8"
           dataKey="value"
+          innerRadius={70}
           label={renderCustomizedLabel}
         >
           {filteredData.map((entry, index) => (
@@ -81,3 +82,5 @@ export const PieChartCurrency = () => {
     </ResponsiveContainer>
   );
 };
+
+export default InnerPieChartCurrency;

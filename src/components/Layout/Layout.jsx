@@ -18,6 +18,7 @@ import {
   capTitle,
 } from "../../const/titles";
 import "./Layout.css";
+import InnerPieChartCurrency from "../../charts/InnerPieChartCurrency";
 
 const Layout = () => {
   let date = new Date().toLocaleDateString("en-GB", {
@@ -47,7 +48,7 @@ const Layout = () => {
       <HeaderOfCharts title={volumeHeader} subheader={volumeTitle}>
         <PieChartCurrency />
       </HeaderOfCharts>
-      <HeaderOfCharts title={athHeader} subheader={athTitle}></HeaderOfCharts>
+      <HeaderOfCharts title={athHeader} subheader={athTitle}><InnerPieChartCurrency/></HeaderOfCharts>
       <HeaderOfCharts
         title={cheapHeader}
         subheader={cheapTitle}
