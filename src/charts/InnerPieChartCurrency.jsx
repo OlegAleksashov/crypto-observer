@@ -1,28 +1,25 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { fetchData } from "../store/action";
 
-const COLORS = ["rgb(25, 42, 176)", "rgb(212, 17, 192)", "rgb(12, 232, 225)", "rgb(142, 161, 18)", 'rgb(143, 58, 24)'];
+const COLORS = [
+  "rgb(25, 42, 176)",
+  "rgb(212, 17, 192)",
+  "rgb(12, 232, 225)",
+  "rgb(142, 161, 18)",
+  "rgb(143, 58, 24)",
+];
 
 const RADIAN = Math.PI / 180;
 
 const InnerPieChartCurrency = () => {
-  const [volume, setVolume] = useState([]);
-
-  const fetchVolume = () => {
-    axios
-      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
-        headers: { Accept: "application-json" },
-      })
-      .then((response) => {
-        setVolume(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
+  const dispatch = useDispatch();
+  const volume = useSelector((state) => state.fetch);
 
   useEffect(() => {
-    fetchVolume();
-  }, []);
+    dispatch(fetchData);
+  }, [dispatch]);
 
   const filteredData = volume
     .slice()

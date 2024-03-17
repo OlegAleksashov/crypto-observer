@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BarChart,
   Bar,
@@ -10,26 +10,17 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { fetchData } from "../store/action";
 
 export const BarChartCurrency = () => {
-  const [marketPrice, setMarketPrice] = useState([]);
+  const dispatch = useDispatch();
+  const marketPrice = useSelector((state) => state.fetch);
 
   //const COLORS = ["rgb(25, 42, 176)", "rgb(212, 17, 192)", "rgb(12, 232, 225)", "rgb(142, 161, 18)", 'rgb(143, 58, 24)'];
 
-  const fetchMarketPrice = () => {
-    axios
-      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
-        headers: { Accept: "application-json" },
-      })
-      .then((response) => {
-        setMarketPrice(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
-
   useEffect(() => {
-    fetchMarketPrice();
-  }, []);
+    dispatch(fetchData);
+  }, [dispatch]);
 
   const filteredData = marketPrice
     .slice()

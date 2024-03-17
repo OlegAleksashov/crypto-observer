@@ -1,28 +1,36 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+//import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { fetchData } from "../store/action";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 
 export const PieChartCurrency = () => {
-  const [volume, setVolume] = useState([]);
-
-  const fetchVolume = () => {
-    axios
-      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
-        headers: { Accept: "application-json" },
-      })
-      .then((response) => {
-        setVolume(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
+  const dispatch = useDispatch();
+  const volume = useSelector((state) => state.fetch);
 
   useEffect(() => {
-    fetchVolume();
-  }, []);
+    dispatch(fetchData());
+  }, [dispatch]);
+  //const [volume, setVolume] = useState([]);
+
+  // const fetchVolume = () => {
+  //   axios
+  //     .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
+  //       headers: { Accept: "application-json" },
+  //     })
+  //     .then((response) => {
+  //       setVolume(response.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
+
+  // useEffect(() => {
+  //   fetchVolume();
+  // }, []);
 
   const filteredData = volume
     .slice()

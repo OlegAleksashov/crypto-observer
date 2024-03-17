@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -10,26 +10,15 @@ import {
   CartesianGrid,
 } from "recharts";
 import "./AreaChartCurrency.css";
+import { fetchData } from "../../store/action";
 
 const AreaChartCurrency = () => {
-  const [ath, setAth] = useState([]);
-
-  const fetchAllTimeHigh = () => {
-    axios
-      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
-        headers: { Accept: "application-json" },
-      })
-      .then((response) => {
-        setAth(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const dispatch = useDispatch();
+  const ath = useSelector((state) => state.fetch);
 
   useEffect(() => {
-    fetchAllTimeHigh();
-  }, []);
+    dispatch(fetchData());
+  }, [dispatch]);
 
   const filteredData = ath
     .slice()
@@ -40,10 +29,24 @@ const AreaChartCurrency = () => {
       value: coin.ath,
     }));
 
-  const currencyFormatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+  const formatNumber = (number) => {
+    if (Math.abs(number) < 1e3) return number;
+    const sign = Math.sign(number);
+    const absNumber = Math.abs(number);
+    const abbreviated = ["K", "M", "B", "T"];
+    const abbreviatedNumber = abbreviated.reduce((acc, curr, index) => {
+      const value = absNumber / Math.pow(1e3, index + 1);
+      if (value >= 1) {
+        return `${(sign * value).toFixed(1)}${curr}`;
+      }
+      return acc;
+    }, "");
+    return abbreviatedNumber;
+  };
+
+  const currencyFormatter = (value) => {
+    return formatNumber(value);
+  };
 
   const customTooltip = ({ active, payload, label }) => {
     if (active) {
@@ -58,7 +61,7 @@ const AreaChartCurrency = () => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height={400}>
       <AreaChart data={filteredData}>
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
@@ -81,7 +84,7 @@ const AreaChartCurrency = () => {
           axisLine={false}
           tickLine={false}
           tickCount={8}
-          tickFormatter={(value) => currencyFormatter.format(value)}
+          tickFormatter={(value) => currencyFormatter(value)}
         />
         <Tooltip content={customTooltip} />
         <CartesianGrid opacity={0.1} vertical={false} />
