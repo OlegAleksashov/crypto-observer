@@ -14,14 +14,13 @@ import {
   cheapTitle,
   volumeHeader,
   volumeTitle,
-  capHeader,
-  capTitle,
   atlHeader,
   atlTitle,
 } from "../../const/titles";
 import "./Layout.css";
 import InnerPieChartCurrency from "../../charts/InnerPieChartCurrency";
 import AreaChartCurrency from "../../charts/AreaChartCurrency/AreaChartCurrency";
+import AreaChartLowCurrency from "../../charts/AreaChartLowCurrency/AreaChartLowCurrency";
 
 const Layout = () => {
   let date = new Date().toLocaleDateString("en-GB", {
@@ -57,8 +56,9 @@ const Layout = () => {
       <HeaderOfCharts title={cheapHeader} subheader={cheapTitle}>
         <InnerPieChartCurrency />
       </HeaderOfCharts>
-      <HeaderOfCharts title={atlHeader} subheader={atlTitle}></HeaderOfCharts>
-      <HeaderOfCharts title={capHeader} subheader={capTitle}></HeaderOfCharts>
+      <HeaderOfCharts title={atlHeader} subheader={atlTitle}>
+        <AreaChartLowCurrency />
+      </HeaderOfCharts>
     </div>
   );
 };

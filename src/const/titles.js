@@ -13,5 +13,3 @@ export const atlTitle =
 export const volumeHeader = "Top 3 Cryptocurrencies By Volume";
 export const volumeTitle =
   "The cryptocurrencies Measured By Their Total Volume";
-export const capHeader = "Top 3 Cryptocurrencies By Market Cap";
-export const capTitle = "Top 3 Cryptocurrencies Measured By Their Market Cap";

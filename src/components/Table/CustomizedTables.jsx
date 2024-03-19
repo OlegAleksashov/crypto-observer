@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,9 +8,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
+import TablePagination from "@mui/material/TablePagination";
 import useInput from "../../hooks/useInput";
 import InputSearch from "../InputSearch/InputSearch";
+import PaginationActions from "../Table/PaginationActions";
+import { fetchData } from "../../store/action";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,38 +34,42 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 export default function CustomizedTables() {
-  const [bitcoin, setBitcoin] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+  const currency = useSelector((state) => state.fetch);
   const input = useInput();
+  const [page, setPage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const fetchBitcoin = () => {
-    axios
-      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", {
-        headers: {
-          Accept: "aplication/json",
-        },
-      })
-      .then((response) => {
-        setBitcoin(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
+  //const isSearchFieldEmpty = filteredCryptoCurrency.length === 0;
 
-  useEffect(() => {
-    fetchBitcoin();
-  }, []);
-
-  const filteredCryptoCurrency = bitcoin.filter((coin) =>
+  const filteredCryptoCurrency = currency.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const paginatedCryptoCurrency = filteredCryptoCurrency.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+
+  const newLocal = "rgb(123, 182, 77)";
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   const handleInputChange = (value) => {
     setSearchTerm(value);
   };
 
-  const isSearchFieldEmpty = filteredCryptoCurrency.length === 0;
+  const handleRowsPerPageChange = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
-  const newLocal = "rgb(123, 182, 77)";
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
 
   return (
     <TableContainer component={Paper}>
@@ -107,39 +114,9 @@ export default function CustomizedTables() {
             </TableCell>
           </TableRow>
         </TableHead>
-        {isSearchFieldEmpty ? (
-          <TableBody>
-            {bitcoin.map((coin) => (
-              <StyledTableRow key={coin.image}>
-                <StyledTableCell component="th" scope="row">
-                  <img
-                    src={coin.image}
-                    alt=""
-                    style={{ height: "2rem", width: "2rem" }}
-                  />
-                </StyledTableCell>
-                <StyledTableCell>{coin.name}</StyledTableCell>
-                <StyledTableCell>{coin.symbol}</StyledTableCell>
-                <StyledTableCell>
-                  ${coin.current_price.toFixed(2)}
-                </StyledTableCell>
-                <StyledTableCell>
-                  <span style={{ color: newLocal }}>
-                    {coin.price_change_percentage_24h.toFixed(2)}%
-                  </span>
-                </StyledTableCell>
-                <StyledTableCell>${coin.total_volume}</StyledTableCell>
-                <StyledTableCell>${coin.market_cap}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        ) : (
-          <TableBody>
-            {filteredCryptoCurrency
-              .filter((coin) =>
-                coin.name.toLowerCase().includes(input.value.toLowerCase())
-              )
-              .map((coin) => (
+        <TableBody>
+          {setSearchTerm //isSearchFieldEmpty
+            ? paginatedCryptoCurrency.map((coin) => (
                 <StyledTableRow key={coin.image}>
                   <StyledTableCell component="th" scope="row">
                     <img
@@ -158,17 +135,54 @@ export default function CustomizedTables() {
                       {coin.price_change_percentage_24h.toFixed(2)}%
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell>
-                    ${coin.total_volume.toLocaleString()}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    ${coin.market_cap.toLocaleString()}
-                  </StyledTableCell>
+                  <StyledTableCell>${coin.total_volume}</StyledTableCell>
+                  <StyledTableCell>${coin.market_cap}</StyledTableCell>
                 </StyledTableRow>
-              ))}
-          </TableBody>
-        )}
+              ))
+            : paginatedCryptoCurrency
+                .filter((coin) =>
+                  coin.name.toLowerCase().includes(input.value.toLowerCase())
+                )
+                .map((coin) => (
+                  <StyledTableRow key={coin.image}>
+                    <StyledTableCell component="th" scope="row">
+                      <img
+                        src={coin.image}
+                        alt=""
+                        style={{ height: "2rem", width: "2rem" }}
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell>{coin.name}</StyledTableCell>
+                    <StyledTableCell>{coin.symbol}</StyledTableCell>
+                    <StyledTableCell>
+                      ${coin.current_price.toFixed(2)}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      <span style={{ color: newLocal }}>
+                        {coin.price_change_percentage_24h.toFixed(2)}%
+                      </span>
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      ${coin.total_volume.toLocaleString()}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      ${coin.market_cap.toLocaleString()}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+        </TableBody>
       </Table>
+      <TablePagination
+        rowsPerPageOptions={[]}
+        colSpan={3}
+        count={filteredCryptoCurrency.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleRowsPerPageChange}
+        ActionsComponent={PaginationActions}
+        sx={{ display: "flex", justifyContent: "center" }}
+      />
     </TableContainer>
   );
 }

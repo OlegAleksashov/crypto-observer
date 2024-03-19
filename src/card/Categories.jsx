@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import { useTheme } from "@mui/material/styles";
-
 import { PersonalCard } from "./PersonalCard";
 import { fetchAllCategories } from "../services/coinService";
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCoins as CoinsIcon } from "@fortawesome/free-solid-svg-icons";
 library.add(CoinsIcon);
@@ -33,7 +31,7 @@ const Categories = () => {
     (async () => {
       const allCoins = await fetchAllCategories();
       setCategories(allCoins.data);
-    })(); 
+    })();
   }, []);
 
   return (
