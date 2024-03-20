@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import store from "../src/store/index";
 import Header from "./components/Header/Header";
 import Layout from "./components/Layout/Layout";
-import "./App.css";
 
 function App() {
   return (

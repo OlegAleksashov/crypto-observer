@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchAllCoins = () => {
   return axios.get(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
     // {
     //   headers: {
     //     "Content-Type":
@@ -12,8 +12,27 @@ export const fetchAllCoins = () => {
   );
 };
 
+export const options = {method: 'GET', headers: {'x-cg-demo-api-key': '	CG-CGygkDfhmBsYedqGSXaSB5YT'}};
+
+export const fetch_AllCoins = () => {
+  fetch(
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+    options
+  )
+    .then((response) => response.json())
+    .catch((err) => console.error(err));
+};
+
 export const fetchAllCategories = () => {
   return axios.get("https://api.coingecko.com/api/v3/coins/categories/list");
+};
+
+export const fetchAllExchanges = () => {
+  return axios.get("https://api.coingecko.com/api/v3/exchanges");
+};
+
+export const fetchAllAssetPlatforms = () => {
+  return axios.get("https://api.coingecko.com/api/v3/asset_platforms");
 };
 
 // export const fetchAllCoins = () => {

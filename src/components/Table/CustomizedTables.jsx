@@ -42,6 +42,7 @@ export default function CustomizedTables() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   //const isSearchFieldEmpty = filteredCryptoCurrency.length === 0;
+  console.log(currency.length)
 
   const filteredCryptoCurrency = currency.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -128,11 +129,11 @@ export default function CustomizedTables() {
                   <StyledTableCell>{coin.name}</StyledTableCell>
                   <StyledTableCell>{coin.symbol}</StyledTableCell>
                   <StyledTableCell>
-                    ${coin.current_price.toFixed(2)}
+                    ${coin.current_price}
                   </StyledTableCell>
                   <StyledTableCell>
                     <span style={{ color: newLocal }}>
-                      {coin.price_change_percentage_24h.toFixed(2)}%
+                      {coin.price_change_percentage_24h}%
                     </span>
                   </StyledTableCell>
                   <StyledTableCell>${coin.total_volume}</StyledTableCell>
@@ -155,11 +156,11 @@ export default function CustomizedTables() {
                     <StyledTableCell>{coin.name}</StyledTableCell>
                     <StyledTableCell>{coin.symbol}</StyledTableCell>
                     <StyledTableCell>
-                      ${coin.current_price.toFixed(2)}
+                      ${coin.current_price}
                     </StyledTableCell>
                     <StyledTableCell>
                       <span style={{ color: newLocal }}>
-                        {coin.price_change_percentage_24h.toFixed(2)}%
+                        {coin.price_change_percentage_24h}
                       </span>
                     </StyledTableCell>
                     <StyledTableCell>
@@ -181,7 +182,7 @@ export default function CustomizedTables() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleRowsPerPageChange}
         ActionsComponent={PaginationActions}
-        sx={{ display: "flex", justifyContent: "center" }}
+        sx={{ display: "flex", justifyContent: "center", backgroundColor: 'rgb(31, 37, 61)'}}
       />
     </TableContainer>
   );

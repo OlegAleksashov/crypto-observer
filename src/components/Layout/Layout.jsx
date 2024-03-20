@@ -21,6 +21,8 @@ import "./Layout.css";
 import InnerPieChartCurrency from "../../charts/InnerPieChartCurrency";
 import AreaChartCurrency from "../../charts/AreaChartCurrency/AreaChartCurrency";
 import AreaChartLowCurrency from "../../charts/AreaChartLowCurrency/AreaChartLowCurrency";
+import { Exchanges } from "../../card/Exchanges";
+import { AssetPlatforms } from "../../card/AssetPlatforms";
 
 const Layout = () => {
   let date = new Date().toLocaleDateString("en-GB", {
@@ -38,9 +40,18 @@ const Layout = () => {
       <span className="date">
         Today: <p id="date">{date}</p>
       </span>
-      <Grid container spacing={1}>
-        <Grid marginLeft={1} marginTop={1} item xs={2.5}>
+      <Grid>
+        <Grid
+          marginLeft={5}
+          marginRight={5}
+          marginTop={1}
+          marginBottom={1}
+          display={"flex"}
+          justifyContent="space-between"
+        >
           <Categories />
+          <Exchanges />
+          <AssetPlatforms />
         </Grid>
       </Grid>
       <CustomizedTables />
