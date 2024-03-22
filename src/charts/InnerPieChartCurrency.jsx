@@ -15,7 +15,7 @@ const RADIAN = Math.PI / 180;
 
 const InnerPieChartCurrency = () => {
   const dispatch = useDispatch();
-  const volume = useSelector((state) => state.fetch);
+  const volume = useSelector((state) => state.fetch.allCoins);
 
   useEffect(() => {
     dispatch(fetchData);

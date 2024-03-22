@@ -1,4 +1,4 @@
-export const ALL_TIME_HIGH = "ALL_TIME_HIGH";
+export const ALL_COINS = "ALL_COINS";
 export const ALL_CATEGORIES = "ALL_CATEGORIES";
 export const ALL_EXCHANGES = "ALL_EXCHANGES";
 export const ALL_ASSETPLATFORMS = "ALL_ASSETPLATFORMS";

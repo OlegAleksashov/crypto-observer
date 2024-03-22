@@ -10,7 +10,7 @@ const RADIAN = Math.PI / 180;
 
 export const PieChartCurrency = () => {
   const dispatch = useDispatch();
-  const volume = useSelector((state) => state.fetch);
+  const volume = useSelector((state) => state.fetch.allCoins);
 
   useEffect(() => {
     dispatch(fetchData());

@@ -11,7 +11,7 @@ library.add(CoinsIcon);
 const Categories = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const cata = useSelector((state) => state.fetch);
+  const cata = useSelector((state) => state.fetch.categories);
 
   useEffect(() => {
     dispatch(fetchCategories());

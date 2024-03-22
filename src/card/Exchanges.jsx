@@ -10,7 +10,7 @@ library.add(ChartAreaIcon);
 export const Exchanges = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const exchange = useSelector((state) => state.fetch);
+  const exchange = useSelector((state) => state.fetch.exchanges);
 
   useEffect(() => {
     dispatch(fetchCategories());

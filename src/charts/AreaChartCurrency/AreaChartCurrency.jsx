@@ -14,7 +14,7 @@ import { fetchData } from "../../store/action";
 
 const AreaChartCurrency = () => {
   const dispatch = useDispatch();
-  const ath = useSelector((state) => state.fetch);
+  const ath = useSelector((state) => state.fetch.allCoins);
 
   useEffect(() => {
     dispatch(fetchData());

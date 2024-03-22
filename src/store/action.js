@@ -5,7 +5,7 @@ import {
   fetchAllAssetPlatforms,
 } from "../services/coinService";
 import {
-  ALL_TIME_HIGH,
+  ALL_COINS,
   ALL_CATEGORIES,
   ALL_EXCHANGES,
   ALL_ASSETPLATFORMS,
@@ -14,7 +14,7 @@ import {
 export const fetchData = () => async (dispatch) => {
   const response = await fetchAllCoins();
   dispatch({
-    type: ALL_TIME_HIGH,
+    type: ALL_COINS,
     payload: response.data,
   });
 };

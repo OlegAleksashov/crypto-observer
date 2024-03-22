@@ -14,7 +14,7 @@ import { fetchData } from "../store/action";
 
 export const BarChartCurrency = () => {
   const dispatch = useDispatch();
-  const marketPrice = useSelector((state) => state.fetch);
+  const marketPrice = useSelector((state) => state.fetch.allCoins);
 
   //const COLORS = ["rgb(25, 42, 176)", "rgb(212, 17, 192)", "rgb(12, 232, 225)", "rgb(142, 161, 18)", 'rgb(143, 58, 24)'];
 

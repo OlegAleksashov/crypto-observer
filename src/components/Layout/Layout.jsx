@@ -48,6 +48,7 @@ const Layout = () => {
           marginBottom={1}
           display={"flex"}
           justifyContent="space-between"
+          
         >
           <Categories />
           <Exchanges />

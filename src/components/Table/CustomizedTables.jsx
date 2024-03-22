@@ -35,14 +35,11 @@ const StyledTableRow = styled(TableRow)(() => ({
 
 export default function CustomizedTables() {
   const dispatch = useDispatch();
-  const currency = useSelector((state) => state.fetch);
+  const currency = useSelector((state) => state.fetch.allCoins);
   const input = useInput();
   const [page, setPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  //const isSearchFieldEmpty = filteredCryptoCurrency.length === 0;
-  console.log(currency.length)
 
   const filteredCryptoCurrency = currency.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -128,9 +125,7 @@ export default function CustomizedTables() {
                   </StyledTableCell>
                   <StyledTableCell>{coin.name}</StyledTableCell>
                   <StyledTableCell>{coin.symbol}</StyledTableCell>
-                  <StyledTableCell>
-                    ${coin.current_price}
-                  </StyledTableCell>
+                  <StyledTableCell>${coin.current_price}</StyledTableCell>
                   <StyledTableCell>
                     <span style={{ color: newLocal }}>
                       {coin.price_change_percentage_24h}%
@@ -155,9 +150,7 @@ export default function CustomizedTables() {
                     </StyledTableCell>
                     <StyledTableCell>{coin.name}</StyledTableCell>
                     <StyledTableCell>{coin.symbol}</StyledTableCell>
-                    <StyledTableCell>
-                      ${coin.current_price}
-                    </StyledTableCell>
+                    <StyledTableCell>${coin.current_price}</StyledTableCell>
                     <StyledTableCell>
                       <span style={{ color: newLocal }}>
                         {coin.price_change_percentage_24h}
@@ -182,7 +175,12 @@ export default function CustomizedTables() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleRowsPerPageChange}
         ActionsComponent={PaginationActions}
-        sx={{ display: "flex", justifyContent: "center", backgroundColor: 'rgb(31, 37, 61)'}}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "rgb(31, 37, 61)",
+          color: "#fff",
+        }}
       />
     </TableContainer>
   );
