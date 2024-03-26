@@ -2,27 +2,28 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { PersonalCard } from "./PersonalCard";
-import { fetchCategories } from "../store/action";
+import { exchanges } from "../const/value";
+import { fetchExchanges } from "../store/action";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faChartArea as ChartAreaIcon } from '@fortawesome/free-solid-svg-icons';
+import { faChartArea as ChartAreaIcon } from "@fortawesome/free-solid-svg-icons";
 library.add(ChartAreaIcon);
 
 export const Exchanges = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const exchange = useSelector((state) => state.fetch.exchanges);
+  // const dispatch = useDispatch();
+  // const exchange = useSelector((state) => state.fetch.exchanges);
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchExchanges());
+  // }, [dispatch]);
 
-  console.log(exchange.length)
+  // console.log(exchange);
 
   return (
     <PersonalCard
       text="EXCHANGES"
-      value={exchange.length}
-      color={theme.palette.success.light}
+      value={exchanges.length}
+      color={theme.palette.error.dark}
       icon={ChartAreaIcon}
     />
   );

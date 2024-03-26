@@ -1,8 +1,5 @@
-span.date {
-  color: rgb(169, 172, 186);
-}
-
 span {
+  color: rgb(169, 172, 186);
   display: flex;
   margin: 0.5rem 0 0 0.5rem;
 }
@@ -15,4 +12,23 @@ p#date {
 p#overview {
   margin: 0.5rem 0 0 0.5rem;
   color: rgb(169, 172, 186);
+}
+
+@media screen and (min-width: 645px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+  .grid > * {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .grid > :first-child {
+    margin-top: 0;
+  }
+
+  .grid > :last-child {
+    margin-bottom: 0;
+  }
 }

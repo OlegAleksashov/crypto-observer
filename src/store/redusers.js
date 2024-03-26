@@ -44,7 +44,6 @@ export const fetchReducer = (state = initialState, action) => {
   }
 };
 
-// // eslint-disable-next-line no-lone-blocks
 // export const fetchReducer = (state = [], action) => {
 //   switch (action.type) {
 //     case ALL_COINS:

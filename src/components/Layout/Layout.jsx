@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import Categories from "../../card/Categories";
+import Example from "../../test/Example";
 import CustomizedTables from "../Table/CustomizedTables";
 import { BarChartCurrency } from "../../charts/BarChartCurrency";
 import { PieChartCurrency } from "../../charts/PieChartCurrency";
@@ -33,27 +34,24 @@ const Layout = () => {
   });
 
   return (
-    <div className="main">
+    <>
       <p id="overview">
         <strong>Overview</strong>
       </p>
-      <span className="date">
+      <span>
         Today: <p id="date">{date}</p>
       </span>
-      <Grid>
-        <Grid
-          marginLeft={5}
-          marginRight={5}
-          marginTop={1}
-          marginBottom={1}
-          display={"flex"}
-          justifyContent="space-between"
-          
-        >
-          <Categories />
-          <Exchanges />
-          <AssetPlatforms />
-        </Grid>
+      <Grid
+        className="grid"
+        marginLeft={5}
+        marginRight={5}
+        marginTop={1}
+        marginBottom={1}
+        justifyContent="space-between"
+      >
+        <Categories />
+        <Exchanges />
+        <AssetPlatforms />
       </Grid>
       <CustomizedTables />
       <HeaderOfCharts title={priceHeader} subheader={priceTitle}>
@@ -65,13 +63,15 @@ const Layout = () => {
       <HeaderOfCharts title={athHeader} subheader={athTitle}>
         <AreaChartCurrency />
       </HeaderOfCharts>
-      <HeaderOfCharts title={cheapHeader} subheader={cheapTitle}>
-        <InnerPieChartCurrency />
-      </HeaderOfCharts>
-      <HeaderOfCharts title={atlHeader} subheader={atlTitle}>
-        <AreaChartLowCurrency />
-      </HeaderOfCharts>
-    </div>
+      <div style={{ display: "flex", justifyContent: 'space-around' }}>
+        <HeaderOfCharts title={cheapHeader} subheader={cheapTitle}>
+          <InnerPieChartCurrency />
+        </HeaderOfCharts>
+        <HeaderOfCharts title={atlHeader} subheader={atlTitle}>
+          <AreaChartLowCurrency />
+        </HeaderOfCharts>
+      </div>
+    </>
   );
 };
 

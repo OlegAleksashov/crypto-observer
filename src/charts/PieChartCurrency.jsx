@@ -3,18 +3,19 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { fetchData } from "../store/action";
+import {list} from '../const/value'
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 
 export const PieChartCurrency = () => {
-  const dispatch = useDispatch();
-  const volume = useSelector((state) => state.fetch.allCoins);
+  // const dispatch = useDispatch();
+  // const volume = useSelector((state) => state.fetch.allCoins);
 
-  useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+  // useEffect(() => {
+  //     dispatch(fetchData());
+  // }, [dispatch]);
   //const [volume, setVolume] = useState([]);
 
   // const fetchVolume = () => {
@@ -32,7 +33,16 @@ export const PieChartCurrency = () => {
   //   fetchVolume();
   // }, []);
 
-  const filteredData = volume
+  // const filteredData = volume
+  //   .slice()
+  //   .sort((a, b) => b.total_volume - a.total_volume)
+  //   .slice(0, 3)
+  //   .map((currency) => ({
+  //     name: currency.name,
+  //     value: currency.total_volume,
+  //   }));
+
+    const filteredData = list
     .slice()
     .sort((a, b) => b.total_volume - a.total_volume)
     .slice(0, 3)
@@ -40,6 +50,7 @@ export const PieChartCurrency = () => {
       name: currency.name,
       value: currency.total_volume,
     }));
+
 
   const renderCustomizedLabel = ({
     cx,

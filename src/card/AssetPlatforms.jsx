@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import { useMediaQuery } from "@mui/material";
+//import { useMediaQuery } from "@mui/material";
+import {assetPlatforms} from '../const/value'
 import { PersonalCard } from "./PersonalCard";
 import { fetchAssetPlatforms } from "../store/action";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -10,23 +11,25 @@ library.add(ChartPieIcon);
 
 export const AssetPlatforms = () => {
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"), {
-    defaultMatches: true,
-  });
-  const dispatch = useDispatch();
-  const platforms = useSelector((state) => state.fetch.assetPlatforms);
+  // const dispatch = useDispatch();
+  // const platforms = useSelector((state) => state.fetch.assetPlatforms);
 
-  useEffect(() => {
-    dispatch(fetchAssetPlatforms());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchAssetPlatforms());
+  // }, [dispatch]);
+
+  // console.log(platforms);
 
   return (
     <PersonalCard
       text="ASSET PLATFORMS"
-      value={platforms.length}
+      value={assetPlatforms.length}
       color={theme.palette.primary.dark}
       icon={ChartPieIcon}
-      style={{ padding: isMd ? "20px" : "10px", fontSize: isMd ? "18px" : "14px" }}
+      // style={{
+      //   padding: isMd ? "20px" : "10px",
+      //   fontSize: isMd ? "18px" : "14px",
+      // }}
     />
   );
 };

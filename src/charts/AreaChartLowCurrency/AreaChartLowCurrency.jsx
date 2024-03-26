@@ -11,18 +11,19 @@ import {
 } from "recharts";
 import "./AreaChartLowCurrency.css";
 import { fetchData } from "../../store/action";
+import { list } from "../../const/value";
 
 const AreaChartLowCurrency = () => {
-  const dispatch = useDispatch();
-  const atl = useSelector((state) => state.fetch.allCoins);
+  // const dispatch = useDispatch();
+  // const atl = useSelector((state) => state.fetch.allCoins);
 
-  useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+  // useEffect(() => {
+  //     dispatch(fetchData());
+  // }, [dispatch]);
 
-  const filteredData = atl
+  const filteredData = list
     .slice()
-    .sort((a, b) => b.atl - a.atl)
+    .sort((a, b) => b.list - a.list)
     .slice(0, 5)
     .map((coin) => ({
       name: coin.name,
@@ -62,7 +63,10 @@ const AreaChartLowCurrency = () => {
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <AreaChart data={filteredData}>
+      <AreaChart
+        data={filteredData}
+        margin={{ top: 10, right: 30, left: 20, bottom: 50 }}
+      >
         <defs>
           <linearGradient id="color1" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="rgb(161, 18, 18)" stopOpacity={0.4} />

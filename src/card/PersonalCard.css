@@ -1,0 +1,19 @@
+@media screen and (min-width: 645px) {
+    .grid {
+      display: flex;
+      flex-direction: column;
+    }
+    .grid > * {
+      margin-top: 10px; /* Add margin to the top */
+      margin-bottom: 10px; /* Add margin to the bottom */
+    }
+  
+    .grid > :first-child {
+      margin-top: 0; /* Remove margin from the top of the first child */
+    }
+  
+    .grid > :last-child {
+      margin-bottom: 0; /* Remove margin from the bottom of the last child */
+    }
+  }
+  

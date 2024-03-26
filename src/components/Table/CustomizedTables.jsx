@@ -13,6 +13,7 @@ import useInput from "../../hooks/useInput";
 import InputSearch from "../InputSearch/InputSearch";
 import PaginationActions from "../Table/PaginationActions";
 import { fetchData } from "../../store/action";
+import {list} from '../../const/value'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,7 +42,7 @@ export default function CustomizedTables() {
   const [searchTerm, setSearchTerm] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const filteredCryptoCurrency = currency.filter((coin) =>
+  const filteredCryptoCurrency = list.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -65,12 +66,12 @@ export default function CustomizedTables() {
     setPage(0);
   };
 
-  useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+  // useEffect(() => {
+  //     dispatch(fetchData());
+  // }, [dispatch]);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} >
       <InputSearch style={{}} onInputChange={handleInputChange} />
       <Table sx={{ minWidth: 500 }} aria-label="customized table">
         <TableHead>
