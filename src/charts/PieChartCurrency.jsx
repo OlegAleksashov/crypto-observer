@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { fetchData } from "../store/action";
-import {list} from '../const/value'
+import { list } from "../const/value";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -42,7 +42,7 @@ export const PieChartCurrency = () => {
   //     value: currency.total_volume,
   //   }));
 
-    const filteredData = list
+  const filteredData = list
     .slice()
     .sort((a, b) => b.total_volume - a.total_volume)
     .slice(0, 3)
@@ -50,7 +50,6 @@ export const PieChartCurrency = () => {
       name: currency.name,
       value: currency.total_volume,
     }));
-
 
   const renderCustomizedLabel = ({
     cx,
@@ -67,7 +66,7 @@ export const PieChartCurrency = () => {
 
     return (
       <text
-        fontSize={"1.5rem"}
+    
         x={x}
         y={y}
         fill="white"
@@ -81,15 +80,18 @@ export const PieChartCurrency = () => {
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <PieChart width={400} height={400}>
+      <PieChart
+        width={600}
+        height={400}
+        margin={{ top: 50, right: 30, left: 20, bottom: 100 }}
+      >
         <Pie
           data={filteredData}
           cx="50%"
           cy="50%"
           labelLine={false}
-          outerRadius={195}
+          outerRadius={160}
           fill="#8884d8"
-          dataKey="value"
           label={renderCustomizedLabel}
         >
           {filteredData.map((entry, index) => (

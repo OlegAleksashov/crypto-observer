@@ -57,7 +57,6 @@ const InnerPieChartCurrency = () => {
 
     return (
       <text
-        fontSize={"1.5rem"}
         x={x}
         y={y}
         fill="white"
@@ -68,6 +67,7 @@ const InnerPieChartCurrency = () => {
       </text>
     );
   };
+  
   return (
     <ResponsiveContainer width="100%" height={400}>
       <PieChart width={400} height={400} margin={{top: 50,
