@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
+//import { useDispatch, useSelector } from "react-redux";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import TablePagination from "@mui/material/TablePagination";
-import useInput from "../../hooks/useInput";
-import InputSearch from "../InputSearch/InputSearch";
-import PaginationActions from "../Table/PaginationActions";
-import { fetchData } from "../../store/action";
-import {list} from '../../const/value'
+//import { fetchData } from "../../store/action";
+import IsTablet from "./IsTablet";
+import IsMobile from "./IsMobile";
+import IsDesktop from "./IsDesktop";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
@@ -26,7 +21,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(() => ({
+export const StyledTableRow = styled(TableRow)(() => ({
   color: "white",
   backgroundColor: "rgb(31, 37, 61)",
   "&:last-child td, &:last-child th": {
@@ -35,154 +30,45 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 export default function CustomizedTables() {
-  const dispatch = useDispatch();
-  const currency = useSelector((state) => state.fetch.allCoins);
-  const input = useInput();
-  const [page, setPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [isTablet, setIsTablet] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const filteredCryptoCurrency = list.filter((coin) =>
-    coin.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  //const dispatch = useDispatch();
+  //const currency = useSelector((state) => state.fetch.allCoins);
 
-  const paginatedCryptoCurrency = filteredCryptoCurrency.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 530);
+    };
 
-  const newLocal = "rgb(123, 182, 77)";
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-  const handleInputChange = (value) => {
-    setSearchTerm(value);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsTablet(window.innerWidth <= 760);
+    };
 
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // useEffect(() => {
   //     dispatch(fetchData());
   // }, [dispatch]);
 
   return (
-    <TableContainer component={Paper} >
-      <InputSearch style={{}} onInputChange={handleInputChange} />
-      <Table sx={{ minWidth: 500 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <TableCell
-              sx={{ backgroundColor: "rgb(31, 37, 61)", color: "white" }}
-            >
-              Image
-            </TableCell>
-            <TableCell
-              sx={{ backgroundColor: "rgb(31, 37, 61)", color: "white" }}
-            >
-              Name
-            </TableCell>
-            <TableCell
-              sx={{ backgroundColor: "rgb(31, 37, 61)", color: "white" }}
-            >
-              Symbol
-            </TableCell>
-            <TableCell
-              sx={{ backgroundColor: "rgb(31, 37, 61)", color: "white" }}
-            >
-              Price
-            </TableCell>
-            <TableCell
-              sx={{ backgroundColor: "rgb(31, 37, 61)", color: "white" }}
-            >
-              24h
-            </TableCell>
-            <TableCell
-              sx={{ backgroundColor: "rgb(31, 37, 61)", color: "white" }}
-            >
-              Volume
-            </TableCell>
-            <TableCell
-              sx={{ backgroundColor: "rgb(31, 37, 61)", color: "white" }}
-            >
-              Market Cap
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {setSearchTerm //isSearchFieldEmpty
-            ? paginatedCryptoCurrency.map((coin) => (
-                <StyledTableRow key={coin.image}>
-                  <StyledTableCell component="th" scope="row">
-                    <img
-                      src={coin.image}
-                      alt=""
-                      style={{ height: "2rem", width: "2rem" }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell>{coin.name}</StyledTableCell>
-                  <StyledTableCell>{coin.symbol}</StyledTableCell>
-                  <StyledTableCell>${coin.current_price}</StyledTableCell>
-                  <StyledTableCell>
-                    <span style={{ color: newLocal }}>
-                      {coin.price_change_percentage_24h}%
-                    </span>
-                  </StyledTableCell>
-                  <StyledTableCell>${coin.total_volume}</StyledTableCell>
-                  <StyledTableCell>${coin.market_cap}</StyledTableCell>
-                </StyledTableRow>
-              ))
-            : paginatedCryptoCurrency
-                .filter((coin) =>
-                  coin.name.toLowerCase().includes(input.value.toLowerCase())
-                )
-                .map((coin) => (
-                  <StyledTableRow key={coin.image}>
-                    <StyledTableCell component="th" scope="row">
-                      <img
-                        src={coin.image}
-                        alt=""
-                        style={{ height: "2rem", width: "2rem" }}
-                      />
-                    </StyledTableCell>
-                    <StyledTableCell>{coin.name}</StyledTableCell>
-                    <StyledTableCell>{coin.symbol}</StyledTableCell>
-                    <StyledTableCell>${coin.current_price}</StyledTableCell>
-                    <StyledTableCell>
-                      <span style={{ color: newLocal }}>
-                        {coin.price_change_percentage_24h}
-                      </span>
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      ${coin.total_volume.toLocaleString()}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      ${coin.market_cap.toLocaleString()}
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-        </TableBody>
-      </Table>
-      <TablePagination
-        rowsPerPageOptions={[]}
-        colSpan={3}
-        count={filteredCryptoCurrency.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleRowsPerPageChange}
-        ActionsComponent={PaginationActions}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "rgb(31, 37, 61)",
-          color: "#fff",
-        }}
-      />
+    <TableContainer component={Paper}>
+      {isMobile ? <IsMobile /> : isTablet ? <IsTablet /> : <IsDesktop />}
     </TableContainer>
   );
 }

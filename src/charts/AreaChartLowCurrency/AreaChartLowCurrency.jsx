@@ -23,11 +23,11 @@ const AreaChartLowCurrency = () => {
 
   const filteredData = list
     .slice()
-    .sort((a, b) => b.list - a.list)
+    .sort((a, b) => b.atl - a.atl)
     .slice(0, 5)
     .map((coin) => ({
       name: coin.name,
-      value: coin.ath,
+      value: coin.atl,
     }));
 
   const formatNumber = (number) => {

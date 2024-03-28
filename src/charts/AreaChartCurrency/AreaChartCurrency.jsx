@@ -23,7 +23,7 @@ const AreaChartCurrency = () => {
 
   const filteredData = list
     .slice()
-    .sort((a, b) => b.list - a.list)
+    .sort((a, b) => b.ath - a.ath)
     .slice(0, 10)
     .map((coin) => ({
       name: coin.name,
