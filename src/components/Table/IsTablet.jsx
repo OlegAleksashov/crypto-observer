@@ -7,11 +7,6 @@ import PaginationActions from "./PaginationActions";
 import { StyledTableCell, StyledTableRow } from "./CustomizedTables";
 import { list } from "../../const/value";
 
-const commonStyle = {
-  backgroundColor: "rgb(31, 37, 61)",
-  color: "#fff",
-};
-
 const IsTablet = ({ data }) => {
   const [page, setPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,10 +40,10 @@ const IsTablet = ({ data }) => {
       <Table sx={{ minWidth: 500 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell sx={commonStyle}>Image</StyledTableCell>
-            <StyledTableCell sx={commonStyle}>Name</StyledTableCell>
-            <StyledTableCell sx={commonStyle}>Symbol</StyledTableCell>
-            <StyledTableCell sx={commonStyle}>Price</StyledTableCell>
+            <StyledTableCell>Image</StyledTableCell>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell>Symbol</StyledTableCell>
+            <StyledTableCell>Price</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,7 +58,9 @@ const IsTablet = ({ data }) => {
               </StyledTableCell>
               <StyledTableCell>{coin.name}</StyledTableCell>
               <StyledTableCell>{coin.symbol}</StyledTableCell>
-              <StyledTableCell>${coin.current_price}</StyledTableCell>
+              <StyledTableCell>
+                ${coin.current_price.toFixed(2)}
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

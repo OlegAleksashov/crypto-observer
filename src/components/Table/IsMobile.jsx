@@ -7,11 +7,6 @@ import { list } from "../../const/value";
 import TablePagination from "@mui/material/TablePagination";
 import PaginationActions from "./PaginationActions";
 
-const commonStyle = {
-  backgroundColor: "rgb(31, 37, 61)",
-  color: "#fff",
-};
-
 const IsMobile = () => {
   const [page, setPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,13 +36,13 @@ const IsMobile = () => {
 
   return (
     <>
-      <InputSearch style={{}} onInputChange={handleInputChange} />
+      <InputSearch onInputChange={handleInputChange} />
       <Table sx={{ minWidth: 300 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell sx={commonStyle}>Image</StyledTableCell>
-            <StyledTableCell sx={commonStyle}>Name</StyledTableCell>
-            <StyledTableCell sx={commonStyle}>Symbol</StyledTableCell>
+            <StyledTableCell>Image</StyledTableCell>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell>Symbol</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

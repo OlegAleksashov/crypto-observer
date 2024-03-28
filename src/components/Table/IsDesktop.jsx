@@ -72,14 +72,20 @@ const IsDesktop = () => {
                   </StyledTableCell>
                   <StyledTableCell>{coin.name}</StyledTableCell>
                   <StyledTableCell>{coin.symbol}</StyledTableCell>
-                  <StyledTableCell>${coin.current_price}</StyledTableCell>
+                  <StyledTableCell>
+                    ${coin.current_price.toFixed(2)}
+                  </StyledTableCell>
                   <StyledTableCell>
                     <span style={{ color: newLocal }}>
-                      {coin.price_change_percentage_24h}%
+                      {coin.price_change_percentage_24h.toFixed(2)}%
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell>${coin.total_volume}</StyledTableCell>
-                  <StyledTableCell>${coin.market_cap}</StyledTableCell>
+                  <StyledTableCell>
+                    ${coin.total_volume.toLocaleString()}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    ${coin.market_cap.toLocaleString()}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))
             : paginatedCryptoCurrency
@@ -97,10 +103,12 @@ const IsDesktop = () => {
                     </StyledTableCell>
                     <StyledTableCell>{coin.name}</StyledTableCell>
                     <StyledTableCell>{coin.symbol}</StyledTableCell>
-                    <StyledTableCell>${coin.current_price}</StyledTableCell>
+                    <StyledTableCell>
+                      ${coin.current_price.toFixed(2)}
+                    </StyledTableCell>
                     <StyledTableCell>
                       <span style={{ color: newLocal }}>
-                        {coin.price_change_percentage_24h}
+                        {coin.price_change_percentage_24h.toFixed(2)}
                       </span>
                     </StyledTableCell>
                     <StyledTableCell>

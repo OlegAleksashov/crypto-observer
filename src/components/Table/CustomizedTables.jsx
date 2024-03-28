@@ -12,7 +12,7 @@ import IsDesktop from "./IsDesktop";
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "rgb(31, 37, 61)",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
