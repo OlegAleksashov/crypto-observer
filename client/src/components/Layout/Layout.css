@@ -1,0 +1,30 @@
+span {
+    color: rgb(169, 172, 186);
+    display: flex;
+    margin: 0.5rem 0 0 0.5rem;
+  }
+  
+  p#date {
+    margin: 0 0 0 0.3rem;
+    color: rgb(123, 182, 77);
+  }
+  
+  p#overview {
+    margin: 0.5rem 0 0 0.5rem;
+    color: rgb(169, 172, 186);
+  }
+  
+  @media screen and (max-width: 1115px) {
+    .doubleChart {
+      flex-direction: column;
+      align-items: center;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem; 
+    }
+  
+    .doubleChart > :last-child {
+      margin-top: 1rem;
+    }
+  }
