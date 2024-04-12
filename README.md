@@ -1,0 +1,1 @@
+This is a cryptocurrency dashboard app built using React 18, Material UI 5, and Recharts. The app uses the CoinGecko API to get cryptocurrency data such as live prices, trading volume, exchange volumes, historical data, crypto categories, images, and more.
