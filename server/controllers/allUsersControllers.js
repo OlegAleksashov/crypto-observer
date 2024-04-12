@@ -2,9 +2,7 @@
 // TODO: add json response & status code
 
 const User = require("../models/user");
-
 const createNewUser = async (req, res) => {
-  //const { error, value } = validateSignup(req.body);
   const { name, email, password } = req.body;
   console.log(name, email, password); // services
   return res.status(201).json({msg: "OK"});
