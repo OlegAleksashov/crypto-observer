@@ -20,7 +20,7 @@ const Signup = () => {
       setError(error.details.map((d) => d.message).join("\n"));
     } else {
       setError(null);
-      // Perform signup action here
+      // TODO: Perform signup action here
     }
   };
 
@@ -76,17 +76,6 @@ const Signup = () => {
         </Typography>
       )}
     </Box>
-
-    // <div className="authorization">
-    //   <div className="authorization__header">Registration</div>
-    //   <Input
-    //     value={name}
-    //     setValue={setName}
-    //     type="text"
-    //     placeholder="Enter your name..."
-    //   />
-    //   <button className="authorization__btn">Sign up</button>
-    // </div>
   );
 };
 

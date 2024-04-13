@@ -1,19 +1,39 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import Signup from "../Authorization/SIgnup";
-//import useMediaQuery from "@mui/material/useMediaQuery";
-//import { useTheme } from "@mui/material/styles";
-/*import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import TextField from "@mui/material/TextField";*/
+import Modal from "@mui/joy/Modal";
+import Sheet from "@mui/joy/Sheet";
+import ModalClose from "@mui/joy/ModalClose";
+import Typography from "@mui/joy/Typography";
+import Input from "@mui/joy/Input";
+import Box from "@mui/joy/Box";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import { validateSignup } from "../../assest/validador";
 
 const ButtonEnter = () => {
-  //const theme = useTheme();
-  //const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  /*Handler for Sign UP section*/
+
+  const handleSignup = () => {
+    const payload = { name, email, password, confirmPassword };
+    const { error } = validateSignup(payload);
+    if (error) {
+      setError(error.details.map((d) => d.message).join("\n"));
+    } else {
+      setError(null);
+    }
+  };
+
+  /*Handlers for Button-Dialog section*/
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,9 +42,18 @@ const ButtonEnter = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  /*Handler for Modal section*/
+
+  const handleCloseErrorMessage = () => {
+    setError(null);
+  };
+
   return (
     <div style={{ marginLeft: "1rem" }}>
-           <Button
+      {/*section Button-Dialog*/}
+
+      <Button
         onClick={handleClickOpen}
         variant="outlined"
         size="small"
@@ -33,7 +62,7 @@ const ButtonEnter = () => {
         Enter
       </Button>
       <Dialog
-        //fullScreen={fullScreen}
+        fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         PaperProps={{
@@ -47,9 +76,98 @@ const ButtonEnter = () => {
             handleClose();
           },
         }}
+      ></Dialog>
+
+      {/*section Modal*/}
+
+      <Modal
+        aria-labelledby="modal-title"
+        aria-describedby="modal-desc"
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Signup />
-      </Dialog>
+        <Sheet
+          variant="outlined"
+          sx={{
+            maxWidth: 500,
+            borderRadius: "md",
+            p: 3,
+            boxShadow: "lg",
+          }}
+        >
+          <ModalClose
+            variant="plain"
+            sx={{ m: 1 }}
+            onClick={handleCloseErrorMessage}
+          />
+          <Typography
+            component="h2"
+            id="modal-title"
+            level="h4"
+            textColor="inherit"
+            fontWeight="lg"
+            mb={1}
+          >
+            Registration
+          </Typography>
+
+          {/*section Sign UP*/}
+
+          <Box
+            sx={{
+              width: "20rem",
+              display: "flex",
+              gap: 2,
+              alignItems: "center",
+              flexWrap: "wrap",
+              flexDirection: "column",
+              marginBottom: "1rem",
+            }}
+          >
+            <Input
+              size="lg"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              placeholder="Enter your name..."
+            ></Input>
+            <Input
+              size="lg"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              placeholder="Enter email..."
+            ></Input>
+            <Input
+              size="lg"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Enter password..."
+            ></Input>
+            <Input
+              size="lg"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              type="password"
+              placeholder="Confirm password..."
+            ></Input>
+            <Button size="md" onClick={handleSignup}>
+              Sign up
+            </Button>
+            {error && (
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+            )}
+          </Box>
+        </Sheet>
+      </Modal>
     </div>
   );
 };
