@@ -13,7 +13,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import InfoIcon from "@mui/icons-material/Info";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ButtonEnter from "../Button/ButtonEnter";
+import ButtonRegistration from "../Button/ButtonRegistration";
+import ButtonSignUp from "../Button/ButtonSignUp";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -56,10 +57,11 @@ const Header = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        Profile
-        <ButtonEnter />
+        <ButtonRegistration />
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <ButtonSignUp />
+      </MenuItem>
     </Menu>
   );
 

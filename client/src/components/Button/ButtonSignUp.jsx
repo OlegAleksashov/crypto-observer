@@ -11,20 +11,18 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { validateSignup } from "../../assest/validador";
 
-const ButtonEnter = () => {
+const ButtonRegistration = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
 
   /*Handler for Sign UP section*/
 
   const handleSignup = () => {
-    const payload = { name, email, password, confirmPassword };
+    const payload = { email, password };
     const { error } = validateSignup(payload);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
@@ -59,7 +57,7 @@ const ButtonEnter = () => {
         size="small"
         sx={{ background: "rgb(177, 209, 227);" }}
       >
-        Enter
+        Sign up
       </Button>
       <Dialog
         fullScreen={fullScreen}
@@ -131,13 +129,6 @@ const ButtonEnter = () => {
           >
             <Input
               size="lg"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              placeholder="Enter your name..."
-            ></Input>
-            <Input
-              size="lg"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="text"
@@ -149,13 +140,6 @@ const ButtonEnter = () => {
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Enter password..."
-            ></Input>
-            <Input
-              size="lg"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              type="password"
-              placeholder="Confirm password..."
             ></Input>
             <Button size="md" onClick={handleSignup}>
               Sign up
@@ -172,4 +156,4 @@ const ButtonEnter = () => {
   );
 };
 
-export default ButtonEnter;
+export default ButtonRegistration;
