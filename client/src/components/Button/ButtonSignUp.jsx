@@ -111,7 +111,7 @@ const ButtonRegistration = () => {
             fontWeight="lg"
             mb={1}
           >
-            Registration
+            Log in
           </Typography>
 
           {/*section Sign UP*/}
@@ -145,9 +145,36 @@ const ButtonRegistration = () => {
               Sign up
             </Button>
             {error && (
-              <Typography variant="body2" color="error">
-                {error}
-              </Typography>
+              <Modal
+                aria-labelledby="modal-title"
+                aria-describedby="modal-desc"
+                open={open}
+                onClose={() => setOpen(false)}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Sheet
+                  variant="outlined"
+                  sx={{
+                    maxWidth: 500,
+                    borderRadius: "md",
+                    p: 3,
+                    boxShadow: "lg",
+                  }}
+                >
+                  <ModalClose
+                    variant="plain"
+                    sx={{ m: 1 }}
+                    onClick={handleCloseErrorMessage}
+                  />
+                  
+                    {error}
+                  
+                </Sheet>
+              </Modal>
             )}
           </Box>
         </Sheet>

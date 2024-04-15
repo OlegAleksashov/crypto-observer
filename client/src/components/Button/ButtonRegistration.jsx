@@ -10,27 +10,35 @@ import Box from "@mui/joy/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { validateSignup } from "../../assest/validador";
+import { useDispatch, useSelector } from "react-redux";
+import { validateUser } from "../../store/reduserForUsers";
 
 const ButtonRegistration = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
+  /*const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");*/
   const [error, setError] = useState(null);
 
   /*Handler for Sign UP section*/
 
-  const handleSignup = () => {
+  /*const handleSignup = () => {
     const payload = { name, email, password, confirmPassword };
     const { error } = validateSignup(payload);
     if (error) {
-      setError(error.details.map((d) => d.message).join("\n"));
+      setError(error.details.map((d) => d.message).join(", "));
     } else {
       setError(null);
     }
+  };*/
+
+  const handleSignup = () => {
+    dispatch(validateUser(user));
   };
 
   /*Handlers for Button-Dialog section*/
@@ -131,40 +139,51 @@ const ButtonRegistration = () => {
           >
             <Input
               size="lg"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={user.name}
+              onChange={(e) =>
+                dispatch({ type: "SET_NAME", payload: e.target.value })
+              }
               type="text"
               placeholder="Enter your name..."
             ></Input>
             <Input
               size="lg"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={user.email}
+              onChange={(e) =>
+                dispatch({ type: "SET_EMAIL", payload: e.target.value })
+              }
               type="text"
               placeholder="Enter email..."
             ></Input>
             <Input
               size="lg"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={user.password}
+              onChange={(e) =>
+                dispatch({ type: "SET_PASSWORD", payload: e.target.value })
+              }
               type="password"
               placeholder="Enter password..."
             ></Input>
             <Input
               size="lg"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={user.confirmdPassword}
+              onChange={(e) =>
+                dispatch({
+                  type: "SET_CONFIRM_PASSWORD",
+                  payload: e.target.value,
+                })
+              }
               type="password"
               placeholder="Confirm password..."
             ></Input>
             <Button size="md" onClick={handleSignup}>
               Register
             </Button>
-            {error && (
+            {/* {error && (
               <Typography variant="body2" color="error">
                 {error}
               </Typography>
-            )}
+            )} */}
           </Box>
         </Sheet>
       </Modal>
