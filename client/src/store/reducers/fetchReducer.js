@@ -3,7 +3,7 @@ import {
     ALL_CATEGORIES,
     ALL_EXCHANGES,
     ALL_ASSETPLATFORMS,
-  } from "./actionTypes";
+  } from "../actionTypes";
   
   export const initialState = {
     allCoins: [],

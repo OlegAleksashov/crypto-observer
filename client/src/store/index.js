@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { fetchReducer } from "./redusers";
+import { fetchReducer } from "./reducers/fetchReducer";
 import { combineReducers } from "@reduxjs/toolkit";
-import { validateUser } from "./reduserForUsers";
+import { userReducer } from "./reducers/userReducer";
 
 //export default configureStore({ reducer: fetchReducer });
 
 const rootReducer = combineReducers({
   fetch: fetchReducer,
-   user: validateUser,
+  user: userReducer,
 });
 
 export default configureStore({

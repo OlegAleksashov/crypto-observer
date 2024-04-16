@@ -4,7 +4,7 @@ import {
   SET_PASSWORD,
   SET_CONFIRM_PASSWORD,
   VALIDATE_USER,
-} from "./actionTypes";
+} from "../actionTypes";
 
 export const initialState = {
   user: {
@@ -15,7 +15,7 @@ export const initialState = {
   },
 };
 
-export function validateUser(state = initialState, action) {
+export function userReducer(state = initialState, action) {
   switch (action.type) {
     case VALIDATE_USER:
       return {

@@ -54,7 +54,6 @@ export const valideteSignUp = (name, email, password, confirmPassword) => ({
   payload: validateSignup({ name, email, password, confirmPassword }),
 });
 
-
 export const setName = (name) => ({
   type: SET_NAME,
   payload: name,

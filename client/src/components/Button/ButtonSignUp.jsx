@@ -9,7 +9,7 @@ import Input from "@mui/joy/Input";
 import Box from "@mui/joy/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { validateSignup } from "../../assest/validador";
+import { validateSignup } from "../../assest/signupvalidator";
 
 const ButtonRegistration = () => {
   const theme = useTheme();
@@ -18,6 +18,7 @@ const ButtonRegistration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   /*Handler for Sign UP section*/
 
@@ -35,10 +36,12 @@ const ButtonRegistration = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setShowErrorModal(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setShowErrorModal(false);
   };
 
   /*Handler for Modal section*/
@@ -144,12 +147,15 @@ const ButtonRegistration = () => {
             <Button size="md" onClick={handleSignup}>
               Sign up
             </Button>
+
+            {/* Error Modal */}
+
             {error && (
               <Modal
                 aria-labelledby="modal-title"
                 aria-describedby="modal-desc"
-                open={open}
-                onClose={() => setOpen(false)}
+                open={showErrorModal}
+                onClose={handleCloseErrorMessage}
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -170,9 +176,7 @@ const ButtonRegistration = () => {
                     sx={{ m: 1 }}
                     onClick={handleCloseErrorMessage}
                   />
-                  
-                    {error}
-                  
+                  <Typography sx={{ margin: "15px" }}>{error}</Typography>
                 </Sheet>
               </Modal>
             )}

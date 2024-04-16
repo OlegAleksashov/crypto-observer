@@ -9,9 +9,15 @@ import Input from "@mui/joy/Input";
 import Box from "@mui/joy/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { validateSignup } from "../../assest/validador";
+//import { validateSignup } from "../../assest/validador";
 import { useDispatch, useSelector } from "react-redux";
-import { validateUser } from "../../store/reduserForUsers";
+import { userReducer } from "../../store/reducers/userReducer";
+import {
+  setPassword,
+  setName,
+  setEmail,
+  setConfirmPassword,
+} from "../../store/action";
 
 const ButtonRegistration = () => {
   const dispatch = useDispatch();
@@ -36,9 +42,9 @@ const ButtonRegistration = () => {
       setError(null);
     }
   };*/
-
+  
   const handleSignup = () => {
-    dispatch(validateUser(user));
+    dispatch(userReducer(user));
   };
 
   /*Handlers for Button-Dialog section*/
@@ -140,50 +146,39 @@ const ButtonRegistration = () => {
             <Input
               size="lg"
               value={user.name}
-              onChange={(e) =>
-                dispatch({ type: "SET_NAME", payload: e.target.value })
-              }
+              onChange={(e) => dispatch(setName(e.target.value))}
               type="text"
               placeholder="Enter your name..."
             ></Input>
             <Input
               size="lg"
               value={user.email}
-              onChange={(e) =>
-                dispatch({ type: "SET_EMAIL", payload: e.target.value })
-              }
+              onChange={(e) => dispatch(setEmail(e.target.value))}
               type="text"
               placeholder="Enter email..."
             ></Input>
             <Input
               size="lg"
               value={user.password}
-              onChange={(e) =>
-                dispatch({ type: "SET_PASSWORD", payload: e.target.value })
-              }
+              onChange={(e) => dispatch(setPassword(e.target.value))}
               type="password"
               placeholder="Enter password..."
             ></Input>
             <Input
               size="lg"
               value={user.confirmdPassword}
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_CONFIRM_PASSWORD",
-                  payload: e.target.value,
-                })
-              }
+              onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
               type="password"
               placeholder="Confirm password..."
             ></Input>
             <Button size="md" onClick={handleSignup}>
               Register
             </Button>
-            {/* {error && (
+             {error && (
               <Typography variant="body2" color="error">
                 {error}
               </Typography>
-            )} */}
+            )} 
           </Box>
         </Sheet>
       </Modal>
