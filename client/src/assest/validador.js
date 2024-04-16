@@ -10,4 +10,4 @@ const signupSchema = Joi.object({
   confirmPassword: Joi.ref("password"),
 });
 
-exports.validateSignup = validator(signupSchema);
+exports.validateRegister = validator(signupSchema);

@@ -14,8 +14,8 @@ import {
   SET_EMAIL,
   SET_PASSWORD,
   SET_CONFIRM_PASSWORD,
+  ERROR_MESSAGE,
 } from "./actionTypes";
-import { validateSignup } from "../assest/validador";
 
 export const fetchData = () => async (dispatch) => {
   const response = await fetchAllCoins();
@@ -51,7 +51,12 @@ export const fetchAssetPlatforms = () => async (dispatch) => {
 
 export const valideteSignUp = (name, email, password, confirmPassword) => ({
   type: VALIDATE_USER,
-  payload: validateSignup({ name, email, password, confirmPassword }),
+  payload: {
+    name,
+    email,
+    password,
+    confirmPassword,
+  },
 });
 
 export const setName = (name) => ({
@@ -72,4 +77,9 @@ export const setPassword = (password) => ({
 export const setConfirmPassword = (confirmPassword) => ({
   type: SET_CONFIRM_PASSWORD,
   payload: confirmPassword,
+});
+
+export const setErrorMessage = (errorMessage) => ({
+  type: ERROR_MESSAGE,
+  payload: errorMessage,
 });

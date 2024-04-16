@@ -26,7 +26,7 @@ const ButtonRegistration = () => {
     const payload = { email, password };
     const { error } = validateSignup(payload);
     if (error) {
-      setError(error.details.map((d) => d.message).join("\n"));
+      setError(error.details.map((d) => d.message).join(", "));
     } else {
       setError(null);
     }
@@ -52,6 +52,7 @@ const ButtonRegistration = () => {
 
   return (
     <div style={{ marginLeft: "1rem" }}>
+      
       {/*section Button-Dialog*/}
 
       <Button

@@ -9,9 +9,8 @@ import Input from "@mui/joy/Input";
 import Box from "@mui/joy/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-//import { validateSignup } from "../../assest/validador";
+import { valideteSignUp } from "../../store/action";
 import { useDispatch, useSelector } from "react-redux";
-import { userReducer } from "../../store/reducers/userReducer";
 import {
   setPassword,
   setName,
@@ -25,26 +24,14 @@ const ButtonRegistration = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
-  /*const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");*/
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(user.errorMessage);
 
   /*Handler for Sign UP section*/
 
-  /*const handleSignup = () => {
-    const payload = { name, email, password, confirmPassword };
-    const { error } = validateSignup(payload);
-    if (error) {
-      setError(error.details.map((d) => d.message).join(", "));
-    } else {
-      setError(null);
-    }
-  };*/
-  
   const handleSignup = () => {
-    dispatch(userReducer(user));
+    dispatch(
+      valideteSignUp(user)
+    );
   };
 
   /*Handlers for Button-Dialog section*/
@@ -174,11 +161,11 @@ const ButtonRegistration = () => {
             <Button size="md" onClick={handleSignup}>
               Register
             </Button>
-             {error && (
+            {error && (
               <Typography variant="body2" color="error">
                 {error}
               </Typography>
-            )} 
+            )}
           </Box>
         </Sheet>
       </Modal>

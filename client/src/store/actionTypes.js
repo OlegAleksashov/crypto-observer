@@ -7,3 +7,4 @@ export const SET_NAME = "SET_NAME";
 export const SET_EMAIL = "SET_EMAIL";
 export const SET_PASSWORD = "SET_PASSWORD";
 export const SET_CONFIRM_PASSWORD = "SET_CONFIRM_PASSWORD";
+export const ERROR_MESSAGE = "ERROR_MESSAGE";
