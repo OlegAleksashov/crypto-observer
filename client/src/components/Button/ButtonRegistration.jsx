@@ -9,29 +9,28 @@ import Input from "@mui/joy/Input";
 import Box from "@mui/joy/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { valideteSignUp } from "../../store/action";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setPassword,
-  setName,
-  setEmail,
-  setConfirmPassword,
-} from "../../store/action";
+import { validateSignup } from "../../assest/signupValidator";
 
 const ButtonRegistration = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState(user.errorMessage);
+  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   /*Handler for Sign UP section*/
 
   const handleSignup = () => {
-    dispatch(
-      valideteSignUp(user)
-    );
+    const payload = { name, email, password, confirmPassword };
+    const { error } = validateSignup(payload);
+    if (error) {
+      setError(error.details.map((d) => d.message).join(", "));
+    } else {
+      setError(null);
+    }
   };
 
   /*Handlers for Button-Dialog section*/
@@ -47,7 +46,7 @@ const ButtonRegistration = () => {
   /*Handler for Modal section*/
 
   const handleCloseErrorMessage = () => {
-    setError(null);
+    setError("");
   };
 
   return (
@@ -132,29 +131,29 @@ const ButtonRegistration = () => {
           >
             <Input
               size="lg"
-              value={user.name}
-              onChange={(e) => dispatch(setName(e.target.value))}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               type="text"
               placeholder="Enter your name..."
             ></Input>
             <Input
               size="lg"
-              value={user.email}
-              onChange={(e) => dispatch(setEmail(e.target.value))}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="text"
               placeholder="Enter email..."
             ></Input>
             <Input
               size="lg"
-              value={user.password}
-              onChange={(e) => dispatch(setPassword(e.target.value))}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Enter password..."
             ></Input>
             <Input
               size="lg"
-              value={user.confirmdPassword}
-              onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               type="password"
               placeholder="Confirm password..."
             ></Input>

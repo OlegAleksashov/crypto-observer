@@ -9,7 +9,7 @@ import Input from "@mui/joy/Input";
 import Box from "@mui/joy/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { validateSignup } from "../../assest/signupvalidator";
+import { validateSignup } from "../../assest/signupValidator";
 
 const ButtonRegistration = () => {
   const theme = useTheme();
@@ -47,7 +47,7 @@ const ButtonRegistration = () => {
   /*Handler for Modal section*/
 
   const handleCloseErrorMessage = () => {
-    setError(null);
+    setError("");
   };
 
   return (

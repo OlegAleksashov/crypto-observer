@@ -9,12 +9,6 @@ import {
   ALL_CATEGORIES,
   ALL_EXCHANGES,
   ALL_ASSETPLATFORMS,
-  VALIDATE_USER,
-  SET_NAME,
-  SET_EMAIL,
-  SET_PASSWORD,
-  SET_CONFIRM_PASSWORD,
-  ERROR_MESSAGE,
 } from "./actionTypes";
 
 export const fetchData = () => async (dispatch) => {
@@ -48,38 +42,3 @@ export const fetchAssetPlatforms = () => async (dispatch) => {
     payload: response.data,
   });
 };
-
-export const valideteSignUp = (name, email, password, confirmPassword) => ({
-  type: VALIDATE_USER,
-  payload: {
-    name,
-    email,
-    password,
-    confirmPassword,
-  },
-});
-
-export const setName = (name) => ({
-  type: SET_NAME,
-  payload: name,
-});
-
-export const setEmail = (email) => ({
-  type: SET_EMAIL,
-  payload: email,
-});
-
-export const setPassword = (password) => ({
-  type: SET_PASSWORD,
-  payload: password,
-});
-
-export const setConfirmPassword = (confirmPassword) => ({
-  type: SET_CONFIRM_PASSWORD,
-  payload: confirmPassword,
-});
-
-export const setErrorMessage = (errorMessage) => ({
-  type: ERROR_MESSAGE,
-  payload: errorMessage,
-});
