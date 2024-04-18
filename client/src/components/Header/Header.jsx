@@ -8,23 +8,17 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import InfoIcon from "@mui/icons-material/Info";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ButtonRegistration from "../Button/ButtonRegistration";
-import ButtonSignUp from "../Button/ButtonSignUp";
+import ButtonSignIn from "../Button/ButtonSignIn";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -57,10 +51,7 @@ const Header = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <ButtonRegistration />
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <ButtonSignUp />
+        <ButtonSignIn />
       </MenuItem>
     </Menu>
   );
@@ -74,7 +65,6 @@ const Header = () => {
         horizontal: "right",
       }}
       id={mobileMenuId}
-      keepMounted
       transformOrigin={{
         vertical: "top",
         horizontal: "right",
@@ -106,18 +96,11 @@ const Header = () => {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <IconButton size="large" color="inherit">
+        <Badge color="error">
+          <ButtonSignIn />
+        </Badge>
+      </IconButton>
     </Menu>
   );
 
@@ -147,7 +130,15 @@ const Header = () => {
             Cryptocurrency Dashboard
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                md: "flex",
+                alignItems: "center",
+              },
+            }}
+          >
             <IconButton size="large" sx={{ color: "white" }}>
               <Badge color="white">
                 <DashboardIcon />
@@ -163,17 +154,7 @@ const Header = () => {
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="white"
-            >
-              <AccountCircle sx={{ color: "white" }} />
-            </IconButton>
+            <ButtonSignIn />
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, color: "white" }}>
             <IconButton
