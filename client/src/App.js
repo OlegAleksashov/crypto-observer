@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import store from "../src/store/index";
 import Header from "./components/Header/Header";
 import Layout from "./components/Layout/Layout";
-import Signup from "./components/Authorization/SIgnin";
+import Signin from "./components/Authorization/SIgnin";
+import Signup from "./components/Authorization/Signup"
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
               </>
             }
           ></Route>
-          <Route path="/about" element={<Signup />}></Route>
+          <Route path="/signin" element={<Signin />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
         </Routes>
       </Provider>
     </Router>

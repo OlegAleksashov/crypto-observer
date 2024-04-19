@@ -9,10 +9,11 @@ import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateRegister } from "../../assest/registerValidador";
 
-const Signin = () => {
+const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -20,16 +21,12 @@ const Signin = () => {
     navigate("/");
   };
 
-  const handleClickSignup = () => {
-    navigate("/signup");
-  };
-
   const handleCloseErrorMessage = () => {
     setError("");
   };
 
   const handleSignup = () => {
-    const payload = { name, email, password };
+    const payload = { name, email, password, confirmPassword };
     const { error } = validateRegister(payload);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
@@ -62,7 +59,7 @@ const Signin = () => {
           Home
         </Button>
         <Typography variant="h5" sx={{ color: "#fff" }}>
-          Log in
+          Registration
         </Typography>
         <Input
           size="lg"
@@ -85,11 +82,15 @@ const Signin = () => {
           type="password"
           placeholder="Enter password..."
         ></Input>
+        <Input
+          size="lg"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          type="password"
+          placeholder="Confirm password..."
+        ></Input>
         <Button size="md" onClick={handleSignup}>
-          Sign in
-        </Button>
-        <Button size="md" onClick={handleClickSignup}>
-          Still don't have an acount
+          Sign up
         </Button>
         {error && (
           <Modal
@@ -126,4 +127,5 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Signup;
+// Do you have a profile on Cryptocurrency Dashboard?

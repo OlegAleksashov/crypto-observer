@@ -6,10 +6,10 @@ const ButtonSignIn = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/about");
+    navigate("/signin");
   };
   return (
-    <Link to="/about">
+    <Link to="/signin">
       <Button
         variant="outlined"
         size="small"
