@@ -18,6 +18,11 @@ export const fetchAllAssetPlatforms = () => {
   return axios.get("http://localhost:5000/all-assetPlatforms");
 };
 
+export const fetchUser = (userData) => {
+  //const userData = { name, email, password };
+  return axios.post("http://localhost:5000/registration", userData);
+};
+
 // By using only axios.....................................
 
 /*export const fetchAllCoins = () => {

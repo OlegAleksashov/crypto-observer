@@ -8,6 +8,10 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateRegister } from "../../assest/registerValidador";
+import { useDispatch } from "react-redux";
+import { signInUser } from "../../store/action";
+
+// TODO:
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -16,16 +20,28 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     navigate("/");
+  };
+
+  const handleSubmit = () => {
+    const formData = { name, email, password, confirmPassword };
+    const { error } = validateRegister(formData);
+    if (error) {
+      setError(error.details.map((d) => d.message).join("\n"));
+    } else {
+      setError(null);
+    }
+    dispatch(signInUser(formData));
   };
 
   const handleCloseErrorMessage = () => {
     setError("");
   };
 
-  const handleSignup = () => {
+  /*const handleSignup = () => {
     const payload = { name, email, password, confirmPassword };
     const { error } = validateRegister(payload);
     if (error) {
@@ -33,7 +49,7 @@ const Signup = () => {
     } else {
       setError(null);
     }
-  };
+  };*/
 
   return (
     <div
@@ -89,7 +105,7 @@ const Signup = () => {
           type="password"
           placeholder="Confirm password..."
         ></Input>
-        <Button size="md" onClick={handleSignup}>
+        <Button size="md" onClick={handleSubmit}>
           Sign up
         </Button>
         {error && (
@@ -128,4 +144,3 @@ const Signup = () => {
 };
 
 export default Signup;
-// Do you have a profile on Cryptocurrency Dashboard?
