@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/crypto-observer/static/css/main.b1e495b7.css",
+    "main.js": "/crypto-observer/static/js/main.f35abf3b.js",
+    "index.html": "/crypto-observer/index.html",
+    "main.b1e495b7.css.map": "/crypto-observer/static/css/main.b1e495b7.css.map",
+    "main.f35abf3b.js.map": "/crypto-observer/static/js/main.f35abf3b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b1e495b7.css",
+    "static/js/main.f35abf3b.js"
+  ]
+}
