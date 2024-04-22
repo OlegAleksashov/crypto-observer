@@ -10,9 +10,11 @@ router.use("/all-coins", coinsRouter);
 router.use("/all-assetPlatforms", assetPlatformsRouter);
 router.use("/all-exchanges", exchangesRouter);
 router.use("/all-categories", categoriesRouter);
-router.use("/all-users", usersRoutes);
+router.use("/registration", usersRoutes);
 
 module.exports = router;
+
+// TODO:
 
 // Note
 
