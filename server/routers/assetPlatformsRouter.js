@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const { getAllAssetPlatforms } = require("../controllers/allAssetPlatformsController");
+const {
+  getAllAssetPlatforms,
+} = require("../controllers/allAssetPlatformsController");
 
 router.get("/", getAllAssetPlatforms);
 

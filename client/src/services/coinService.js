@@ -37,9 +37,9 @@ export const fetchUser = (userData) => {
       },
     }
   );
-};*/
+};
 
-/*export const fetchAllCategories = () => {
+export const fetchAllCategories = () => {
   return axios.get("https://api.coingecko.com/api/v3/coins/categories/list", {
     headers: {
       "Access-Control-Allow-Headers":
@@ -48,9 +48,9 @@ export const fetchUser = (userData) => {
       "Access-Control-Allow-Origin": "*",
     },
   });
-};*/
+};
 
-/*export const fetchAllExchanges = () => {
+export const fetchAllExchanges = () => {
   return axios.get("https://api.coingecko.com/api/v3/exchanges", {
     headers: {
       "Access-Control-Allow-Headers":
@@ -59,9 +59,9 @@ export const fetchUser = (userData) => {
       "Access-Control-Allow-Origin": "*",
     },
   });
-};*/
+};
 
-/*export const fetchAllAssetPlatforms = () => {
+export const fetchAllAssetPlatforms = () => {
   return axios.get("https://api.coingecko.com/api/v3/asset_platforms", {
     headers: {
       "Access-Control-Allow-Headers":
