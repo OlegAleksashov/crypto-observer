@@ -7,10 +7,9 @@ import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
-import { validateRegister } from "../../assest/registerValidador";
+import { validateSignin  } from "../../assest/signinvalidator";
 
 const Signin = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -29,8 +28,8 @@ const Signin = () => {
   };
 
   const handleSignup = () => {
-    const payload = { name, email, password };
-    const { error } = validateRegister(payload);
+    const payload = { email, password };
+    const { error } = validateSignin(payload);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
     } else {
@@ -64,13 +63,6 @@ const Signin = () => {
         <Typography variant="h5" sx={{ color: "#fff" }}>
           Log in
         </Typography>
-        <Input
-          size="lg"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="Enter your name..."
-        ></Input>
         <Input
           size="lg"
           value={email}

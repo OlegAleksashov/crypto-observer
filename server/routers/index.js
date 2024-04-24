@@ -6,6 +6,7 @@ const exchangesRouter = require("./excangesRouter");
 const categoriesRouter = require("./categoriesRouter");
 const usersRoutes = require("./usersRoutes");
 
+
 router.use("/all-coins", coinsRouter);
 router.use("/all-assetPlatforms", assetPlatformsRouter);
 router.use("/all-exchanges", exchangesRouter);
