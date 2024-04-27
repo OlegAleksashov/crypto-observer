@@ -7,13 +7,16 @@ import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
-import { validateSignin  } from "../../assest/signinvalidator";
+import { validateSignin } from "../../assest/signinvalidator";
+import { useDispatch } from "react-redux";
+import { signInUser } from "../../store/action";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     navigate("/");
@@ -28,13 +31,14 @@ const Signin = () => {
   };
 
   const handleSignup = () => {
-    const payload = { email, password };
-    const { error } = validateSignin(payload);
+    const formData = { email, password };
+    const { error } = validateSignin(formData);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
     } else {
       setError(null);
     }
+    dispatch(signInUser(formData));
   };
 
   return (

@@ -41,16 +41,6 @@ const Signup = () => {
     setError("");
   };
 
-  /*const handleSignup = () => {
-    const payload = { name, email, password, confirmPassword };
-    const { error } = validateRegister(payload);
-    if (error) {
-      setError(error.details.map((d) => d.message).join("\n"));
-    } else {
-      setError(null);
-    }
-  };*/
-
   return (
     <div
       style={{
