@@ -8,8 +8,8 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateRegister } from "../../assest/registerValidador";
-import { useDispatch } from "react-redux";
-import { signInUser } from "../../store/action";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser } from "../../store/action";
 
 // TODO:
 
@@ -34,7 +34,7 @@ const Signup = () => {
     } else {
       setError(null);
     }
-    dispatch(signInUser(formData));
+    dispatch(signUpUser(formData));
   };
 
   const handleCloseErrorMessage = () => {

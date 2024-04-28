@@ -19,8 +19,11 @@ export const fetchAllAssetPlatforms = () => {
 };
 
 export const fetchUser = (userData) => {
-  //const userData = { name, email, password };
   return axios.post("http://localhost:5000/registration", userData);
+};
+
+export const fetchSignInUser = (userData) => {
+  return axios.post("http://localhost:5000/signin", userData);
 };
 
 // By using only axios.....................................
