@@ -6,9 +6,9 @@ import {
 } from "../actionTypes";
 
 const initialState = {
-  loading: false,
-  error: "",
-  user: JSON.parse(localStorage.getItem("users")) || {},
+   loading: false,
+   error: "",
+  user: null //JSON.parse(localStorage.getItem("users")) || {},
 };
 
 export const authReducer = (state = initialState, action) => {

@@ -1,41 +1,31 @@
 const User = require("../database/models/user");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { SECRET_KEY } = process.env;
 
-module.exports.postSignIn = (req, res) => {
-  const { email, password } = req.body;
-  User.findOne({
-    where: {
-      email: email,
-    },
-  })
-    .then((user, error) => {
-      if (error) {
-        console.log(error);
-        res.staus(500).json({
-          error: "Internal error please try again",
-        });
-      } else if (!user) {
-        res.staus(401).json({
-          error: "User email does not exist",
-        });
-      } else {
-        user.authenticate(password, (error, same) => {
-          if (error) {
-            res.staus(500).json({
-              error: "Internal error please try again",
-            });
-          } else if (!same) {
-            res.staus(401).json({
-              error: "That password is incorrect",
-            });
-          } else {
-            res.json({
-              message: "Welcome!",
-              user: user,
-              error: false,
-            });
-          }
-        });
-      }
-    })
-    .catch((error) => console.log(error));
+module.exports.postSignIn = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isPassValid = bcrypt.compareSync(password, user.password);
+
+    if (!isPassValid) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
+
+    return res.json({ token, user: { id: user.id, email: user.email } });
+  } catch (e) {
+    console.log(e);
+  }
 };

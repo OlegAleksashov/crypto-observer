@@ -1,3 +1,33 @@
+const User = require("../database/models/user");
+const bcrypt = require("bcryptjs");
+
+module.exports.postSignUp = async (req, res) => {
+  const { name, email, password, confirmPassword } = req.body;
+  await User.findOne({
+    where: {
+      email: email,
+    },
+  })
+    .then(async (user) => {
+      const hashPassword = await bcrypt.hash(password, 7);
+      if (!user) {
+        User.create({
+          name: name,
+          email: email,
+          password: hashPassword,
+          confirmPassword: confirmPassword,
+        })
+          .then((response) => {
+            res.status(201).json({ response, message: "Hello " + name });
+          })
+          .catch((error) => console.log(error));
+      } else {
+        res.json({ message: "User already exists!" });
+      }
+    })
+    .catch((error) => console.log(error));
+};
+
 /* const bcrypt = require("bcryptjs");
 const mysql = require("mysql2");
 
@@ -53,31 +83,3 @@ const createNewUser = async (req, res) => {
 };
 
 module.exports = { createNewUser }; */
-
-const User = require("../database/models/user");
-
-module.exports.postSignUp = (req, res) => {
-  const { name, email, password, confirmPassword } = req.body;
-  User.findOne({
-    where: {
-      email: email,
-    },
-  })
-    .then((user) => {
-      if (!user) {
-        User.create({
-          name: name,
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
-        })
-          .then((response) => {
-            res.status(201).json({ response, message: "Hello " + name });
-          })
-          .catch((error) => console.log(error));
-      } else {
-        res.json({ message: "User already exists!" });
-      }
-    })
-    .catch((error) => console.log(error));
-};
