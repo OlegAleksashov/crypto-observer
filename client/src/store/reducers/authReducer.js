@@ -3,17 +3,18 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
   SIGN_IN_REQUEST,
+  SET_USER,
 } from "../actionTypes";
 
 const initialState = {
-   loading: false,
-   error: "",
-  user: null //JSON.parse(localStorage.getItem("users")) || {},
+  loading: false,
+  error: "",
+  user: {}, //JSON.parse(localStorage.getItem("users")) || {},
+  isAuth: false,
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-
     // ================== SIGNUP ====================== //
 
     case SIGN_UP_REQUEST:
@@ -36,6 +37,13 @@ export const authReducer = (state = initialState, action) => {
       };
 
     // ================== SIGNIN ====================== //
+
+    case SET_USER:
+      return {
+        ...state,
+        user: action.payload,
+        isAuth: true,
+      };
 
     case SIGN_IN_REQUEST:
       return {

@@ -24,7 +24,11 @@ module.exports.postSignIn = async (req, res) => {
 
     const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
 
-    return res.json({ token, user: { id: user.id, email: user.email } });
+    return res.json({
+      token,
+      user: { id: user.id, email: user.email },
+      message: "Hello " + user.email,
+    });
   } catch (e) {
     console.log(e);
   }

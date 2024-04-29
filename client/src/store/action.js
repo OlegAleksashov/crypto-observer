@@ -15,6 +15,7 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
   SIGN_IN_REQUEST,
+  SET_USER,
 } from "./actionTypes";
 
 export const fetchData = () => async (dispatch) => {
@@ -87,14 +88,22 @@ export const signInRequest = (userData) => ({
   payload: userData,
 });
 
+export const setUser = (userData) => ({
+  type: SET_USER,
+  payload: userData,
+});
+
 export const signInUser = (userData) => {
   return async (dispatch) => {
     dispatch(signInRequest(userData));
     try {
       const response = await fetchSignInUser(userData);
+      console.log(response.data.user);
+      dispatch(setUser(response.data.user));
       alert(response.data.message);
     } catch (error) {
-      alert(error.response.body.message);
+      console.log(error);
+      alert(error.response.data.message);
     }
   };
 };
