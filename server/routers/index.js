@@ -16,14 +16,3 @@ router.use("/registration", usersSignUpRoutes);
 router.use("/signin", usersSignInRoutes);
 
 module.exports = router;
-
-// TODO:
-
-// Note
-
-// const test = async (req, res) => {
-//   if (req.body.token === 123) {
-//     return res.status(200).json(list);
-//   }
-//   return res.status(404).json({ success: "false" });
-// };

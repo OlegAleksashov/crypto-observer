@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// By using back.....................................
+// ================= By using back ================= //
 
 export const fetchAllCoins = () => {
   return axios.get("http://localhost:5000/all-coins");
@@ -26,7 +26,7 @@ export const fetchSignInUser = (userData) => {
   return axios.post("http://localhost:5000/signin", userData);
 };
 
-// By using only axios.....................................
+// ================= By using only axios ================= //
 
 /*export const fetchAllCoins = () => {
   return axios.get(
@@ -75,7 +75,7 @@ export const fetchAllAssetPlatforms = () => {
   });
 };*/
 
-// By using coinGecko npm api.....................................
+// ================= By using coinGecko npm api ================= //
 
 //import CoinGecko from "coingecko-api";
 /*const CoinGeckoClient = new CoinGecko();
@@ -122,7 +122,7 @@ export const fetchAllAssetPlatforms = async () => {
   }
 }; */
 
-// by using plain fetch requests...............................
+// ================= By using plain fetch requests ================= //
 
 /*export const fetchAllCoins = () => {
   return fetch(

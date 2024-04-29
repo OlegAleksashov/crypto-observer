@@ -4,7 +4,7 @@ import {
   fetchAllExchanges,
   fetchAllAssetPlatforms,
   fetchUser,
-  fetchSignInUser
+  fetchSignInUser,
 } from "../services/coinService";
 import {
   ALL_COINS,
@@ -15,8 +15,6 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
   SIGN_IN_REQUEST,
-  SIGN_IN_SUCCESS,
-  SIGN_IN_FAILURE
 } from "./actionTypes";
 
 export const fetchData = () => async (dispatch) => {
@@ -51,10 +49,7 @@ export const fetchAssetPlatforms = () => async (dispatch) => {
   });
 };
 
-// ======================================== SIGNUP ======================================== //
-// TODO: where does "respons", "error", "userData" take from?
-// TODO: How are they related with authReducer and other components?
-// TODO: What does "dispatch" mean?
+// ================== SIGNUP ====================== //
 
 export const signUpRequest = (userData) => ({
   type: SIGN_UP_REQUEST,
@@ -85,22 +80,12 @@ export const signUpUser = (userData) => {
   };
 };
 
-// ======================================== SIGNIN ======================================== //
+// ================== SIGNIN ====================== //
 
 export const signInRequest = (userData) => ({
   type: SIGN_IN_REQUEST,
   payload: userData,
 });
-
-// export const signInSuccess = (response) => ({
-//   type: SIGN_IN_SUCCESS,
-//   payload: response,
-// });
-
-// export const signInFailure = (error) => ({
-//   type: SIGN_IN_FAILURE,
-//   payload: error,
-// });
 
 export const signInUser = (userData) => {
   return async (dispatch) => {
@@ -114,22 +99,6 @@ export const signInUser = (userData) => {
   };
 };
 
-/*export const signInUser = async (userData) => {
-  try {
-    const response = await fetchUser(userData);
-    alert(response.data.message);
-  } catch (e) {
-    alert(e.response.body.message);
-  }
-};*/
-
-/*export const signInUser = (userData) => {
-  return async (dispatch) => {    
-    try {
-      const response = await fetchUser(userData);
-      alert(response.data.message);
-    } catch (e) {
-      alert(e.response.body.message);
-    }
-  };
-};*/
+// TODO: where does "respons", "error", "userData" take from?
+// TODO: How are they related with authReducer and other components?
+// TODO: What does "dispatch" mean?
