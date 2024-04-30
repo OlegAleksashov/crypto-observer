@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
 import Button from "@mui/joy/Button";
@@ -8,7 +9,6 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateSignin } from "../../assest/signinvalidator";
-import { useDispatch } from "react-redux";
 import { signInUser } from "../../store/action";
 
 const Signin = () => {
@@ -17,6 +17,15 @@ const Signin = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("token", JSON.stringify(token));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [token]);
 
   const handleClick = () => {
     navigate("/");
@@ -37,6 +46,7 @@ const Signin = () => {
       setError(error.details.map((d) => d.message).join("\n"));
     } else {
       setError(null);
+      handleClick();
     }
     dispatch(signInUser(formData));
   };

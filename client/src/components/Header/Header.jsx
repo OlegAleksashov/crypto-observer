@@ -15,6 +15,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import SvgIcon from "@mui/material/SvgIcon";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ButtonSignIn from "../Button/ButtonSignIn";
+import ButtonEnter from "../Button/ButtonEnter";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -24,8 +26,6 @@ const Header = () => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const navigate = useNavigate();
   const isAuth = useSelector((state) => state.auth.isAuth);
-  
-  console.log(isAuth)
 
   function HomeIcon(props) {
     return (
@@ -71,7 +71,7 @@ const Header = () => {
     >
       <MenuItem onClick={handleMenuClose}>
         {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
-        {isAuth && <>Log out</>}
+        {isAuth && <LogoutIcon />}
       </MenuItem>
     </Menu>
   );
@@ -95,7 +95,7 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <DashboardIcon sx={{ color: "brown" }}/>
+            <DashboardIcon sx={{ color: "brown" }} />
           </Badge>
         </IconButton>
         <p>Dashboard</p>
@@ -103,7 +103,7 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <InfoIcon sx={{ color: "blue" }}/>
+            <InfoIcon sx={{ color: "blue" }} />
           </Badge>
         </IconButton>
         <p>Info</p>
@@ -119,11 +119,12 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-          {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
-          {isAuth && <>Log out</>}
+            {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
+            {isAuth && <LogoutIcon color="success" />}
           </Badge>
         </IconButton>
-        <p>Sign In</p>
+        {!isAuth && <p>Sign In</p>}
+        {isAuth && <p>Log out</p>}
       </MenuItem>
     </Menu>
   );
@@ -179,7 +180,7 @@ const Header = () => {
               </Badge>
             </IconButton>
             {!isAuth && <ButtonSignIn />}
-            {isAuth && <>Log out</>}
+            {isAuth && <ButtonEnter />}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, color: "white" }}>
             <IconButton

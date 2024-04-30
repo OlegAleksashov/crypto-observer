@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
@@ -8,10 +8,8 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateRegister } from "../../assest/registerValidador";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../../store/action";
-
-// TODO:
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -21,16 +19,15 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth.user);
 
-  /*useEffect(() => {
+  useEffect(() => {
     try {
       localStorage.setItem("users", JSON.stringify(user));
-      console.log(typeof localStorage.setItem("users", JSON.stringify(user)));
     } catch (error) {
       console.log(error);
     }
-  }, [user]);*/
+  }, [user]);
 
   const handleClick = () => {
     navigate("/");

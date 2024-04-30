@@ -9,8 +9,9 @@ import {
 const initialState = {
   loading: false,
   error: "",
-  user: {}, //JSON.parse(localStorage.getItem("users")) || {},
+  user: JSON.parse(localStorage.getItem("users")) || {},
   isAuth: false,
+  token: localStorage.getItem("token") || "",
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -43,6 +44,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
         isAuth: true,
+        token: action.payload.token,
       };
 
     case SIGN_IN_REQUEST:

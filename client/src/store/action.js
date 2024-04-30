@@ -91,6 +91,7 @@ export const signInRequest = (userData) => ({
 export const setUser = (userData) => ({
   type: SET_USER,
   payload: userData,
+  token: userData.token
 });
 
 export const signInUser = (userData) => {
@@ -99,10 +100,9 @@ export const signInUser = (userData) => {
     try {
       const response = await fetchSignInUser(userData);
       dispatch(setUser(userData));
-      console.log(userData);
       localStorage.setItem("token", response.data.token);
+      console.log(response.data.token)
       alert(response.data.message);
-      console.log(response.data.user);
     } catch (error) {
       alert(error.response.data.message);
     }

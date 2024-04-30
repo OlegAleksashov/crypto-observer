@@ -28,6 +28,8 @@ module.exports.postSignUp = async (req, res) => {
     .catch((error) => console.log(error));
 };
 
+// ================== BY USING QUERY ====================== //
+
 /* const bcrypt = require("bcryptjs");
 const mysql = require("mysql2");
 
