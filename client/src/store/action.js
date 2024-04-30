@@ -16,6 +16,7 @@ import {
   SIGN_UP_FAILURE,
   SIGN_IN_REQUEST,
   SET_USER,
+  LOG_OUT,
 } from "./actionTypes";
 
 export const fetchData = () => async (dispatch) => {
@@ -91,7 +92,7 @@ export const signInRequest = (userData) => ({
 export const setUser = (userData) => ({
   type: SET_USER,
   payload: userData,
-  token: userData.token
+  token: userData.token,
 });
 
 export const signInUser = (userData) => {
@@ -101,13 +102,19 @@ export const signInUser = (userData) => {
       const response = await fetchSignInUser(userData);
       dispatch(setUser(userData));
       localStorage.setItem("token", response.data.token);
-      console.log(response.data.token)
+      console.log(response.data.token);
       alert(response.data.message);
     } catch (error) {
       alert(error.response.data.message);
     }
   };
 };
+
+// ================== LOG OUT ====================== //
+
+export const logOutUser = () => ({
+  type: LOG_OUT,
+});
 
 // TODO: where does "respons", "error", "userData" take from?
 // TODO: How are they related with authReducer and other components?

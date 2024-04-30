@@ -4,6 +4,7 @@ import {
   SIGN_UP_FAILURE,
   SIGN_IN_REQUEST,
   SET_USER,
+  LOG_OUT,
 } from "../actionTypes";
 
 const initialState = {
@@ -24,12 +25,14 @@ export const authReducer = (state = initialState, action) => {
         loading: true,
         error: "",
       };
+
     case SIGN_UP_SUCCESS:
       return {
         ...state,
         loading: false,
         user: action.payload,
       };
+
     case SIGN_UP_FAILURE:
       return {
         ...state,
@@ -53,6 +56,16 @@ export const authReducer = (state = initialState, action) => {
         loading: true,
         error: "",
       };
+
+    // ================== LOG OUT ====================== //
+
+    case LOG_OUT:
+      return {
+        ...state,
+        user: {},
+        isAuth: false,
+      };
+
     default:
       return state;
   }

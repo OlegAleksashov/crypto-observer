@@ -2,9 +2,9 @@ export const ALL_COINS = "ALL_COINS";
 export const ALL_CATEGORIES = "ALL_CATEGORIES";
 export const ALL_EXCHANGES = "ALL_EXCHANGES";
 export const ALL_ASSETPLATFORMS = "ALL_ASSETPLATFORMS";
-export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
-export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
-export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
-export const SIGN_IN_REQUEST = 'SIGN_IN_REQUEST';
-export const SET_USER = "SET_USER"
-
+export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
+export const SIGN_IN_REQUEST = "SIGN_IN_REQUEST";
+export const SET_USER = "SET_USER";
+export const LOG_OUT = "LOG_OUT";
