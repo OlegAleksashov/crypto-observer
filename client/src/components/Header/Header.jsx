@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { AppBar } from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,14 +12,32 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import InfoIcon from "@mui/icons-material/Info";
+import SvgIcon from "@mui/material/SvgIcon";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ButtonSignIn from "../Button/ButtonSignIn";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const navigate = useNavigate();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  
+  console.log(isAuth)
+
+  function HomeIcon(props) {
+    return (
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon>
+    );
+  }
+
+  const handleClick = () => {
+    navigate("/signin");
+  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -51,7 +70,8 @@ const Header = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <ButtonSignIn />
+        {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
+        {isAuth && <>Log out</>}
       </MenuItem>
     </Menu>
   );
@@ -75,7 +95,7 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <DashboardIcon />
+            <DashboardIcon sx={{ color: "brown" }}/>
           </Badge>
         </IconButton>
         <p>Dashboard</p>
@@ -83,7 +103,7 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <InfoIcon />
+            <InfoIcon sx={{ color: "blue" }}/>
           </Badge>
         </IconButton>
         <p>Info</p>
@@ -91,16 +111,20 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <MailIcon />
+            <MailIcon sx={{ color: "pink" }} />
           </Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <IconButton size="large" color="inherit">
-        <Badge color="error">
-          <ButtonSignIn />
-        </Badge>
-      </IconButton>
+      <MenuItem>
+        <IconButton size="large" color="inherit">
+          <Badge color="error">
+          {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
+          {isAuth && <>Log out</>}
+          </Badge>
+        </IconButton>
+        <p>Sign In</p>
+      </MenuItem>
     </Menu>
   );
 
@@ -154,7 +178,8 @@ const Header = () => {
                 <MailIcon />
               </Badge>
             </IconButton>
-            <ButtonSignIn />
+            {!isAuth && <ButtonSignIn />}
+            {isAuth && <>Log out</>}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, color: "white" }}>
             <IconButton

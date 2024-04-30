@@ -7,7 +7,6 @@ const sequelize = new Sequelize(
   DATABASE,
   DATABASE_USER,
   DATABASE_PASSWORD,
-
   {
     DATABASE_HOST,
     dialect: "mysql",

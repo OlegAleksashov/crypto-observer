@@ -98,11 +98,12 @@ export const signInUser = (userData) => {
     dispatch(signInRequest(userData));
     try {
       const response = await fetchSignInUser(userData);
-      console.log(response.data.user);
-      dispatch(setUser(response.data.user));
+      dispatch(setUser(userData));
+      console.log(userData);
+      localStorage.setItem("token", response.data.token);
       alert(response.data.message);
+      console.log(response.data.user);
     } catch (error) {
-      console.log(error);
       alert(error.response.data.message);
     }
   };
