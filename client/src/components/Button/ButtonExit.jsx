@@ -1,16 +1,12 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { useNavigate, Link } from "react-router-dom";
-//import { useSelector } from "react-redux";
 
-
-const ButtonEnter = () => {
+const ButtonExit = () => {
   const navigate = useNavigate();
-  //let isAuth = useSelector((state) => state.auth.isAuth);
 
   const handleClick = () => {
     navigate("/");
-    
   };
   return (
     <Link to="/">
@@ -26,4 +22,4 @@ const ButtonEnter = () => {
   );
 };
 
-export default ButtonEnter;
+export default ButtonExit;

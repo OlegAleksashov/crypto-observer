@@ -14,14 +14,14 @@ import { signInUser } from "../../store/action";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     try {
-      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("token", token);
     } catch (error) {
       console.log(error);
     }
@@ -39,16 +39,16 @@ const Signin = () => {
     setError("");
   };
 
-  const handleSignup = () => {
+  const handleSignIn = () => {
     const formData = { email, password };
     const { error } = validateSignin(formData);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
     } else {
-      setError(null);
+      dispatch(signInUser(formData));
       handleClick();
+      setError("");
     }
-    dispatch(signInUser(formData));
   };
 
   return (
@@ -91,7 +91,7 @@ const Signin = () => {
           type="password"
           placeholder="Enter password..."
         ></Input>
-        <Button size="md" onClick={handleSignup}>
+        <Button size="md" onClick={handleSignIn}>
           Sign in
         </Button>
         <Button size="md" onClick={handleClickSignup}>

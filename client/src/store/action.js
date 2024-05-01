@@ -74,10 +74,11 @@ export const signUpUser = (userData) => {
     try {
       const response = await fetchUser(userData);
       dispatch(signUpSuccess(response.data));
-      alert(response.data.message);
+      //alert(response.data.message);
     } catch (error) {
       dispatch(signUpFailure(error.message));
-      alert(error.response.body.message);
+      //alert(error.response.body.message);
+      console.log(error)
     }
   };
 };
@@ -92,7 +93,7 @@ export const signInRequest = (userData) => ({
 export const setUser = (userData) => ({
   type: SET_USER,
   payload: userData,
-  token: userData.token,
+  
 });
 
 export const signInUser = (userData) => {
@@ -103,9 +104,10 @@ export const signInUser = (userData) => {
       dispatch(setUser(userData));
       localStorage.setItem("token", response.data.token);
       console.log(response.data.token);
-      alert(response.data.message);
+      //alert(response.data.message);
     } catch (error) {
-      alert(error.response.data.message);
+      //alert(error.response.data.message);
+      console.log(error)
     }
   };
 };

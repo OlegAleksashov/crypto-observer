@@ -10,9 +10,8 @@ import {
 const initialState = {
   loading: false,
   error: "",
-  user: JSON.parse(localStorage.getItem("users")) || {},
-  isAuth: false,
-  token: localStorage.getItem("token") || "",
+  user: {}, 
+  token: localStorage.getItem("token") || " ",
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -46,8 +45,6 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
-        isAuth: true,
-        token: action.payload.token,
       };
 
     case SIGN_IN_REQUEST:
@@ -60,10 +57,10 @@ export const authReducer = (state = initialState, action) => {
     // ================== LOG OUT ====================== //
 
     case LOG_OUT:
+      localStorage.removeItem("token");
       return {
         ...state,
         user: {},
-        isAuth: false,
       };
 
     default:

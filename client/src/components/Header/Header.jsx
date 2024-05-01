@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AppBar } from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,9 +15,10 @@ import InfoIcon from "@mui/icons-material/Info";
 import SvgIcon from "@mui/material/SvgIcon";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ButtonSignIn from "../Button/ButtonSignIn";
-import ButtonEnter from "../Button/ButtonEnter";
+import ButtonExit from "../Button/ButtonExit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { logOutUser } from "../../store/action";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -25,7 +26,17 @@ const Header = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const navigate = useNavigate();
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  //const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("token", token);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [token]);
 
   function HomeIcon(props) {
     return (
@@ -70,8 +81,8 @@ const Header = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
-        {isAuth && <LogoutIcon />}
+        {!token && <HomeIcon color="success" onClick={handleClick} />}
+        {token && <LogoutIcon onClick={() => dispatch(logOutUser())} />}
       </MenuItem>
     </Menu>
   );
@@ -119,12 +130,17 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
-            {isAuth && <LogoutIcon color="success" />}
+            {!token && <HomeIcon color="success" onClick={handleClick} />}
+            {token && (
+              <LogoutIcon
+                color="success"
+                onClick={() => dispatch(logOutUser())}
+              />
+            )}
           </Badge>
         </IconButton>
-        {!isAuth && <p>Sign In</p>}
-        {isAuth && <p>Log out</p>}
+        {!token && <p>Sign In</p>}
+        {token && <p>Log out</p>}
       </MenuItem>
     </Menu>
   );
@@ -179,8 +195,8 @@ const Header = () => {
                 <MailIcon />
               </Badge>
             </IconButton>
-            {!isAuth && <ButtonSignIn />}
-            {isAuth && <ButtonEnter />}
+            {!token && <ButtonSignIn />}
+            {token && <ButtonExit onClick={dispatch(logOutUser())}/>}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, color: "white" }}>
             <IconButton

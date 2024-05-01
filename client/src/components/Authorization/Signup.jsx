@@ -16,18 +16,18 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     try {
-      localStorage.setItem("users", JSON.stringify(user));
+      localStorage.setItem("token", token);
     } catch (error) {
       console.log(error);
     }
-  }, [user]);
+  }, [token]);
 
   const handleClick = () => {
     navigate("/");
@@ -39,9 +39,9 @@ const Signup = () => {
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
     } else {
-      setError(null);
+      dispatch(signUpUser(formData));
+      setError("");
     }
-    dispatch(signUpUser(formData));
   };
 
   const handleCloseErrorMessage = () => {
