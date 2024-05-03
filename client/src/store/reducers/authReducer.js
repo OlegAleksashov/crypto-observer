@@ -10,8 +10,9 @@ import {
 const initialState = {
   loading: false,
   error: "",
-  user: {}, 
-  token: localStorage.getItem("token") || " ",
+  user: {},
+  isAuth: false,
+  token: localStorage.getItem("token") || "",
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -30,6 +31,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         user: action.payload,
+        isAuth: true,
       };
 
     case SIGN_UP_FAILURE:
@@ -45,6 +47,8 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+        isAuth: true,
+        token: action.payload.token,
       };
 
     case SIGN_IN_REQUEST:
@@ -61,6 +65,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {},
+        isAuth: false,
       };
 
     default:

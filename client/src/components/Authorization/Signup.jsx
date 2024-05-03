@@ -131,7 +131,9 @@ const Signup = () => {
                 sx={{ m: 1 }}
                 onClick={handleCloseErrorMessage}
               />
-              <Typography sx={{ margin: "15px" }}>{error}</Typography>
+              <div>
+                <pre>{error}</pre>
+              </div>
             </Sheet>
           </Modal>
         )}

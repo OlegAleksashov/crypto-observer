@@ -5,6 +5,7 @@ import {
   fetchAllAssetPlatforms,
   fetchUser,
   fetchSignInUser,
+  fetchTokenUser
 } from "../services/coinService";
 import {
   ALL_COINS,
@@ -75,10 +76,11 @@ export const signUpUser = (userData) => {
       const response = await fetchUser(userData);
       dispatch(signUpSuccess(response.data));
       //alert(response.data.message);
+      console.log(response.data.message);
     } catch (error) {
-      dispatch(signUpFailure(error.message));
+      dispatch(signUpFailure(error.response.body.message));
       //alert(error.response.body.message);
-      console.log(error)
+      console.log(error.response.body.message);
     }
   };
 };
@@ -93,7 +95,7 @@ export const signInRequest = (userData) => ({
 export const setUser = (userData) => ({
   type: SET_USER,
   payload: userData,
-  
+  token: userData.token,
 });
 
 export const signInUser = (userData) => {
@@ -101,13 +103,13 @@ export const signInUser = (userData) => {
     dispatch(signInRequest(userData));
     try {
       const response = await fetchSignInUser(userData);
-      dispatch(setUser(userData));
+      dispatch(setUser(response.data.user, response.data.token));
       localStorage.setItem("token", response.data.token);
       console.log(response.data.token);
       //alert(response.data.message);
     } catch (error) {
       //alert(error.response.data.message);
-      console.log(error)
+      console.log(error);
     }
   };
 };
@@ -117,6 +119,22 @@ export const signInUser = (userData) => {
 export const logOutUser = () => ({
   type: LOG_OUT,
 });
+
+// ================== GET TOKEN ====================== //
+
+export const getUserToken = () => {
+  return async (dispatch) => {
+    
+    try {
+      const response = await fetchTokenUser()
+      dispatch(setUser(response.data.user, response.data.token));
+      localStorage.setItem("token", response.data.token);
+    } catch (error) {
+      localStorage.removeItem('token')
+      console.log(error);
+    }
+  };
+};
 
 // TODO: where does "respons", "error", "userData" take from?
 // TODO: How are they related with authReducer and other components?

@@ -26,6 +26,12 @@ export const fetchSignInUser = (userData) => {
   return axios.post("http://localhost:5000/signin", userData);
 };
 
+export const fetchTokenUser = () => {
+  return axios.get("http://localhost:5000/getToken", {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  });
+};
+
 // ================= By using only axios ================= //
 
 /*export const fetchAllCoins = () => {
