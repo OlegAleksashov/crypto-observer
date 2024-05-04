@@ -18,11 +18,15 @@ module.exports.postSignUp = async (req, res) => {
           confirmPassword: confirmPassword,
         })
           .then((response) => {
-            res.status(201).json({ response, message: "Hello " + name });
+            res.status(201).json({
+              response,
+              message:
+                "Congratulations! You're successfully registered!\nPlease go to the homepage.",
+            });
           })
           .catch((error) => console.log(error));
       } else {
-        res.json({ message: "User already exists!" });
+        res.status(400).json({ message: "User already exists!" });
       }
     })
     .catch((error) => console.log(error));
