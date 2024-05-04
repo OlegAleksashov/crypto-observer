@@ -75,12 +75,10 @@ export const signUpUser = (userData) => {
     try {
       const response = await fetchUser(userData);
       dispatch(signUpSuccess(response.data));
-      //alert(response.data.message);
-      console.log(response.data.message);
+      console.log(response.data.message + "Lol");
     } catch (error) {
-      dispatch(signUpFailure(error.response.body.message));
-      //alert(error.response.body.message);
-      console.log(error.response.body.message);
+      dispatch(signUpFailure(error.response.data.message));
+      console.log(error.response.data.message);
     }
   };
 };
@@ -106,9 +104,7 @@ export const signInUser = (userData) => {
       dispatch(setUser(response.data.user, response.data.token));
       localStorage.setItem("token", response.data.token);
       console.log(response.data.token);
-      //alert(response.data.message);
     } catch (error) {
-      //alert(error.response.data.message);
       console.log(error);
     }
   };
@@ -124,7 +120,6 @@ export const logOutUser = () => ({
 
 export const getUserToken = () => {
   return async (dispatch) => {
-    
     try {
       const response = await fetchTokenUser()
       dispatch(setUser(response.data.user, response.data.token));

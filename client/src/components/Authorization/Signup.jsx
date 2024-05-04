@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+// TODO: When my modal appears with errorMessage I am not be able to close it by clicking on the cross
+// TODO: When user signed up I want to redirect him from SIgm up page to Home and it has to be without profile
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
@@ -19,15 +21,8 @@ const Signup = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("token", token);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [token]);
+  const errorMessage = useSelector((state) => state.auth.error);
+  const successMessage = useSelector((state) => state.auth.user);
 
   const handleClick = () => {
     navigate("/");
@@ -40,6 +35,11 @@ const Signup = () => {
       setError(error.details.map((d) => d.message).join("\n"));
     } else {
       dispatch(signUpUser(formData));
+      /*setConfirmPassword("");
+      setPassword("");
+      setEmail("");
+      setName("");
+      handleClick();*/
       setError("");
     }
   };
@@ -105,7 +105,9 @@ const Signup = () => {
         <Button size="md" onClick={handleSubmit}>
           Sign up
         </Button>
-        {error && (
+        {(error ||
+          errorMessage ||
+          (successMessage && Object.keys(successMessage).length !== 0)) && (
           <Modal
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
@@ -122,17 +124,17 @@ const Signup = () => {
               sx={{
                 maxWidth: 500,
                 borderRadius: "md",
-                p: 3,
+                p: 5,
                 boxShadow: "lg",
               }}
             >
               <ModalClose
                 variant="plain"
-                sx={{ m: 1 }}
+                sx={{ ml: 2 }}
                 onClick={handleCloseErrorMessage}
               />
               <div>
-                <pre>{error}</pre>
+                <pre>{error || errorMessage || successMessage.message}</pre>
               </div>
             </Sheet>
           </Modal>

@@ -19,7 +19,6 @@ import ButtonExit from "../Button/ButtonExit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import { logOutUser } from "../../store/action";
-//import { getUserToken } from "../../store/action";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -27,27 +26,18 @@ const Header = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const navigate = useNavigate();
-  //const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  //const token = useSelector((state) => state.auth.token);
-  const profile = useSelector((state) => state.auth.user.user);
+  const profile = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isAuth);
 
-  console.log(profile);
+  console.log(profile.user);
   console.log(isAuth);
 
-  // useEffect(() => {
-  //   dispatch(getUserToken);
-  // }, []);
-  //console.log("Header: " + isAuth);
-
-  /*useEffect(() => {
-    try {
-      localStorage.setItem("token", token);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [token]);*/
+  /* useEffect(() => {
+     dispatch(getUserToken);
+   }, []);
+  console.log("Header: " + isAuth);*/
 
   const handleClickExit = () => {
     dispatch(logOutUser());
@@ -97,10 +87,8 @@ const Header = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        {/* {!token && <HomeIcon color="success" onClick={handleClick} />}
-        {token && <LogoutIcon onClick={handleClickExit} />} */}
-        {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
-        {isAuth && <LogoutIcon onClick={handleClickExit} />}
+        {!token && <HomeIcon color="success" onClick={handleClick} />}
+        {token && <LogoutIcon onClick={handleClickExit} />}
       </MenuItem>
     </Menu>
   );
@@ -137,34 +125,25 @@ const Header = () => {
         </IconButton>
         <p>Info</p>
       </MenuItem>
-      {isAuth && (
+      {token && (
         <MenuItem>
           <IconButton size="large" color="inherit">
             <Badge color="error">
               <PersonIcon sx={{ color: "pink" }} />
             </Badge>
           </IconButton>
-          <p>{profile}</p>
+          <p>{profile.user}</p>
         </MenuItem>
       )}
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            {/* {!token && <HomeIcon color="success" onClick={handleClick} />}
-            {token && (
-              <LogoutIcon
-                color="success"
-                onClick={handleClickExit}
-              />
-            )} */}
-            {!isAuth && <HomeIcon color="success" onClick={handleClick} />}
-            {isAuth && <LogoutIcon color="success" onClick={handleClickExit} />}
+            {!token && <HomeIcon color="success" onClick={handleClick} />}
+            {token && <LogoutIcon color="success" onClick={handleClickExit} />}
           </Badge>
         </IconButton>
-        {/* {!token && <p>Sign In</p>}
-        {token && <p>Log out</p>} */}
-        {!isAuth && <p>Sign In</p>}
-        {isAuth && <p>Log out</p>}
+        {!token && <p>Sign In</p>}
+        {token && <p>Log out</p>}
       </MenuItem>
     </Menu>
   );
@@ -214,17 +193,15 @@ const Header = () => {
                 <InfoIcon />
               </Badge>
             </IconButton>
-            {isAuth && (
+            {token && (
               <IconButton size="large" sx={{ color: "white" }}>
                 <Badge color="white">
                   <PersonIcon />
                 </Badge>
               </IconButton>
             )}
-            {/* {!token && <ButtonSignIn />}
-            {token && <ButtonExit onClick={handleClickExit}/>} */}
-            {!isAuth && <ButtonSignIn />}
-            {isAuth && <ButtonExit onClick={() => handleClickExit()} />}
+            {!token && <ButtonSignIn />}
+            {token && <ButtonExit onClick={() => handleClickExit()} />}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, color: "white" }}>
             <IconButton

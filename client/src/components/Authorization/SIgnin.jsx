@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
 import Button from "@mui/joy/Button";
@@ -17,15 +17,6 @@ const Signin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("token", token);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [token]);
 
   const handleClick = () => {
     navigate("/");

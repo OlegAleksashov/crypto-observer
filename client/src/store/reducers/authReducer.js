@@ -12,7 +12,7 @@ const initialState = {
   error: "",
   user: {},
   isAuth: false,
-  token: localStorage.getItem("token") || "",
+  token: localStorage.getItem("token") || "" ,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -61,6 +61,7 @@ export const authReducer = (state = initialState, action) => {
     // ================== LOG OUT ====================== //
 
     case LOG_OUT:
+      console.log("!!!")
       localStorage.removeItem("token");
       return {
         ...state,
