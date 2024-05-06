@@ -19,6 +19,7 @@ import ButtonExit from "../Button/ButtonExit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import { logOutUser } from "../../store/action";
+import { Tooltip } from "@mui/joy";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,10 +30,6 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.user);
-  const isAuth = useSelector((state) => state.auth.isAuth);
-
-  console.log(profile.user);
-  console.log(isAuth);
 
   /* useEffect(() => {
      dispatch(getUserToken);
@@ -196,7 +193,9 @@ const Header = () => {
             {token && (
               <IconButton size="large" sx={{ color: "white" }}>
                 <Badge color="white">
-                  <PersonIcon />
+                  <Tooltip title="fuck me">
+                    <PersonIcon />
+                  </Tooltip>
                 </Badge>
               </IconButton>
             )}

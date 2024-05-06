@@ -19,6 +19,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errorMessage = useSelector((state) => state.auth.error);
@@ -33,19 +34,20 @@ const Signup = () => {
     const { error } = validateRegister(formData);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
+      setOpen(!open);
     } else {
       dispatch(signUpUser(formData));
-      /*setConfirmPassword("");
+      setOpen(!open);
+      setConfirmPassword("");
       setPassword("");
       setEmail("");
       setName("");
-      handleClick();*/
       setError("");
     }
   };
 
-  const handleCloseErrorMessage = () => {
-    setError("");
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -111,8 +113,8 @@ const Signup = () => {
           <Modal
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
-            open={true}
-            onClose={handleCloseErrorMessage}
+            open={open}
+            onClose={handleClose}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -128,11 +130,7 @@ const Signup = () => {
                 boxShadow: "lg",
               }}
             >
-              <ModalClose
-                variant="plain"
-                sx={{ ml: 2 }}
-                onClick={handleCloseErrorMessage}
-              />
+              <ModalClose variant="plain" sx={{ ml: 2 }} />
               <div>
                 <pre>{error || errorMessage || successMessage.message}</pre>
               </div>

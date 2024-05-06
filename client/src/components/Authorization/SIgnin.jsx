@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
 import Button from "@mui/joy/Button";
@@ -14,9 +14,11 @@ import { signInUser } from "../../store/action";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const errorMessage = useSelector((state) => state.auth.error);
 
   const handleClick = () => {
     navigate("/");
@@ -26,8 +28,8 @@ const Signin = () => {
     navigate("/signup");
   };
 
-  const handleCloseErrorMessage = () => {
-    setError("");
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleSignIn = () => {
@@ -35,9 +37,11 @@ const Signin = () => {
     const { error } = validateSignin(formData);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
+      setOpen(!open);
     } else {
       dispatch(signInUser(formData));
-      handleClick();
+      setOpen(!open);
+      //handleClick();
       setError("");
     }
   };
@@ -88,12 +92,12 @@ const Signin = () => {
         <Button size="md" onClick={handleClickSignup}>
           Still don't have an acount
         </Button>
-        {error && (
+        {(error || errorMessage) && (
           <Modal
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
-            open={true}
-            onClose={handleCloseErrorMessage}
+            open={open}
+            onClose={handleClose}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -105,17 +109,13 @@ const Signin = () => {
               sx={{
                 maxWidth: 500,
                 borderRadius: "md",
-                p: 3,
+                p: 5,
                 boxShadow: "lg",
               }}
             >
-              <ModalClose
-                variant="plain"
-                sx={{ m: 1 }}
-                onClick={handleCloseErrorMessage}
-              />
+              <ModalClose variant="plain" />
               <div>
-                <pre>{error}</pre>
+                <pre>{error || errorMessage}</pre>
               </div>
             </Sheet>
           </Modal>

@@ -5,7 +5,7 @@ import {
   fetchAllAssetPlatforms,
   fetchUser,
   fetchSignInUser,
-  fetchTokenUser
+  fetchTokenUser,
 } from "../services/coinService";
 import {
   ALL_COINS,
@@ -75,7 +75,6 @@ export const signUpUser = (userData) => {
     try {
       const response = await fetchUser(userData);
       dispatch(signUpSuccess(response.data));
-      console.log(response.data.message + "Lol");
     } catch (error) {
       dispatch(signUpFailure(error.response.data.message));
       console.log(error.response.data.message);
@@ -103,8 +102,8 @@ export const signInUser = (userData) => {
       const response = await fetchSignInUser(userData);
       dispatch(setUser(response.data.user, response.data.token));
       localStorage.setItem("token", response.data.token);
-      console.log(response.data.token);
     } catch (error) {
+      dispatch(signUpFailure(error.response.data.message));
       console.log(error);
     }
   };
@@ -121,11 +120,11 @@ export const logOutUser = () => ({
 export const getUserToken = () => {
   return async (dispatch) => {
     try {
-      const response = await fetchTokenUser()
+      const response = await fetchTokenUser();
       dispatch(setUser(response.data.user, response.data.token));
       localStorage.setItem("token", response.data.token);
     } catch (error) {
-      localStorage.removeItem('token')
+      localStorage.removeItem("token");
       console.log(error);
     }
   };

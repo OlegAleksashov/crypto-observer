@@ -21,7 +21,7 @@ module.exports.postSignUp = async (req, res) => {
             res.status(201).json({
               response,
               message:
-                "Congratulations! You're successfully registered!\nPlease go to the homepage.",
+                "Congratulations! You're successfully registered!\nPlease go to the homepage\nand sign in into your account",
             });
           })
           .catch((error) => console.log(error));
