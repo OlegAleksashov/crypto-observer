@@ -61,8 +61,6 @@ export const authReducer = (state = initialState, action) => {
     // ================== LOG OUT ====================== //
 
     case LOG_OUT:
-      // TODO: I have to check this console
-      console.log("!!!")
       localStorage.removeItem("token");
       return {
         ...state,

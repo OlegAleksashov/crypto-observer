@@ -31,11 +31,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.user);
 
-  /* useEffect(() => {
-     dispatch(getUserToken);
-   }, []);
-  console.log("Header: " + isAuth);*/
-
   const handleClickExit = () => {
     dispatch(logOutUser());
     navigate("/");
@@ -129,7 +124,7 @@ const Header = () => {
               <PersonIcon sx={{ color: "pink" }} />
             </Badge>
           </IconButton>
-          <p>{profile.user}</p>
+          <p>{profile.user.user}</p>
         </MenuItem>
       )}
       <MenuItem>
@@ -193,7 +188,7 @@ const Header = () => {
             {token && (
               <IconButton size="large" sx={{ color: "white" }}>
                 <Badge color="white">
-                  <Tooltip title="fuck me">
+                  <Tooltip title={profile.user.user}>
                     <PersonIcon />
                   </Tooltip>
                 </Badge>

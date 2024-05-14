@@ -1,5 +1,3 @@
-// TODO: When my modal appears with errorMessage I am not be able to close it by clicking on the cross
-// TODO: When user signed up I want to redirect him from SIgm up page to Home and it has to be without profile
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalClose from "@mui/joy/ModalClose";

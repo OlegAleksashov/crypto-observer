@@ -5,7 +5,6 @@ import {
   fetchAllAssetPlatforms,
   fetchUser,
   fetchSignInUser,
-  fetchTokenUser,
 } from "../services/coinService";
 import {
   ALL_COINS,
@@ -101,6 +100,7 @@ export const signInUser = (userData) => {
     try {
       const response = await fetchSignInUser(userData);
       dispatch(setUser(response.data.user, response.data.token));
+      dispatch(signUpSuccess(response.data));
       localStorage.setItem("token", response.data.token);
     } catch (error) {
       dispatch(signUpFailure(error.response.data.message));
@@ -114,21 +114,6 @@ export const signInUser = (userData) => {
 export const logOutUser = () => ({
   type: LOG_OUT,
 });
-
-// ================== GET TOKEN ====================== //
-
-export const getUserToken = () => {
-  return async (dispatch) => {
-    try {
-      const response = await fetchTokenUser();
-      dispatch(setUser(response.data.user, response.data.token));
-      localStorage.setItem("token", response.data.token);
-    } catch (error) {
-      localStorage.removeItem("token");
-      console.log(error);
-    }
-  };
-};
 
 // TODO: where does "respons", "error", "userData" take from?
 // TODO: How are they related with authReducer and other components?

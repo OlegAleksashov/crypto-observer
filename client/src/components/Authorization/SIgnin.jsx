@@ -19,6 +19,7 @@ const Signin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errorMessage = useSelector((state) => state.auth.error);
+  const successMessage = useSelector((state) => state.auth.user);
 
   const handleClick = () => {
     navigate("/");
@@ -41,7 +42,8 @@ const Signin = () => {
     } else {
       dispatch(signInUser(formData));
       setOpen(!open);
-      //handleClick();
+      setEmail("");
+      setPassword("");
       setError("");
     }
   };
@@ -92,7 +94,9 @@ const Signin = () => {
         <Button size="md" onClick={handleClickSignup}>
           Still don't have an acount
         </Button>
-        {(error || errorMessage) && (
+        {(error ||
+          errorMessage ||
+          (successMessage && Object.keys(successMessage).length !== 0)) && (
           <Modal
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
@@ -115,7 +119,7 @@ const Signin = () => {
             >
               <ModalClose variant="plain" />
               <div>
-                <pre>{error || errorMessage}</pre>
+                <pre>{error || errorMessage || successMessage.message}</pre>
               </div>
             </Sheet>
           </Modal>
