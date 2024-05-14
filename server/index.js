@@ -1,16 +1,21 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT;
 const publicRouter = require("./routers");
-const cors = require("cors");
 const sequelize = require("./database/conection.js");
+const passport = require("passport");
 const app = express();
+const middleware = require("./middleware/passport.js");
 
 app.use(cors());
 
 app.use(express.json());
 app.use(publicRouter);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 async function start() {
   try {
