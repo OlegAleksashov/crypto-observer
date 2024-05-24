@@ -6,6 +6,7 @@ const { SECRET_KEY } = process.env;
 module.exports.postSignIn = async (req, res) => {
   try {
     const { email, password } = req.body;
+    //console.log("EMAIL: " + email, "PASSWORD: " + password);
     const user = await User.findOne({
       where: {
         email: email,
@@ -22,7 +23,13 @@ module.exports.postSignIn = async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
-    const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { id: user.id, email: user.email, password: user.password },
+      SECRET_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     return res.status(201).json({
       token,

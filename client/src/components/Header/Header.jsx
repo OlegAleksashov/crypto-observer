@@ -31,6 +31,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.user);
 
+  //console.log(profile.user.user)
+
   const handleClickExit = () => {
     dispatch(logOutUser());
     navigate("/");
@@ -124,7 +126,7 @@ const Header = () => {
               <PersonIcon sx={{ color: "pink" }} />
             </Badge>
           </IconButton>
-          <p>{profile.user.user}</p>
+          <p>{profile.user}</p>
         </MenuItem>
       )}
       <MenuItem>
@@ -188,7 +190,7 @@ const Header = () => {
             {token && (
               <IconButton size="large" sx={{ color: "white" }}>
                 <Badge color="white">
-                  <Tooltip title={profile.user.user}>
+                  <Tooltip title={profile.user}>
                     <PersonIcon />
                   </Tooltip>
                 </Badge>
