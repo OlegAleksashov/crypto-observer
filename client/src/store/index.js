@@ -9,8 +9,6 @@ const rootReducer = combineReducers({
   auth: authReducer,
 });
 
-//TODO: What does "getDefaultMiddleware" mean? How does it work?
-
 export default configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),

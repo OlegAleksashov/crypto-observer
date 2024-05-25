@@ -99,7 +99,7 @@ export const signInUser = (userData) => {
     dispatch(signInRequest(userData));
     try {
       const response = await fetchSignInUser(userData);
-      dispatch(setUser(response.data.user, response.data.token));
+      dispatch(setUser(response.data.user));
       dispatch(signUpSuccess(response.data));
       localStorage.setItem("token", response.data.token);
     } catch (error) {

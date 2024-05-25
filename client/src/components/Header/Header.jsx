@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppBar } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -20,6 +20,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import { logOutUser } from "../../store/action";
 import { Tooltip } from "@mui/joy";
+import { fetchVerifyUser } from "../../services/coinService";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -31,7 +32,14 @@ const Header = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.user);
 
-  //console.log(profile.user.user)
+  useEffect(() => {
+    if (token) {
+      //fetchVerifyUser(token);
+      console.log(profile.user);
+    }
+  }, [profile]);
+
+  console.log(profile.user?.user);
 
   const handleClickExit = () => {
     dispatch(logOutUser());
@@ -126,7 +134,7 @@ const Header = () => {
               <PersonIcon sx={{ color: "pink" }} />
             </Badge>
           </IconButton>
-          <p>{profile.user}</p>
+          <p>{profile.user?.userName}</p>
         </MenuItem>
       )}
       <MenuItem>
@@ -190,7 +198,7 @@ const Header = () => {
             {token && (
               <IconButton size="large" sx={{ color: "white" }}>
                 <Badge color="white">
-                  <Tooltip title={profile.user}>
+                  <Tooltip title={profile.user?.userName}>
                     <PersonIcon />
                   </Tooltip>
                 </Badge>

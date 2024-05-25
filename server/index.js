@@ -7,13 +7,12 @@ const publicRouter = require("./routers");
 const sequelize = require("./database/conection.js");
 const passport = require("passport");
 const app = express();
-const strategy = require("./middleware/passport.js");
+const strategy = require("./middleware/strategy.js");
 
 app.use(cors());
 
 passport.use("user", strategy);
 app.use(passport.initialize());
-//app.use(passport.session());
 
 app.use(express.json());
 app.use(publicRouter);

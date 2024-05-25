@@ -2,11 +2,11 @@ const User = require("../database/models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = process.env;
+//const findUser = require("../services/functions")
 
 module.exports.postSignIn = async (req, res) => {
   try {
     const { email, password } = req.body;
-    //console.log("EMAIL: " + email, "PASSWORD: " + password);
     const user = await User.findOne({
       where: {
         email: email,
@@ -24,7 +24,12 @@ module.exports.postSignIn = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, password: user.password },
+      {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password, // TODO: Can I delete this property? 
+      },
       SECRET_KEY,
       {
         expiresIn: "1h",
@@ -33,7 +38,7 @@ module.exports.postSignIn = async (req, res) => {
 
     return res.status(201).json({
       token,
-      user: { user: user.name, id: user.id, email: user.email },
+      user: { userName: user.name, id: user.id, email: user.email },
       message:
         "Hello " +
         user.email +
