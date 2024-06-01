@@ -35,7 +35,7 @@ module.exports.postSignIn = async (req, res) => {
         expiresIn: "1h",
       }
     );
-
+5
     return res.status(201).json({
       token,
       user: { userName: user.name, id: user.id, email: user.email },

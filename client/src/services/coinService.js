@@ -30,7 +30,7 @@ export const fetchVerifyUser = async (token) => {
   try {
     const response = await axios.post(
       "http://localhost:5000/verify",
-      {}, // TODO: is it nessasary to use an empty object?
+      //{}, // TODO: is it nessasary to use an empty object?
       {
         headers: { Authorization: `Bearer ${token}` },
       }

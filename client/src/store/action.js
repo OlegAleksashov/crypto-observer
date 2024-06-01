@@ -94,13 +94,14 @@ export const setUser = (userData) => ({
   token: userData.token,
 });
 
+// TODO: potential error
 export const signInUser = (userData) => {
   return async (dispatch) => {
     dispatch(signInRequest(userData));
     try {
       const response = await fetchSignInUser(userData);
-      dispatch(setUser(response.data.user));
-      dispatch(signUpSuccess(response.data));
+      dispatch(setUser(response.data));
+      //dispatch(signUpSuccess(response.data));
       localStorage.setItem("token", response.data.token);
     } catch (error) {
       dispatch(signUpFailure(error.response.data.message));

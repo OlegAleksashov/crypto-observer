@@ -11,7 +11,7 @@ const initialState = {
   loading: false,
   error: "",
   user: {},
-  isAuth: false,
+  isAuth: "HELL",
   token: localStorage.getItem("token") || "",
 };
 
@@ -48,7 +48,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
         isAuth: true,
-        //token: action.payload.token,
+        token: action.payload.token,
       };
 
     case SIGN_IN_REQUEST:
