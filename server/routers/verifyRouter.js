@@ -4,7 +4,7 @@ const passport = require("passport");
 
 router.post(
   "/",
-  passport.authenticate("user", { session: false }),
+  passport.authenticate("account", { session: false }),
   function (req, res) {
     res.send(req.user);
   }

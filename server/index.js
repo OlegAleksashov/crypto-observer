@@ -11,7 +11,7 @@ const strategy = require("./middleware/strategy.js");
 
 app.use(cors());
 
-passport.use("user", strategy);
+passport.use("account", strategy);
 app.use(passport.initialize());
 
 app.use(express.json());

@@ -13,10 +13,8 @@ const options = {
 
 const strategy = new Strategy(options, async (jwt_payload, done) => {
   const { email, password } = jwt_payload;
-
   if (!email || !password) {
-    console.log("EMAIL: " + email, "PASSWORD: " + password);
-    console.log(jwt_payload);
+    console.log(jwt_payload + "Hell I wanna miss my diet");
     return done("Request from passport failed", false);
   }
 
@@ -27,7 +25,13 @@ const strategy = new Strategy(options, async (jwt_payload, done) => {
   });
 
   if (password === user.password) {
-    return done(null, user);
+    return done(null, {
+      user,
+      message:
+        "Hello " +
+        user.email +
+        "\nPlease go to the homepage\nand see what you can do!",
+    });
   } else {
     return done("Wrong password", false);
   }

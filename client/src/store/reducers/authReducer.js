@@ -5,13 +5,14 @@ import {
   SIGN_IN_REQUEST,
   SET_USER,
   LOG_OUT,
+  VERIFY,
 } from "../actionTypes";
 
 const initialState = {
   loading: false,
   error: "",
   user: {},
-  isAuth: "HELL",
+  isAuth: false,
   token: localStorage.getItem("token") || "",
 };
 
@@ -66,6 +67,16 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         user: {},
         isAuth: false,
+      };
+
+    // ================== VERIFY USER CREDENTIAL ====================== //
+
+    case VERIFY:
+      return {
+        ...state,
+        user: action.payload,
+        token: action.payload.token,
+        isAuth: true,
       };
 
     default:

@@ -8,3 +8,4 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const SIGN_IN_REQUEST = "SIGN_IN_REQUEST";
 export const SET_USER = "SET_USER";
 export const LOG_OUT = "LOG_OUT";
+export const VERIFY = "VERIFY";

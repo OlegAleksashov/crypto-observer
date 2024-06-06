@@ -1,25 +1,23 @@
 import React, { useEffect } from "react";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import store from "../src/store/index";
 import Header from "./components/Header/Header";
 import Layout from "./components/Layout/Layout";
 import Signin from "./components/Authorization/SIgnin";
 import Signup from "./components/Authorization/Signup";
-import { fetchVerifyUser } from "./services/coinService";
+import { verifyCredential } from "./store/action";
 import { useSelector } from "react-redux";
 
 function App() {
-  //const me = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
 
-  /*useEffect(() => {
-    fetchVerifyUser(me.token)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch(console.log("Hello!"));
-    console.log(me.token);
-  }, [me]);*/
+  useEffect(() => {
+    if (token) {
+      dispatch(verifyCredential(token));
+    }
+  }, [dispatch, token]);
 
   return (
     <Router>
@@ -43,3 +41,25 @@ function App() {
 }
 
 export default App;
+
+/*import axios from 'axios';
+import { setUser } from './authSlice';
+
+// Action to verify token and fetch user details
+export const verifyUser = (token) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/verify',
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(setUser(response.data)); // Update Redux store with user data
+    } catch (error) {
+      console.error('Error verifying user:', error);
+      localStorage.removeItem('token'); // Remove invalid token
+    }
+  };
+};*/

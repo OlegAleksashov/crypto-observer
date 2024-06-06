@@ -5,6 +5,7 @@ import {
   fetchAllAssetPlatforms,
   fetchUser,
   fetchSignInUser,
+  fetchVerifyUser,
 } from "../services/coinService";
 import {
   ALL_COINS,
@@ -17,6 +18,7 @@ import {
   SIGN_IN_REQUEST,
   SET_USER,
   LOG_OUT,
+  VERIFY,
 } from "./actionTypes";
 
 export const fetchData = () => async (dispatch) => {
@@ -94,14 +96,13 @@ export const setUser = (userData) => ({
   token: userData.token,
 });
 
-// TODO: potential error
 export const signInUser = (userData) => {
   return async (dispatch) => {
     dispatch(signInRequest(userData));
     try {
       const response = await fetchSignInUser(userData);
       dispatch(setUser(response.data));
-      //dispatch(signUpSuccess(response.data));
+      console.log(response.data)
       localStorage.setItem("token", response.data.token);
     } catch (error) {
       dispatch(signUpFailure(error.response.data.message));
@@ -116,6 +117,24 @@ export const logOutUser = () => ({
   type: LOG_OUT,
 });
 
+// ================== VERIFY USER CREDENTIAL ====================== //
+
+export const verifyUser = (userData) => ({
+  type: VERIFY,
+  payload: userData,
+});
+
+export const verifyCredential = (token) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetchVerifyUser(token);
+      dispatch(verifyUser(response));
+    } catch (error) {
+      console.error("Error verifying user:", error);
+      dispatch(logOutUser()); //TODO: describe the reason
+    }
+  };
+};
 // TODO: where does "respons", "error", "userData" take from?
 // TODO: How are they related with authReducer and other components?
 // TODO: What does "dispatch" mean?
