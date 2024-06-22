@@ -9,7 +9,13 @@ const rootReducer = combineReducers({
   auth: authReducer,
 });
 
-export default configureStore({
+const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
+
+export type AppStore = typeof store;
+//export type RootState = ReturnType<AppStore>["getState"];
+export type AppDispatch = AppStore["dispatch"];
+
+export default store;

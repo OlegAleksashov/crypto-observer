@@ -21,7 +21,7 @@ import {
   VERIFY,
 } from "./actionTypes";
 
-export const fetchData = () => async (dispatch) => {
+export const fetchData = () => async (dispatch) => {  //TODO: insert types
   const response = await fetchAllCoins();
   dispatch({
     type: ALL_COINS,

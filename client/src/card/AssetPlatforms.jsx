@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faChartPie as ChartPieIcon } from "@fortawesome/free-solid-svg-icons";
 import { fetchAssetPlatforms } from "../store/action";
 import { PersonalCard } from "./PersonalCard";
-//import { useMediaQuery } from "@mui/material";
 
 library.add(ChartPieIcon);
 
@@ -26,10 +25,6 @@ export const AssetPlatforms = () => {
       value={loading ? <p>Loading...</p> : platforms.length}
       color={theme.palette.success.light}
       icon={ChartPieIcon}
-      // style={{
-      //   padding: isMd ? "20px" : "10px",
-      //   fontSize: isMd ? "18px" : "14px",
-      // }}
     />
   );
 };

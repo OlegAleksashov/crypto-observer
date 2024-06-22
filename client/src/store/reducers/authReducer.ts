@@ -1,3 +1,4 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
@@ -8,7 +9,15 @@ import {
   VERIFY,
 } from "../actionTypes";
 
-const initialState = {
+interface AuthState {
+  loading: boolean;
+  error: string;
+  user: object | null;
+  isAuth: boolean;
+  token: string | null;
+}
+
+const initialState: AuthState = {
   loading: false,
   error: "",
   user: {},
@@ -16,7 +25,7 @@ const initialState = {
   token: localStorage.getItem("token") || "",
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: PayloadAction<AuthState>) => {
   switch (action.type) {
     // ================== SIGNUP ====================== //
 
