@@ -4,18 +4,24 @@ import {
   fetchAllExchanges,
   fetchAllAssetPlatforms,
   fetchUser,
+  fetchSignInUser,
+  fetchVerifyUser,
 } from "../services/coinService";
 import {
   ALL_COINS,
   ALL_CATEGORIES,
   ALL_EXCHANGES,
   ALL_ASSETPLATFORMS,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
   SIGN_IN_REQUEST,
-  SIGN_IN_SUCCESS,
-  SIGN_IN_FAILURE,
+  SET_USER,
+  LOG_OUT,
+  VERIFY,
 } from "./actionTypes";
 
-export const fetchData = () => async (dispatch) => {
+export const fetchData = () => async (dispatch) => {  //TODO: insert types
   const response = await fetchAllCoins();
   dispatch({
     type: ALL_COINS,
@@ -47,56 +53,88 @@ export const fetchAssetPlatforms = () => async (dispatch) => {
   });
 };
 
-// For user...........................................
-// TODO: where does "respons", "error", "userData" take from?
-// TODO: How are they related with authReducer and other components?
-// TODO: What does "dispatch" mean?
+// ================== SIGNUP ====================== //
+
+export const signUpRequest = (userData) => ({
+  type: SIGN_UP_REQUEST,
+  payload: userData,
+});
+
+export const signUpSuccess = (response) => ({
+  type: SIGN_UP_SUCCESS,
+  payload: response,
+});
+
+export const signUpFailure = (error) => ({
+  type: SIGN_UP_FAILURE,
+  payload: error,
+});
+
+export const signUpUser = (userData) => {
+  return async (dispatch) => {
+    dispatch(signUpRequest(userData));
+    try {
+      const response = await fetchUser(userData);
+      dispatch(signUpSuccess(response.data));
+    } catch (error) {
+      dispatch(signUpFailure(error.response.data.message));
+      console.log(error.response.data.message);
+    }
+  };
+};
+
+// ================== SIGNIN ====================== //
 
 export const signInRequest = (userData) => ({
   type: SIGN_IN_REQUEST,
   payload: userData,
 });
 
-export const signInSuccess = (response) => ({
-  type: SIGN_IN_SUCCESS,
-  payload: response,
-});
-
-export const signInFailure = (error) => ({
-  type: SIGN_IN_FAILURE,
-  payload: error,
+export const setUser = (userData) => ({
+  type: SET_USER,
+  payload: userData,
+  token: userData.token,
 });
 
 export const signInUser = (userData) => {
   return async (dispatch) => {
     dispatch(signInRequest(userData));
     try {
-      const response = await fetchUser(userData);
-      dispatch(signInSuccess(response.data));
-      alert(response.data.message);
+      const response = await fetchSignInUser(userData);
+      dispatch(setUser(response.data));
+      console.log(response.data)
+      localStorage.setItem("token", response.data.token);
     } catch (error) {
-      dispatch(signInFailure(error.message));
-      alert(error.response.body.message);
+      dispatch(signUpFailure(error.response.data.message));
+      console.log(error);
     }
   };
 };
 
-/*export const signInUser = async (userData) => {
-  try {
-    const response = await fetchUser(userData);
-    alert(response.data.message);
-  } catch (e) {
-    alert(e.response.body.message);
-  }
-};*/
+// ================== LOG OUT ====================== //
 
-/*export const signInUser = (userData) => {
-  return async (dispatch) => {    
+export const logOutUser = () => ({
+  type: LOG_OUT,
+});
+
+// ================== VERIFY USER CREDENTIAL ====================== //
+
+export const verifyUser = (userData) => ({
+  type: VERIFY,
+  payload: userData,
+});
+
+export const verifyCredential = (token) => {
+  return async (dispatch) => {
     try {
-      const response = await fetchUser(userData);
-      alert(response.data.message);
-    } catch (e) {
-      alert(e.response.body.message);
+      const response = await fetchVerifyUser(token);
+      dispatch(verifyUser(response));
+    } catch (error) {
+      console.error("Error verifying user:", error);
+      dispatch(logOutUser()); //TODO: describe the reason
     }
   };
-};*/
+};
+// TODO: where does "respons", "error", "userData" take from?
+// TODO: How are they related with authReducer and other components?
+// TODO: What does "dispatch" mean?

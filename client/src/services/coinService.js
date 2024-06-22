@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// By using back.....................................
+// ================= By using back ================= //
 
 export const fetchAllCoins = () => {
   return axios.get("http://localhost:5000/all-coins");
@@ -19,11 +19,29 @@ export const fetchAllAssetPlatforms = () => {
 };
 
 export const fetchUser = (userData) => {
-  //const userData = { name, email, password };
   return axios.post("http://localhost:5000/registration", userData);
 };
 
-// By using only axios.....................................
+export const fetchSignInUser = (userData) => {
+  return axios.post("http://localhost:5000/signin", userData);
+};
+
+export const fetchVerifyUser = async (token) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/verify",
+      {}, // TODO: is it nessasary to use an empty object?
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// ================= By using only axios ================= //
 
 /*export const fetchAllCoins = () => {
   return axios.get(
@@ -37,9 +55,9 @@ export const fetchUser = (userData) => {
       },
     }
   );
-};*/
+};
 
-/*export const fetchAllCategories = () => {
+export const fetchAllCategories = () => {
   return axios.get("https://api.coingecko.com/api/v3/coins/categories/list", {
     headers: {
       "Access-Control-Allow-Headers":
@@ -48,9 +66,9 @@ export const fetchUser = (userData) => {
       "Access-Control-Allow-Origin": "*",
     },
   });
-};*/
+};
 
-/*export const fetchAllExchanges = () => {
+export const fetchAllExchanges = () => {
   return axios.get("https://api.coingecko.com/api/v3/exchanges", {
     headers: {
       "Access-Control-Allow-Headers":
@@ -59,9 +77,9 @@ export const fetchUser = (userData) => {
       "Access-Control-Allow-Origin": "*",
     },
   });
-};*/
+};
 
-/*export const fetchAllAssetPlatforms = () => {
+export const fetchAllAssetPlatforms = () => {
   return axios.get("https://api.coingecko.com/api/v3/asset_platforms", {
     headers: {
       "Access-Control-Allow-Headers":
@@ -72,7 +90,7 @@ export const fetchUser = (userData) => {
   });
 };*/
 
-// By using coinGecko npm api.....................................
+// ================= By using coinGecko npm api ================= //
 
 //import CoinGecko from "coingecko-api";
 /*const CoinGeckoClient = new CoinGecko();
@@ -119,7 +137,7 @@ export const fetchAllAssetPlatforms = async () => {
   }
 }; */
 
-// by using plain fetch requests...............................
+// ================= By using plain fetch requests ================= //
 
 /*export const fetchAllCoins = () => {
   return fetch(

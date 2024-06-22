@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AppBar } from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,17 +9,44 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import InfoIcon from "@mui/icons-material/Info";
+import PersonIcon from "@mui/icons-material/Person";
+import SvgIcon from "@mui/material/SvgIcon";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ButtonSignIn from "../Button/ButtonSignIn";
+import ButtonExit from "../Button/ButtonExit";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router-dom";
+import { logOutUser } from "../../store/action";
+import { Tooltip } from "@mui/joy";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.auth.user);
+
+  const handleClickExit = () => {
+    dispatch(logOutUser());
+    navigate("/");
+  };
+
+  function HomeIcon(props) {
+    return (
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon>
+    );
+  }
+
+  const handleClick = () => {
+    navigate("/signin");
+  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -51,7 +79,8 @@ const Header = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <ButtonSignIn />
+        {!token && <HomeIcon color="success" onClick={handleClick} />}
+        {token && <LogoutIcon onClick={handleClickExit} />}
       </MenuItem>
     </Menu>
   );
@@ -75,7 +104,7 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <DashboardIcon />
+            <DashboardIcon sx={{ color: "brown" }} />
           </Badge>
         </IconButton>
         <p>Dashboard</p>
@@ -83,24 +112,31 @@ const Header = () => {
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <InfoIcon />
+            <InfoIcon sx={{ color: "blue" }} />
           </Badge>
         </IconButton>
         <p>Info</p>
       </MenuItem>
+      {token && (
+        <MenuItem>
+          <IconButton size="large" color="inherit">
+            <Badge color="error">
+              <PersonIcon sx={{ color: "pink" }} />
+            </Badge>
+          </IconButton>
+          <p>{profile.user?.name}</p>
+        </MenuItem>
+      )}
       <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge color="error">
-            <MailIcon />
+            {!token && <HomeIcon color="success" onClick={handleClick} />}
+            {token && <LogoutIcon color="success" onClick={handleClickExit} />}
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        {!token && <p>Sign In</p>}
+        {token && <p>Log out</p>}
       </MenuItem>
-      <IconButton size="large" color="inherit">
-        <Badge color="error">
-          <ButtonSignIn />
-        </Badge>
-      </IconButton>
     </Menu>
   );
 
@@ -149,12 +185,17 @@ const Header = () => {
                 <InfoIcon />
               </Badge>
             </IconButton>
-            <IconButton size="large" sx={{ color: "white" }}>
-              <Badge color="white">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <ButtonSignIn />
+            {token && (
+              <IconButton size="large" sx={{ color: "white" }}>
+                <Badge color="white">
+                  <Tooltip title={profile.user?.name}>
+                    <PersonIcon />
+                  </Tooltip>
+                </Badge>
+              </IconButton>
+            )}
+            {!token && <ButtonSignIn />}
+            {token && <ButtonExit onClick={() => handleClickExit()} />}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, color: "white" }}>
             <IconButton

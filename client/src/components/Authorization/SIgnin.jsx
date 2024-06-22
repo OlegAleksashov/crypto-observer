@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
 import Button from "@mui/joy/Button";
@@ -7,14 +8,18 @@ import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
-import { validateRegister } from "../../assest/registerValidador";
+import { validateSignin } from "../../assest/signinvalidator";
+import { signInUser } from "../../store/action";
 
 const Signin = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const errorMessage = useSelector((state) => state.auth.error);
+  const successMessage = useSelector((state) => state.auth.user);
 
   const handleClick = () => {
     navigate("/");
@@ -24,17 +29,22 @@ const Signin = () => {
     navigate("/signup");
   };
 
-  const handleCloseErrorMessage = () => {
-    setError("");
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handleSignup = () => {
-    const payload = { name, email, password };
-    const { error } = validateRegister(payload);
+  const handleSignIn = () => {
+    const formData = { email, password };
+    const { error } = validateSignin(formData);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
+      setOpen(!open);
     } else {
-      setError(null);
+      dispatch(signInUser(formData));
+      setOpen(!open);
+      setEmail("");
+      setPassword("");
+      setError("");
     }
   };
 
@@ -66,13 +76,6 @@ const Signin = () => {
         </Typography>
         <Input
           size="lg"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="Enter your name..."
-        ></Input>
-        <Input
-          size="lg"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="text"
@@ -85,18 +88,20 @@ const Signin = () => {
           type="password"
           placeholder="Enter password..."
         ></Input>
-        <Button size="md" onClick={handleSignup}>
+        <Button size="md" onClick={handleSignIn}>
           Sign in
         </Button>
         <Button size="md" onClick={handleClickSignup}>
           Still don't have an acount
         </Button>
-        {error && (
+        {(error ||
+          errorMessage ||
+          (successMessage && Object.keys(successMessage).length !== 0)) && (
           <Modal
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
-            open={true}
-            onClose={handleCloseErrorMessage}
+            open={open}
+            onClose={handleClose}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -108,16 +113,14 @@ const Signin = () => {
               sx={{
                 maxWidth: 500,
                 borderRadius: "md",
-                p: 3,
+                p: 5,
                 boxShadow: "lg",
               }}
             >
-              <ModalClose
-                variant="plain"
-                sx={{ m: 1 }}
-                onClick={handleCloseErrorMessage}
-              />
-              <Typography sx={{ margin: "15px" }}>{error}</Typography>
+              <ModalClose variant="plain" />
+              <div>
+                <pre>{error || errorMessage || successMessage.message}</pre>
+              </div>
             </Sheet>
           </Modal>
         )}

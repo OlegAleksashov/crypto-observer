@@ -4,23 +4,16 @@ const coinsRouter = require("./coinsRouter");
 const assetPlatformsRouter = require("./assetPlatformsRouter");
 const exchangesRouter = require("./excangesRouter");
 const categoriesRouter = require("./categoriesRouter");
-const usersRoutes = require("./usersRoutes");
+const usersSignUpRoutes = require("./userSignUpRoutes");
+const usersSignInRoutes = require("./userSignInRoutes");
+const userVerify = require("./verifyRouter");
 
 router.use("/all-coins", coinsRouter);
 router.use("/all-assetPlatforms", assetPlatformsRouter);
 router.use("/all-exchanges", exchangesRouter);
 router.use("/all-categories", categoriesRouter);
-router.use("/registration", usersRoutes);
+router.use("/registration", usersSignUpRoutes);
+router.use("/signin", usersSignInRoutes);
+router.use("/verify", userVerify);
 
 module.exports = router;
-
-// TODO:
-
-// Note
-
-// const test = async (req, res) => {
-//   if (req.body.token === 123) {
-//     return res.status(200).json(list);
-//   }
-//   return res.status(404).json({ success: "false" });
-// };

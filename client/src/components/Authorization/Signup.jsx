@@ -8,19 +8,20 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateRegister } from "../../assest/registerValidador";
-import { useDispatch } from "react-redux";
-import { signInUser } from "../../store/action";
-
-// TODO:
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser } from "../../store/action";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const errorMessage = useSelector((state) => state.auth.error);
+  const successMessage = useSelector((state) => state.auth.user);
 
   const handleClick = () => {
     navigate("/");
@@ -31,25 +32,21 @@ const Signup = () => {
     const { error } = validateRegister(formData);
     if (error) {
       setError(error.details.map((d) => d.message).join("\n"));
+      setOpen(!open);
     } else {
-      setError(null);
+      dispatch(signUpUser(formData));
+      setOpen(!open);
+      setConfirmPassword("");
+      setPassword("");
+      setEmail("");
+      setName("");
+      setError("");
     }
-    dispatch(signInUser(formData));
   };
 
-  const handleCloseErrorMessage = () => {
-    setError("");
+  const handleClose = () => {
+    setOpen(false);
   };
-
-  /*const handleSignup = () => {
-    const payload = { name, email, password, confirmPassword };
-    const { error } = validateRegister(payload);
-    if (error) {
-      setError(error.details.map((d) => d.message).join("\n"));
-    } else {
-      setError(null);
-    }
-  };*/
 
   return (
     <div
@@ -108,12 +105,14 @@ const Signup = () => {
         <Button size="md" onClick={handleSubmit}>
           Sign up
         </Button>
-        {error && (
+        {(error ||
+          errorMessage ||
+          (successMessage && Object.keys(successMessage).length !== 0)) && (
           <Modal
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
-            open={true}
-            onClose={handleCloseErrorMessage}
+            open={open}
+            onClose={handleClose}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -125,16 +124,14 @@ const Signup = () => {
               sx={{
                 maxWidth: 500,
                 borderRadius: "md",
-                p: 3,
+                p: 5,
                 boxShadow: "lg",
               }}
             >
-              <ModalClose
-                variant="plain"
-                sx={{ m: 1 }}
-                onClick={handleCloseErrorMessage}
-              />
-              <Typography sx={{ margin: "15px" }}>{error}</Typography>
+              <ModalClose variant="plain" sx={{ ml: 2 }} />
+              <div>
+                <pre>{error || errorMessage || successMessage.message}</pre>
+              </div>
             </Sheet>
           </Modal>
         )}
