@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -7,6 +7,12 @@ import Typography from "@mui/material/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "@mui/system";
 
+interface IPersonalCard {
+  text: string;
+  value: any;
+  color: string;
+  icon: any;
+}
 const CustomCardContent = styled(CardContent)({
   padding: 1,
   margin: 1,
@@ -16,7 +22,12 @@ const CustomCardContent = styled(CardContent)({
   },
 });
 
-export const PersonalCard = ({ text, value, color, icon }) => {
+export const PersonalCard: FC<IPersonalCard> = ({
+  text,
+  value,
+  color,
+  icon,
+}) => {
   return (
     <Card sx={{ padding: 0, margin: 0, backgroundColor: "rgb(48, 59, 107)" }}>
       <CustomCardContent>

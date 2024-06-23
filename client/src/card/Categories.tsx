@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, FC } from "react";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { useTheme } from "@mui/material/styles";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCoins as CoinsIcon } from "@fortawesome/free-solid-svg-icons";
@@ -8,11 +8,11 @@ import { PersonalCard } from "./PersonalCard";
 
 library.add(CoinsIcon);
 
-const Categories = () => {
+const Categories: FC = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-  const categories = useSelector((state) => state.fetch.categories);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector((state) => state.fetch.categories);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +31,7 @@ const Categories = () => {
   return (
     <PersonalCard
       text="CATEGORIES"
-      value={loading ? <p>Loading...</p> : categories.length}
+      value={loading ? <p>Loading...</p> : Object.keys(categories).length}
       color={theme.palette.info.light}
       icon={CoinsIcon}
     />
