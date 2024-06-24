@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useEffect, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchData } from "../../store/action";
@@ -7,35 +7,41 @@ import { colorsForPie } from "../../utils/commonStyles";
 import { customTooltip } from "../../utils/helpers";
 import { stylesForDiv } from "../PieChartCurrency/PieChartCurrencyStyles";
 
+interface Coin {
+  name: string;
+  current_price: number;
+}
+
 export const InnerPieChartCurrency = () => {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-  const volume = useSelector((state) => state.fetch.allCoins);
+  const dispatch = useAppDispatch();
+  const volume = useAppSelector((state) => state.fetch.allCoins);
 
   useEffect(() => {
     dispatch(fetchData());
     setLoading(false);
   }, [dispatch]);
 
-  const filteredData = volume
-    .slice()
+  const filteredData = Object.entries(volume)
+    .map(([name, coin]) => ({
+      name: coin.name,
+      current_price: (coin as Coin).current_price,
+    }))
     .sort((a, b) => a.current_price - b.current_price)
     .filter((coin) => coin.current_price > 100)
-    .slice(0, 5)
-    .map((currency) => ({
-      name: currency.name,
-      value: currency.current_price,
-    }));
+    .slice(0, 5);
 
   return (
     <ResponsiveContainer width="100%" height={400}>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div style={stylesForDiv}>
+        <div style={stylesForDiv as React.CSSProperties}>
           <PieChart width={350} height={350}>
             <Pie
               data={filteredData}
+              dataKey="current_price"
+              nameKey="name"
               isAnimationActive={false}
               cx="50%"
               cy="50%"

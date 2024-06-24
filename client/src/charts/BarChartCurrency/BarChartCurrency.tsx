@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   BarChart,
   Bar,
@@ -14,27 +14,39 @@ import { fetchData } from "../../store/action";
 import { customTooltip } from "../../utils/helpers";
 import { COLORS } from "../../utils/commonStyles";
 
-export const BarChartCurrency = () => {
-  const dispatch = useDispatch();
+interface Coin {
+  name: string;
+  current_price: number;
+}
+
+export const BarChartCurrency: FC = () => {
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
-  const marketPrice = useSelector((state) => state.fetch.allCoins);
+  const marketPrice = useAppSelector((state) => state.fetch.allCoins);
 
   useEffect(() => {
     dispatch(fetchData());
     setLoading(false);
   }, [dispatch]);
 
-  const filteredData = marketPrice
-    .slice()
+  const filteredData = Object.entries(marketPrice)
+    .map(([nmae, coin]) => ({
+      name: coin.name,
+      current_price: (coin as Coin).current_price,
+    }))
     .sort((a, b) => b.current_price - a.current_price)
     .slice(0, 10);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <ResponsiveContainer width="95%" height={400}>
       <BarChart
         width={500}
         height={300}
-        data={loading ? <p>Loading...</p> : filteredData}
+        data={filteredData}
         margin={{ top: 10, right: 30, left: 20, bottom: 100 }}
       >
         <CartesianGrid stroke="none" />

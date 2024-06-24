@@ -1,7 +1,8 @@
 import { toolTip } from "./commonStyles";
+import { TooltipProps } from "recharts";
 
-export const formatNumber = (number) => {
-  if (Math.abs(number) < 1e3) return number;
+export const formatNumber = (number: number): string => {
+  if (Math.abs(number) < 1e3) return number.toString();
   const sign = Math.sign(number);
   const absNumber = Math.abs(number);
   const abbreviated = ["K", "M", "B", "T"];
@@ -15,12 +16,17 @@ export const formatNumber = (number) => {
   return abbreviatedNumber;
 };
 
-export const customTooltip = ({ active, payload, label }) => {
-  if (active) {
+export const customTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) => {
+  if (active && payload) {
+    const value = payload[0]?.value ?? 0;
     return (
       <div style={toolTip}>
         <h4>{label}</h4>
-        <p>${payload[0].value.toLocaleString()}</p>
+        <p>${value.toLocaleString()}</p>
       </div>
     );
   }
