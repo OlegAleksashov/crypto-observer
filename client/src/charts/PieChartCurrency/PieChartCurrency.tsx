@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState, FC } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchData } from "../../store/action";
 import { customTooltip } from "../../utils/helpers";
 import { COLORS, stylesForDiv } from "./PieChartCurrencyStyles";
 
-export const PieChartCurrency = () => {
+interface Coin {
+  name: string;
+  total_volume: number;
+}
+
+export const PieChartCurrency: FC = () => {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-  const volume = useSelector((state) => state.fetch.allCoins);
+  const dispatch = useAppDispatch();
+  const volume = useAppSelector((state) => state.fetch.allCoins);
 
   useEffect(() => {
     const fetchMainData = async () => {
@@ -25,24 +30,26 @@ export const PieChartCurrency = () => {
     fetchMainData();
   }, [dispatch]);
 
-  const filteredData = volume
-    .slice()
+  const filteredData = Object.entries(volume)
+    .map(([name, coin]) => ({
+      name: coin.name,
+      total_volume: (coin as Coin).total_volume,
+    }))
     .sort((a, b) => b.total_volume - a.total_volume)
-    .slice(0, 3)
-    .map((currency) => ({
-      name: currency.name,
-      value: currency.total_volume,
-    }));
+    .filter((coin) => coin.total_volume > 100)
+    .slice(0, 3);
 
   return (
     <ResponsiveContainer width="100%" height={400}>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div style={stylesForDiv}>
+        <div style={stylesForDiv as React.CSSProperties}>
           <PieChart width={350} height={350}>
             <Pie
               data={filteredData}
+              dataKey="total_volume"
+              nameKey="name"
               cx="50%"
               cy="50%"
               labelLine={false}
@@ -100,4 +107,3 @@ const fetchVolume = () => {
      fetchVolume();
    }, []);
    */
-  

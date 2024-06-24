@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, FC } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -17,42 +17,44 @@ import {
   margin,
 } from "./AreaChartCurrencyStyles";
 
-const AreaChartCurrency = () => {
+interface Coin {
+  name: string;
+  ath: number;
+}
+
+const AreaChartCurrency: FC = () => {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-  const ath = useSelector((state) => state.fetch.allCoins);
+  const dispatch = useAppDispatch();
+  const ath = useAppSelector((state) => state.fetch.allCoins);
 
   useEffect(() => {
     dispatch(fetchData());
     setLoading(false);
   }, [dispatch]);
 
-  const filteredData = ath
-    .slice()
+  const filteredData = Object.entries(ath)
+    .map(([name, coin]) => ({ name: coin.name, ath: (coin as Coin).ath }))
     .sort((a, b) => b.ath - a.ath)
-    .slice(0, 10)
-    .map((coin) => ({
-      name: coin.name,
-      value: coin.ath,
-    }));
+    .slice(0, 10);
 
-  const currencyFormatter = (value) => {
+  const currencyFormatter = (value: number) => {
     return formatNumber(value);
   };
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <AreaChart
-        data={loading ? <p>Loading...</p> : filteredData}
-        margin={margin}
-      >
+      <AreaChart data={filteredData} margin={margin}>
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
             <stop style={stopStylesUp} />
             <stop style={stopStylesDown} />
           </linearGradient>
         </defs>
-        <Area dataKey="value" stroke="#2451B7" fill="url(#color)" />
+        <Area dataKey="ath" stroke="#2451B7" fill="url(#color)" />
         <XAxis
           dataKey="name"
           axisLine={false}
@@ -63,7 +65,7 @@ const AreaChartCurrency = () => {
           tick={{ fontSize: "1rem" }}
         />
         <YAxis
-          dataKey="value"
+          dataKey="ath"
           axisLine={false}
           tickLine={false}
           tickCount={8}

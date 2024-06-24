@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, FC } from "react";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { useTheme } from "@mui/material/styles";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faChartArea as ChartAreaIcon } from "@fortawesome/free-solid-svg-icons";
@@ -8,10 +8,10 @@ import { PersonalCard } from "./PersonalCard";
 
 library.add(ChartAreaIcon);
 
-export const Exchanges = () => {
+export const Exchanges: FC = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const exchanges = useSelector((state) => state.fetch.exchanges);
+  const dispatch = useAppDispatch();
+  const exchanges = useAppSelector((state) => state.fetch.exchanges);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const Exchanges = () => {
   return (
     <PersonalCard
       text="EXCHANGES"
-      value={loading ? <p>Loading...</p> : exchanges.length}
+      value={loading ? <p>Loading...</p> : Object.keys(exchanges).length}
       color={theme.palette.warning.light}
       icon={ChartAreaIcon}
     />

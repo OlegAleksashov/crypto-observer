@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 import Button from "@mui/material/Button";
 import { useNavigate, Link } from "react-router-dom";
 
-const ButtonSignIn = () => {
+const ButtonSignIn: FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {

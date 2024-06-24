@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 export const marginFirst = {
     top: 10,
     right: 50,
@@ -65,7 +67,7 @@ export const marginFirst = {
     "rgb(143, 58, 24)",
   ];
   
-  export const toolTip = {
+  export const toolTip: CSSProperties = {
     borderRadius: "0.25rem",
     background: "#26313c",
     color: "#fff",

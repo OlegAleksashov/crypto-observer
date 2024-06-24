@@ -1,7 +1,11 @@
-import React from "react";
+import {FC} from "react";
 import Button from "@mui/material/Button";
 
-const ButtonExit = ({ onClick }) => {
+interface IButtonExit {
+  onClick: () => void
+}
+
+const ButtonExit: FC<IButtonExit> = ({ onClick }) => {
   return (
     <Button
       variant="outlined"
