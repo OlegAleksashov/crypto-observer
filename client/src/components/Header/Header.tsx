@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, FC } from "react";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { AppBar } from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,28 +21,33 @@ import { useNavigate } from "react-router-dom";
 import { logOutUser } from "../../store/action";
 import { Tooltip } from "@mui/joy";
 
-const Header = () => {
+interface IHomeIcon {
+  color: "success";
+  onClick: () => void;
+}
+
+const Header: FC = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const dispatch = useDispatch();
-  const profile = useSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
+  const profile = useAppSelector((state) => state.auth.user);
 
   const handleClickExit = () => {
     dispatch(logOutUser());
     navigate("/");
   };
 
-  function HomeIcon(props) {
+  const HomeIcon: FC<IHomeIcon> = (props) => {
     return (
       <SvgIcon {...props}>
         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
       </SvgIcon>
     );
-  }
+  };
 
   const handleClick = () => {
     navigate("/signin");
@@ -57,7 +62,7 @@ const Header = () => {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
+  const handleMobileMenuOpen = (event: any) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -176,18 +181,18 @@ const Header = () => {
             }}
           >
             <IconButton size="large" sx={{ color: "white" }}>
-              <Badge color="white">
+              <Badge sx={{ color: "white" }}>
                 <DashboardIcon />
               </Badge>
             </IconButton>
             <IconButton size="large" sx={{ color: "white" }}>
-              <Badge color="white">
+              <Badge sx={{ color: "white" }}>
                 <InfoIcon />
               </Badge>
             </IconButton>
             {token && (
               <IconButton size="large" sx={{ color: "white" }}>
-                <Badge color="white">
+                <Badge sx={{ color: "white" }}>
                   <Tooltip title={profile.user?.name}>
                     <PersonIcon />
                   </Tooltip>
@@ -204,7 +209,7 @@ const Header = () => {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="white"
+              sx={{ color: "white" }}
             >
               <MoreIcon sx={{ color: "white" }} />
             </IconButton>

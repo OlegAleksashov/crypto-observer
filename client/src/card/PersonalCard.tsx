@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

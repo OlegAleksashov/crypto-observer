@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -10,23 +10,27 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 
-const Footer = () => {
+const Footer: FC = () => {
   const theme = useTheme();
 
   return (
     <>
       <Box
-        backgroundColor="#2b4766" //{theme.palette.background.default}
-        paddingTop="0.5rem"
-        paddingBottom="0.5rem"
-        bottom="0"
-        left="0"
+        sx={{
+          backgroundColor: "#2b4766",
+          paddingTop: "0.5rem",
+          paddingBottom: "0.5rem",
+          bottom: "0",
+          left: "0",
+        }}
       >
         <Divider />
         <Box
-          backgroundColor={theme.palette.primary.default}
-          position="relative"
-          padding={theme.spacing(0.25)}
+          sx={{
+            backgroundColor: "#2b4766",
+            position: "relative",
+            padding: theme.spacing(0.25),
+          }}
         >
           <Grid container spacing={0}>
             <Hidden mdDown>
@@ -94,10 +98,11 @@ const Footer = () => {
                         Data provided by{" "}
                         <Link
                           href="https://www.coingecko.com/"
-                          alt="CoinGecko"
                           target="_blank"
                           rel="noreferrer"
-                          color={theme.palette.text.secondary}
+                          sx={{
+                            color: theme.palette.text.secondary,
+                          }}
                         >
                           CoinGecko
                         </Link>

@@ -2,6 +2,11 @@ import axios from "axios";
 
 // ================= By using back ================= //
 
+interface UserData {
+  email: string;
+  password: string;
+}
+
 export const fetchAllCoins = () => {
   return axios.get("http://localhost:5000/all-coins");
 };
@@ -18,15 +23,15 @@ export const fetchAllAssetPlatforms = () => {
   return axios.get("http://localhost:5000/all-assetPlatforms");
 };
 
-export const fetchUser = (userData) => {
+export const fetchUser = (userData: UserData) => {
   return axios.post("http://localhost:5000/registration", userData);
 };
 
-export const fetchSignInUser = (userData) => {
+export const fetchSignInUser = (userData: UserData) => {
   return axios.post("http://localhost:5000/signin", userData);
 };
 
-export const fetchVerifyUser = async (token) => {
+export const fetchVerifyUser = async (token: string) => {
   try {
     const response = await axios.post(
       "http://localhost:5000/verify",

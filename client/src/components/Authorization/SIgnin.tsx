@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState, FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
 import Button from "@mui/joy/Button";
@@ -11,15 +11,15 @@ import Box from "@mui/joy/Box";
 import { validateSignin } from "../../assest/signinvalidator";
 import { signInUser } from "../../store/action";
 
-const Signin = () => {
+const Signin: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const errorMessage = useSelector((state) => state.auth.error);
-  const successMessage = useSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
+  const errorMessage = useAppSelector((state) => state.auth.error);
+  const successMessage = useAppSelector((state) => state.auth.user);
 
   const handleClick = () => {
     navigate("/");
