@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalClose from "@mui/joy/ModalClose";
 import { Typography } from "@mui/material";
@@ -8,7 +8,7 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateRegister } from "../../assest/registerValidador";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { signUpUser } from "../../store/action";
 
 const Signup = () => {
@@ -19,9 +19,9 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const errorMessage = useSelector((state) => state.auth.error);
-  const successMessage = useSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
+  const errorMessage = useAppSelector((state) => state.auth.error);
+  const successMessage = useAppSelector((state) => state.auth.user);
 
   const handleClick = () => {
     navigate("/");

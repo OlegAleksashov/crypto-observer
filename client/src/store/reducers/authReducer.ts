@@ -12,7 +12,7 @@ import {
 interface AuthState {
   loading: boolean;
   error: string;
-  user: object | null;
+  user: object | any; //null;
   isAuth: boolean;
   token: string | null;
 }
