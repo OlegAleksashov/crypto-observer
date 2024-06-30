@@ -31,7 +31,7 @@ const Categories: FC = () => {
   return (
     <PersonalCard
       text="CATEGORIES"
-      value={loading ? <p>Loading...</p> : Object.keys(categories).length}
+      value={loading ? "Loading..." : Object.keys(categories).length}
       color={theme.palette.info.light}
       icon={CoinsIcon}
     />

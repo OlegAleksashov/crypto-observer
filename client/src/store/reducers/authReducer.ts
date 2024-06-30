@@ -1,4 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
+import { AuthState } from "../../../interfaces/commonInterfaces";
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
@@ -9,14 +10,6 @@ import {
   VERIFY,
 } from "../actionTypes";
 
-interface AuthState {
-  loading: boolean;
-  error: string;
-  user: object | any; //null;
-  isAuth: boolean;
-  token: string | null;
-}
-
 const initialState: AuthState = {
   loading: false,
   error: "",
@@ -25,7 +18,10 @@ const initialState: AuthState = {
   token: localStorage.getItem("token") || "",
 };
 
-export const authReducer = (state = initialState, action: PayloadAction<AuthState>) => {
+export const authReducer = (
+  state = initialState,
+  action: PayloadAction<AuthState>
+) => {
   switch (action.type) {
     // ================== SIGNUP ====================== //
 

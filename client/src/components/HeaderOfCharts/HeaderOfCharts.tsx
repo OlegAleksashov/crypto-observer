@@ -1,13 +1,12 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { Card, CardHeader, Typography } from "@mui/material";
+import { IHeaderOfCharts } from "../../../interfaces/commonInterfaces";
 
-interface IHeaderOfCharts {
-  children: ReactNode,
-  title: String,
-  subheader: String,
-}
-
-const HeaderOfCharts: FC<IHeaderOfCharts> = ({ children, title, subheader }) => {
+const HeaderOfCharts: FC<IHeaderOfCharts> = ({
+  children,
+  title,
+  subheader,
+}) => {
   return (
     <Card sx={{ backgroundColor: "rgb(31, 37, 61)" }}>
       <CardHeader

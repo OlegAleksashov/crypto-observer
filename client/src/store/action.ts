@@ -1,5 +1,12 @@
 import { AppDispatch } from ".";
 import {
+  CoinData,
+  ApiResponse,
+  UserData,
+  UserResponse,
+  ErrorResponse,
+} from "../../interfaces/commonInterfaces";
+import {
   fetchAllCoins,
   fetchAllCategories,
   fetchAllExchanges,
@@ -21,36 +28,6 @@ import {
   LOG_OUT,
   VERIFY,
 } from "./actionTypes";
-
-interface CoinData {
-  data: Array<object>;
-}
-
-interface ApiResponse<T> {
-  data: T;
-}
-
-interface UserData {
-  email: string;
-  password: string;
-}
-
-interface UserResponse {
-  token: string;
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
-}
-
-interface ErrorResponse {
-  response: {
-    data: {
-      message: string;
-    };
-  };
-}
 
 export const fetchData = () => async (dispatch: AppDispatch) => {
   //TODO: insert types

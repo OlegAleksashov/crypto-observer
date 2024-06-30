@@ -5,11 +5,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchData } from "../../store/action";
 import { customTooltip } from "../../utils/helpers";
 import { COLORS, stylesForDiv } from "./PieChartCurrencyStyles";
-
-interface Coin {
-  name: string;
-  total_volume: number;
-}
+import { CoinTotal } from "../../../interfaces/commonInterfaces";
 
 export const PieChartCurrency: FC = () => {
   const [loading, setLoading] = useState(true);
@@ -33,7 +29,7 @@ export const PieChartCurrency: FC = () => {
   const filteredData = Object.entries(volume)
     .map(([name, coin]) => ({
       name: coin.name,
-      total_volume: (coin as Coin).total_volume,
+      total_volume: (coin as CoinTotal).total_volume,
     }))
     .sort((a, b) => b.total_volume - a.total_volume)
     .filter((coin) => coin.total_volume > 100)

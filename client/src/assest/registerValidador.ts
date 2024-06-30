@@ -1,10 +1,6 @@
 // ======================= BY USING TS ======================= //
-
-import Joi, { ObjectSchema, ValidationResult } from "joi";
-
-interface Validator<T> {
-  (payload: T): ValidationResult;
-}
+import { Validator } from "../../interfaces/commonInterfaces";
+import Joi, { ObjectSchema } from "joi";
 
 const validator =
   <T>(scheme: ObjectSchema): Validator<T> =>

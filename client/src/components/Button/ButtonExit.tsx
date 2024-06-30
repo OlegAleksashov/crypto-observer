@@ -1,9 +1,6 @@
-import {FC} from "react";
+import { FC } from "react";
 import Button from "@mui/material/Button";
-
-interface IButtonExit {
-  onClick: () => void
-}
+import { IButtonExit } from "../../../interfaces/commonInterfaces";
 
 const ButtonExit: FC<IButtonExit> = ({ onClick }) => {
   return (

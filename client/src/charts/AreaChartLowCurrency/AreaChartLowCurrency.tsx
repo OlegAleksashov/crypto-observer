@@ -12,11 +12,7 @@ import {
 import { fetchData } from "../../store/action";
 import { formatNumber, customTooltip } from "../../utils/helpers";
 import { marginFirst, marginSecond } from "../../utils/commonStyles";
-
-interface Coin {
-  name: string;
-  atl: number;
-}
+import { CoinAtl } from "../../../interfaces/commonInterfaces";
 
 const AreaChartLowCurrency: FC = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +38,7 @@ const AreaChartLowCurrency: FC = () => {
   }, [dispatch]);
 
   const filteredData = Object.entries(atl)
-    .map(([name, coin]) => ({ name: coin.name, atl: (coin as Coin).atl }))
+    .map(([name, coin]) => ({ name: coin.name, atl: (coin as CoinAtl).atl }))
     .sort((a, b) => b.atl - a.atl)
     .slice(0, 5);
 

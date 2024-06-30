@@ -13,11 +13,7 @@ import {
 import { fetchData } from "../../store/action";
 import { customTooltip } from "../../utils/helpers";
 import { COLORS } from "../../utils/commonStyles";
-
-interface Coin {
-  name: string;
-  current_price: number;
-}
+import { CoinPrice } from "../../../interfaces/commonInterfaces";
 
 export const BarChartCurrency: FC = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +28,7 @@ export const BarChartCurrency: FC = () => {
   const filteredData = Object.entries(marketPrice)
     .map(([nmae, coin]) => ({
       name: coin.name,
-      current_price: (coin as Coin).current_price,
+      current_price: (coin as CoinPrice).current_price,
     }))
     .sort((a, b) => b.current_price - a.current_price)
     .slice(0, 10);

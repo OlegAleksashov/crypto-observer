@@ -10,6 +10,7 @@ import Box from "@mui/joy/Box";
 import { validateRegister } from "../../assest/registerValidador";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { signUpUser } from "../../store/action";
+import { UserType } from "../../../types/common";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -20,8 +21,10 @@ const Signup = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const errorMessage = useAppSelector((state) => state.auth.error);
-  const successMessage = useAppSelector((state) => state.auth.user);
+  const errorMessage = useAppSelector((state) => state.auth.error) as string;
+  const successMessage = useAppSelector((state) => state.auth.user) as
+    | UserType
+    | {};
 
   const handleClick = () => {
     navigate("/");
@@ -130,7 +133,13 @@ const Signup = () => {
             >
               <ModalClose variant="plain" sx={{ ml: 2 }} />
               <div>
-                <pre>{error || errorMessage || successMessage.message}</pre>
+                <pre>
+                  {error ||
+                    errorMessage ||
+                    (successMessage && "message" in successMessage
+                      ? successMessage.message
+                      : "")}
+                </pre>
               </div>
             </Sheet>
           </Modal>
