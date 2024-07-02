@@ -32,7 +32,7 @@ const AreaChartCurrency: FC = () => {
     .map(([name, coin]) => ({ name: coin.name, ath: (coin as CoinAth).ath }))
     .sort((a, b) => b.ath - a.ath)
     .slice(0, 10);
-
+console.log(filteredData)
   const currencyFormatter = (value: number) => {
     return formatNumber(value);
   };

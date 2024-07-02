@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, FC, MouseEvent } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { TableHead, TableRow, TableBody } from "@mui/material";
 import Table from "@mui/material/Table";
 import TablePagination from "@mui/material/TablePagination";
@@ -8,12 +8,12 @@ import { StyledTableCell, StyledTableRow } from "./CustomizedTables";
 import InputSearch from "../InputSearch/InputSearch";
 import PaginationActions from "./PaginationActions";
 
-const IsMobile = () => {
+const IsTablet: FC = () => {
   const [page, setPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const dispatch = useDispatch();
-  const allCoins = useSelector((state) => state.fetch.allCoins);
+  const dispatch = useAppDispatch();
+  const allCoins = useAppSelector((state) => state.fetch.allCoins);
 
   const filteredCryptoCurrency = allCoins.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -24,15 +24,15 @@ const IsMobile = () => {
     page * rowsPerPage + rowsPerPage
   );
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleInputChange = (value) => {
+  const handleInputChange = (value: string) => {
     setSearchTerm(value);
   };
 
-  const handleRowsPerPageChange = (event) => {
+  const handleRowsPerPageChange = (event: MouseEvent<HTMLButtonElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -44,12 +44,13 @@ const IsMobile = () => {
   return (
     <>
       <InputSearch onInputChange={handleInputChange} />
-      <Table sx={{ minWidth: 300 }} aria-label="customized table">
+      <Table sx={{ minWidth: 500 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Image</StyledTableCell>
             <StyledTableCell>Name</StyledTableCell>
             <StyledTableCell>Symbol</StyledTableCell>
+            <StyledTableCell>Price</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -64,6 +65,9 @@ const IsMobile = () => {
               </StyledTableCell>
               <StyledTableCell>{coin.name}</StyledTableCell>
               <StyledTableCell>{coin.symbol}</StyledTableCell>
+              <StyledTableCell>
+                ${coin.current_price.toFixed(2)}
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -88,4 +92,4 @@ const IsMobile = () => {
   );
 };
 
-export default IsMobile;
+export default IsTablet;
