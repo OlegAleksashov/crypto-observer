@@ -1,17 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit";
+import {DashBoardData} from '../../../interfaces/commonInterfaces'
 import {
   ALL_COINS,
   ALL_CATEGORIES,
   ALL_EXCHANGES,
   ALL_ASSETPLATFORMS,
 } from "../actionTypes";
-
-interface DashBoardData {
-  allCoins: Array<object>;
-  categories: Array<object>;
-  exchanges: Array<object>;
-  assetPlatforms: Array<object>;
-}
 
 export const initialState: DashBoardData = {
   allCoins: [],

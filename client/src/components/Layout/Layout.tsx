@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import { Box } from "@mui/material";
 import Categories from "../../card/Categories";
-import CustomizedTables from "../Table/CustomizedTables";
+import { CustomizedTables } from "../Table/CustomizedTables";
 import { BarChartCurrency } from "../../charts/BarChartCurrency/BarChartCurrency";
 import { PieChartCurrency } from "../../charts/PieChartCurrency/PieChartCurrency";
 import HeaderOfCharts from "../HeaderOfCharts/HeaderOfCharts";
@@ -32,7 +32,7 @@ import {
 import { date } from "../../utils/helpers";
 import "./Layout.css";
 
-const Layout = () => {
+const Layout: FC = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Layout = () => {
       <span>
         Today: <p id="date">{date}</p>
       </span>
-      <Box style={style}>
+      <Box sx={{ ...style }}>
         <Categories />
         <br />
         <Exchanges />

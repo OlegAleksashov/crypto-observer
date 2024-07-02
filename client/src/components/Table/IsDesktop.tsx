@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, FC, ChangeEvent } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TablePagination from "@mui/material/TablePagination";
@@ -9,38 +9,49 @@ import InputSearch from "../InputSearch/InputSearch";
 import PaginationActions from "./PaginationActions";
 import useInput from "../../hooks/useInput";
 import { fetchData } from "../../store/action";
+import { Coin } from "../../../interfaces/commonInterfaces";
 
 const commonStyle = {
   backgroundColor: "rgb(31, 37, 61)",
   color: "#fff",
 };
 
-const IsDesktop = () => {
+const IsDesktop: FC = (defaultValue = "") => {
   const input = useInput();
   const [page, setPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(defaultValue);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const dispatch = useDispatch();
-  const allCoins = useSelector((state) => state.fetch.allCoins);
+  const dispatch = useAppDispatch();
+  const allCoins = useAppSelector((state) => state.fetch.allCoins);
 
-  const filteredCryptoCurrency = allCoins.filter((coin) =>
+  /*const filteredCryptoCurrency = allCoins.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ); */
+
+  const filteredCryptoCurrency = Object.entries(allCoins)
+    .map(([name, coin]) => ({
+      name: coin.name,
+    }))
+    .filter((coin) =>
+      coin.name.toLowerCase().includes(searchTerm)
+    );
+
+  console.log(filteredCryptoCurrency);
 
   const paginatedCryptoCurrency = filteredCryptoCurrency.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleInputChange = (value) => {
+  const handleInputChange = (value: string) => {
     setSearchTerm(value);
   };
 
-  const handleRowsPerPageChange = (event) => {
+  const handleRowsPerPageChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -67,7 +78,7 @@ const IsDesktop = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {setSearchTerm //isSearchFieldEmpty
+          {searchTerm //isSearchFieldEmpty
             ? paginatedCryptoCurrency.map((coin) => (
                 <StyledTableRow key={coin.image}>
                   <StyledTableCell component="th" scope="row">
