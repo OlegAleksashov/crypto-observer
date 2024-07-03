@@ -1,4 +1,4 @@
-import { useState, useEffect, FC, MouseEvent } from "react";
+import { useState, useEffect, FC, MouseEvent, ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { TableHead, TableRow, TableBody } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -25,7 +25,10 @@ const IsTablet: FC = () => {
     page * rowsPerPage + rowsPerPage
   );
 
-  const handleChangePage = (newPage: number) => {
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
@@ -33,7 +36,7 @@ const IsTablet: FC = () => {
     setSearchTerm(value);
   };
 
-  const handleRowsPerPageChange = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleRowsPerPageChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -81,7 +84,7 @@ const IsTablet: FC = () => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleRowsPerPageChange}
-        ActionsComponent={PaginationActions}
+        // ActionsComponent={PaginationActions}
         sx={{
           display: "flex",
           justifyContent: "center",

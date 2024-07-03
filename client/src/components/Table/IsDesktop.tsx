@@ -1,4 +1,4 @@
-import { useEffect, useState, FC, ChangeEvent } from "react";
+import { useEffect, useState, FC, ChangeEvent, MouseEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
@@ -43,7 +43,10 @@ const IsDesktop: FC = (defaultValue = "") => {
     page * rowsPerPage + rowsPerPage
   );
 
-  const handleChangePage = (newPage: number) => {
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
@@ -147,7 +150,7 @@ const IsDesktop: FC = (defaultValue = "") => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleRowsPerPageChange}
-        ActionsComponent={PaginationActions}
+        // ActionsComponent={PaginationActions}
         sx={{
           display: "flex",
           justifyContent: "center",

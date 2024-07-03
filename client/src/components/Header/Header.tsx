@@ -33,8 +33,6 @@ const Header: FC = () => {
   const dispatch = useAppDispatch();
   const profile = useAppSelector((state) => state.auth.user) as UserType | {};
 
-  console.log(profile);
-
   const handleClickExit = () => {
     dispatch(logOutUser());
     navigate("/");
