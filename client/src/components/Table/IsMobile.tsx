@@ -1,4 +1,4 @@
-import { useState, useEffect, FC, MouseEvent, ChangeEventHandler } from "react";
+import { useState, useEffect, FC, MouseEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { TableHead, TableRow, TableBody } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -7,6 +7,7 @@ import { fetchData } from "../../store/action";
 import { StyledTableCell, StyledTableRow } from "./CustomizedTables";
 import InputSearch from "../InputSearch/InputSearch";
 import PaginationActions from "./PaginationActions";
+import { Coin } from "../../../interfaces/commonInterfaces";
 
 const IsMobile: FC = () => {
   const [page, setPage] = useState(0);
@@ -15,7 +16,7 @@ const IsMobile: FC = () => {
   const dispatch = useAppDispatch();
   const allCoins = useAppSelector((state) => state.fetch.allCoins);
 
-  const filteredCryptoCurrency = allCoins.filter((coin) =>
+  const filteredCryptoCurrency = (allCoins as Coin[]).filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -24,7 +25,7 @@ const IsMobile: FC = () => {
     page * rowsPerPage + rowsPerPage
   );
 
-  const handleChangePage = (event, newPage: number) => {
+  const handleChangePage = (newPage: number) => {
     setPage(newPage);
   };
 
@@ -32,7 +33,7 @@ const IsMobile: FC = () => {
     setSearchTerm(value);
   };
 
-  const handleRowsPerPageChange = (event: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleRowsPerPageChange = (event: MouseEvent<HTMLButtonElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

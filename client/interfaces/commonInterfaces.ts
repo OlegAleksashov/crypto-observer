@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, MouseEvent } from "react";
 import { ValidationResult } from "joi";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { Category, UserType } from "../types/common";
@@ -148,11 +148,7 @@ export interface IPaginationActions {
   count: number;
   page: number;
   rowsPerPage: number;
-  onPageChange: Function;
+  onPageChange: (event: MouseEvent<HTMLButtonElement>, newPage: number) => void;
 }
 
 // ================== To IsTablet.tsx ====================== //
-
-// export interface IIsTablet {
-//   data: string
-// }

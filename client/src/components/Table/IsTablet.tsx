@@ -7,6 +7,7 @@ import { fetchData } from "../../store/action";
 import { StyledTableCell, StyledTableRow } from "./CustomizedTables";
 import InputSearch from "../InputSearch/InputSearch";
 import PaginationActions from "./PaginationActions";
+import { Coin } from "../../../interfaces/commonInterfaces";
 
 const IsTablet: FC = () => {
   const [page, setPage] = useState(0);
@@ -15,7 +16,7 @@ const IsTablet: FC = () => {
   const dispatch = useAppDispatch();
   const allCoins = useAppSelector((state) => state.fetch.allCoins);
 
-  const filteredCryptoCurrency = allCoins.filter((coin) =>
+  const filteredCryptoCurrency = (allCoins as Coin[]).filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

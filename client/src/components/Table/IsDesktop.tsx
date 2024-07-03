@@ -19,24 +19,24 @@ const commonStyle = {
 const IsDesktop: FC = (defaultValue = "") => {
   const input = useInput();
   const [page, setPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState(defaultValue);
+  const [searchTerm, setSearchTerm] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useAppDispatch();
   const allCoins = useAppSelector((state) => state.fetch.allCoins);
 
   /*const filteredCryptoCurrency = allCoins.filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
-  ); */
+  );*/
 
-  const filteredCryptoCurrency = Object.entries(allCoins)
-    .map(([name, coin]) => ({
-      name: coin.name,
-    }))
-    .filter((coin) =>
-      coin.name.toLowerCase().includes(searchTerm)
-    );
+  /*const filteredCryptoCurrency = Object.fromEntries(
+    Object.entries(allCoins).filter((coin) =>
+      coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );*/
 
-  console.log(filteredCryptoCurrency);
+  const filteredCryptoCurrency = (allCoins as Coin[]).filter((coin) =>
+    coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const paginatedCryptoCurrency = filteredCryptoCurrency.slice(
     page * rowsPerPage,
@@ -78,7 +78,7 @@ const IsDesktop: FC = (defaultValue = "") => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {searchTerm //isSearchFieldEmpty
+          {searchTerm
             ? paginatedCryptoCurrency.map((coin) => (
                 <StyledTableRow key={coin.image}>
                   <StyledTableCell component="th" scope="row">

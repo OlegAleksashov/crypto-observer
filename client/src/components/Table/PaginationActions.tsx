@@ -5,9 +5,14 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import {IPaginationActions} from '../../../interfaces/commonInterfaces'
+import { IPaginationActions } from "../../../interfaces/commonInterfaces";
 
-const PaginationActions: FC<IPaginationActions> = ({ count, page, rowsPerPage, onPageChange }) => {
+const PaginationActions: FC<IPaginationActions> = ({
+  count,
+  page,
+  rowsPerPage,
+  onPageChange,
+}) => {
   const handleFirstPageButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, 0);
   };
