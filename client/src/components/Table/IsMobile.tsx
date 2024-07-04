@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, FC, ChangeEvent, MouseEvent } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { TableHead, TableRow, TableBody } from "@mui/material";
 import Table from "@mui/material/Table";
 import TablePagination from "@mui/material/TablePagination";
@@ -7,15 +7,16 @@ import { fetchData } from "../../store/action";
 import { StyledTableCell, StyledTableRow } from "./CustomizedTables";
 import InputSearch from "../InputSearch/InputSearch";
 import PaginationActions from "./PaginationActions";
+import { Coin } from "../../../interfaces/commonInterfaces";
 
-const IsTablet = ({ data }) => {
+const IsMobile: FC = () => {
   const [page, setPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const dispatch = useDispatch();
-  const allCoins = useSelector((state) => state.fetch.allCoins);
+  const dispatch = useAppDispatch();
+  const allCoins = useAppSelector((state) => state.fetch.allCoins);
 
-  const filteredCryptoCurrency = allCoins.filter((coin) =>
+  const filteredCryptoCurrency = (allCoins as Coin[]).filter((coin) =>
     coin.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -24,15 +25,18 @@ const IsTablet = ({ data }) => {
     page * rowsPerPage + rowsPerPage
   );
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
-  const handleInputChange = (value) => {
+  const handleInputChange = (value: string) => {
     setSearchTerm(value);
   };
 
-  const handleRowsPerPageChange = (event) => {
+  const handleRowsPerPageChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -43,14 +47,13 @@ const IsTablet = ({ data }) => {
 
   return (
     <>
-      <InputSearch style={{}} onInputChange={handleInputChange} />
-      <Table sx={{ minWidth: 500 }} aria-label="customized table">
+      <InputSearch onInputChange={handleInputChange} />
+      <Table sx={{ minWidth: 300 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Image</StyledTableCell>
             <StyledTableCell>Name</StyledTableCell>
             <StyledTableCell>Symbol</StyledTableCell>
-            <StyledTableCell>Price</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -65,9 +68,6 @@ const IsTablet = ({ data }) => {
               </StyledTableCell>
               <StyledTableCell>{coin.name}</StyledTableCell>
               <StyledTableCell>{coin.symbol}</StyledTableCell>
-              <StyledTableCell>
-                ${coin.current_price.toFixed(2)}
-              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -80,7 +80,7 @@ const IsTablet = ({ data }) => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleRowsPerPageChange}
-        ActionsComponent={PaginationActions}
+        // ActionsComponent={PaginationActions}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -92,4 +92,4 @@ const IsTablet = ({ data }) => {
   );
 };
 
-export default IsTablet;
+export default IsMobile;

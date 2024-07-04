@@ -22,7 +22,7 @@ export const Exchanges: FC = () => {
   return (
     <PersonalCard
       text="EXCHANGES"
-      value={loading ? <p>Loading...</p> : Object.keys(exchanges).length}
+      value={loading ? "Loading..." : Object.keys(exchanges).length}
       color={theme.palette.warning.light}
       icon={ChartAreaIcon}
     />

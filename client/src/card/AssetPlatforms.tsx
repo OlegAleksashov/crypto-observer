@@ -22,7 +22,7 @@ export const AssetPlatforms: FC = () => {
   return (
     <PersonalCard
       text="ASSET PLATFORMS"
-      value={loading ? <p>Loading...</p> : Object.keys(platforms).length}
+      value={loading ? "Loading..." : Object.keys(platforms).length}
       color={theme.palette.success.light}
       icon={ChartPieIcon}
     />

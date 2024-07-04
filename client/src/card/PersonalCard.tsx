@@ -6,13 +6,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "@mui/system";
+import { IPersonalCard } from "../../interfaces/commonInterfaces";
 
-interface IPersonalCard {
-  text: string;
-  value: any;
-  color: string;
-  icon: any;
-}
 const CustomCardContent = styled(CardContent)({
   padding: 1,
   margin: 1,

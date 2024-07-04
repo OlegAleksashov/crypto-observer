@@ -6,11 +6,7 @@ import { fetchData } from "../../store/action";
 import { colorsForPie } from "../../utils/commonStyles";
 import { customTooltip } from "../../utils/helpers";
 import { stylesForDiv } from "../PieChartCurrency/PieChartCurrencyStyles";
-
-interface Coin {
-  name: string;
-  current_price: number;
-}
+import { CoinCurrentPrice } from "../../../interfaces/commonInterfaces";
 
 export const InnerPieChartCurrency = () => {
   const [loading, setLoading] = useState(true);
@@ -25,7 +21,7 @@ export const InnerPieChartCurrency = () => {
   const filteredData = Object.entries(volume)
     .map(([name, coin]) => ({
       name: coin.name,
-      current_price: (coin as Coin).current_price,
+      current_price: (coin as CoinCurrentPrice).current_price,
     }))
     .sort((a, b) => a.current_price - b.current_price)
     .filter((coin) => coin.current_price > 100)

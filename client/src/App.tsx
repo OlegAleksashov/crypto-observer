@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import store from "../src/store/index";
+import store from "./store/index";
 import Header from "./components/Header/Header";
 import Layout from "./components/Layout/Layout";
 import Signin from "./components/Authorization/SIgnin";
 import Signup from "./components/Authorization/Signup";
 import { verifyCredential } from "./store/action";
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 
 function App() {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
+  const dispatch = useAppDispatch();
+  const token = useAppSelector((state) => state.auth.token) as string;
 
   useEffect(() => {
     if (token) {

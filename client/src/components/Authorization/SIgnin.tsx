@@ -10,6 +10,7 @@ import Sheet from "@mui/joy/Sheet";
 import Box from "@mui/joy/Box";
 import { validateSignin } from "../../assest/signinvalidator";
 import { signInUser } from "../../store/action";
+import { UserType } from "../../../types/common";
 
 const Signin: FC = () => {
   const [email, setEmail] = useState("");
@@ -18,8 +19,10 @@ const Signin: FC = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const errorMessage = useAppSelector((state) => state.auth.error);
-  const successMessage = useAppSelector((state) => state.auth.user);
+  const errorMessage = useAppSelector((state) => state.auth.error) as string;
+  const successMessage = useAppSelector((state) => state.auth.user) as
+    | UserType
+    | {};
 
   const handleClick = () => {
     navigate("/");
@@ -119,7 +122,13 @@ const Signin: FC = () => {
             >
               <ModalClose variant="plain" />
               <div>
-                <pre>{error || errorMessage || successMessage.message}</pre>
+                <pre>
+                  {error ||
+                    errorMessage ||
+                    (successMessage && "message" in successMessage
+                      ? successMessage.message
+                      : "")}
+                </pre>
               </div>
             </Sheet>
           </Modal>

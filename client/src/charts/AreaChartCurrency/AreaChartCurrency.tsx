@@ -11,16 +11,12 @@ import {
 } from "recharts";
 import { fetchData } from "../../store/action";
 import { formatNumber, customTooltip } from "../../utils/helpers";
+import { CoinAth } from "../../../interfaces/commonInterfaces";
 import {
   stopStylesUp,
   stopStylesDown,
   margin,
 } from "./AreaChartCurrencyStyles";
-
-interface Coin {
-  name: string;
-  ath: number;
-}
 
 const AreaChartCurrency: FC = () => {
   const [loading, setLoading] = useState(true);
@@ -33,7 +29,7 @@ const AreaChartCurrency: FC = () => {
   }, [dispatch]);
 
   const filteredData = Object.entries(ath)
-    .map(([name, coin]) => ({ name: coin.name, ath: (coin as Coin).ath }))
+    .map(([name, coin]) => ({ name: coin.name, ath: (coin as CoinAth).ath }))
     .sort((a, b) => b.ath - a.ath)
     .slice(0, 10);
 

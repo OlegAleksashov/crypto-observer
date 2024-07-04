@@ -20,11 +20,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import { logOutUser } from "../../store/action";
 import { Tooltip } from "@mui/joy";
-
-interface IHomeIcon {
-  color: "success";
-  onClick: () => void;
-}
+import { UserType } from "../../../types/common";
+import { IHomeIcon } from "../../../interfaces/commonInterfaces";
 
 const Header: FC = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,7 +31,7 @@ const Header: FC = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const dispatch = useAppDispatch();
-  const profile = useAppSelector((state) => state.auth.user);
+  const profile = useAppSelector((state) => state.auth.user) as UserType | {};
 
   const handleClickExit = () => {
     dispatch(logOutUser());
@@ -129,7 +126,7 @@ const Header: FC = () => {
               <PersonIcon sx={{ color: "pink" }} />
             </Badge>
           </IconButton>
-          <p>{profile.user?.name}</p>
+          <p>{profile && "user" in profile ? profile.user.name : ""}</p>
         </MenuItem>
       )}
       <MenuItem>
@@ -193,7 +190,11 @@ const Header: FC = () => {
             {token && (
               <IconButton size="large" sx={{ color: "white" }}>
                 <Badge sx={{ color: "white" }}>
-                  <Tooltip title={profile.user?.name}>
+                  <Tooltip
+                    title={
+                      profile && "user" in profile ? profile.user.name : ""
+                    }
+                  >
                     <PersonIcon />
                   </Tooltip>
                 </Badge>

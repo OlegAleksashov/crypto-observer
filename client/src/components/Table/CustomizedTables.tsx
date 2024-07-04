@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
@@ -27,7 +27,7 @@ export const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function CustomizedTables() {
+export const CustomizedTables: FC = () => {
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -62,4 +62,4 @@ export default function CustomizedTables() {
       {isMobile ? <IsMobile /> : isTablet ? <IsTablet /> : <IsDesktop />}
     </TableContainer>
   );
-}
+};
