@@ -1,7 +1,6 @@
 import axios from "axios";
 
 // ================= By using back ================= //
-
 interface UserData {
   email: string;
   password: string;
@@ -35,7 +34,7 @@ export const fetchVerifyUser = async (token: string) => {
   try {
     const response = await axios.post(
       "http://localhost:5000/verify",
-      {}, // TODO: is it nessasary to use an empty object?
+      {},
       {
         headers: { Authorization: `Bearer ${token}` },
       }
